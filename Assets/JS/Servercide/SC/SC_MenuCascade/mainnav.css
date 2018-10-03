@@ -1,0 +1,47 @@
+﻿/*
+  base styles for menu and submenus:
+  root is horizontal
+  submenus are all vertical
+  dripouts appear below hovered item
+  flyouts appear to the right of hovered item
+*/
+.navroot ul { width:auto; margin:0px; }
+.navroot li {
+  position: relative;
+  background-color: #f1ba87;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  padding: 10px 25px;
+  box-sizing: border-box;
+  margin:0px;
+}
+
+/* root and submenu styling */
+.navroot { position:absolute; display:flex; justify-content:center; padding:0px; margin:0px; width:100%; }
+.dripout { position:absolute; display:none; left:0px; top:100%; padding:0px; }
+.flyout { position:absolute; display:none; left:100%; top:0px; padding:0px; }
+
+/* navroot items styling */
+.navroot > li { display: inline; }
+.dripout > li, .flyout > li { border-left: 1px solid #ab9481; border-right: 1px solid #ab9481; width:auto; white-space: nowrap; display: block;  }
+
+.vert_nav > li:first-of-type { border-bottom: none; border-top-left-radius: 12px; border-top-right-radius: 12px; }
+.vert_nav > li:last-of-type { border-top: none; border-bottom-left-radius: 12px; border-bottom-right-radius: 12px; }
+.horiz_nav > li:first-of-type { border-left: none; border-top-left-radius: 12px; border-bottom-left-radius: 12px; }
+.horiz_nav > li:last-of-type { border-right: none; border-top-right-radius: 12px; border-bottom-right-radius: 12px; }
+
+.dripout > li:first-of-type, .flyout > li:first-of-type { border-bottom: none; border-top-left-radius: 12px; border-top-right-radius: 12px; }
+.dripout > li:last-of-type, .flyout > li:last-of-type { border-top: none; border-bottom-left-radius: 12px; border-bottom-right-radius: 12px; }
+
+
+/* Button depress animation
+.navroot li:active { box-shadow: -15px 0 15px -15px #ab9481 inset, 15px 0 15px -15px #ab9481 inset; transform: translateY(4px); }
+*/
+
+/* show drip and fly menus on hover */
+.navroot li:hover { background-color: sandybrown;z-index:2; }
+.navroot .empty { background-color: #e6b6bd !important; }
+.navroot li:hover > ul { display: inline-block !important; }

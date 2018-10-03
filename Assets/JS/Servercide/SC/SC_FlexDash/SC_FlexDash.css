@@ -1,0 +1,7 @@
+.gridItems { height:30px;width:100px;outline:solid thin black; }
+.flexControl { text-align: center; }
+.flexControl:hover { color:green; }
+.flexControlCat { outline:solid thin black; padding:10px; }
+.dirCats { font-weight: bold;text-align: center; }
+.foo {outline: solid thin blue;}
+#flexDemoDash {height:unset;}

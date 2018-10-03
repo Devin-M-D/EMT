@@ -1,0 +1,87 @@
+<span class="bodyCopy1" style="text-align:center;display:block;height:250px;">
+  <span class="header1" style="height:50px;">EMT</span>
+  <br>A self-contained small enterprise fullstack framework for browser-to-browser decentralized networks
+
+  <br><br><span class="header1"  style="height:50px;">License:</span>
+  <br>Released under the <a href="www.wtfpl.net">WTFPL License</a> (free and unlimited in every respect)
+  <br><span class="header2">Docs</span>
+</span>
+
+<span id="SClibraryAccordion" SC_appObj="true" SC_appType="Accordion" style="height:unset;">
+  <span id="aboutSC" class="accord-headerSClibraryAccordion">The Servercide Frontend Library</span>
+  <span id="aboutSCNode">
+    <span id="aboutSCAccordion" SC_appObj="true" SC_appType="Accordion" style="height:unset;">
+      <span id="SCOverview" class="accord-headeraboutSCAccordion">Overview</span>
+      <span id="aboutSCOverviewNode">
+        <span>
+          The Servercide library is a componentization library like angular or react, but intended to remove the server from the equation in favor of
+          completely client-side procedural content building. Frontends can then be passed as a self-describing code with a batch of JSON data.
+          <code><br></code>
+          The goal is to serve sites with client-side JS p2p and consensus algorithms, for a strap-once-ever fully-decentralized serverless web app pattern.
+          After connecting to a server-hosting peer once, peer discovery would pass through connected peers, similar to (or using) webtorrent.
+        </span>
+      </span>
+      <span id="SCLifecycle" class="accord-headeraboutSCAccordion">Servercide Lifecycle</span>
+      <span id="aboutSCLifecycleNode">
+        <span>
+          In Servercide the frontend components are referred to as Servercide applications. Servercide begins by searching the &lt;html&gt; element
+          and its children for span elements with attribute SC_appObj=true.
+          <br><br>
+          It will depth-first traverse all the way down the dom tree when scraping, but is looking for the "next layer" of apps and will not search
+          deeper below any Servercide apps it finds (it will continue to process laterally). Servercide then straps the "top layer" apps in
+          discovery order, and recurses as it goes.
+          <br><br>
+          This makes the body tag a convenient entry point, especially for a root/layout Servercide app such as SC_EMTBase.
+        </span>
+      </span>
+      <span id="SCAppDef" class="accord-headeraboutSCAccordion">App Definitions</span>
+      <span id="aboutSCAppDefNode">
+        <span>
+          SC apps are defined by a js file which defines a js object class matching the type name, eg SC_Include. A set of default parameters in
+          the form of a vanilla javascript object is defined, and passed when SC_Include inherits from ServercideApp, the object underlying the
+          common Servercide functionality.
+          <br><br>
+          ServercideApp searches for any overriding parameters set on this particular SC_Include instance (covered in more detail below), then
+          call SC_Include.onStrap(), restart discovery from the SC_Include span, and call SC_EMTBase.postStrap() to run asynchronously.
+          <br><br>
+          A new SC app definition can be easily started by copying the SC_blankTemplate.js file.
+        </span>
+      </span>
+
+      <span id="aboutSC" class="accord-headeraboutSCAccordion">Parameters</span>
+      <span id="aboutSCParametersNode">
+        <span>
+          SC app parameters can be added in several ways. The simplest is to include an html attribute with the long form of the parameter name eg SC_EMTBase_baseApps or
+          SC_FlexGrid_nodes_template. Similarly jQuery data can be used on the added to the app element, but make sure to add this before the element would be strapped.
+          Finally child elements can be used, where the tag matches the long form param name eg &lt;SC_FlexGrid_nodes_template&gt;&lt;/SC_FlexGrid_nodes&gt;.
+          <br><br>
+          Since the nodes param of SC_FlexGrid is an object, it will search child objects for the SC_FlexGrid_nodes_template and SC_FlexGrid_nodes_contentObjects params.
+          <br><br>
+          Since the template param is a string, the nodes element can implement this with an attribute of the long form name or jQuery data. Otherwise a child element with a tag
+          matching the template param long form name can be used, either as a "value" attribute on that tag or as an html string by including the "htmlParam" attribute on the template tag.
+          <br><br>
+          Since the contentObjects param is an array, there is one additional method that works only when a &lt;SC_FlexGrid_nodes_contentObjects&gt; tag is found: a series of
+          &lt;item&gt; tags specifying value or html can be used to fill an array.
+          <br><br>
+          Params can also be jQuery elements, which can be set by including the child as an element, or by parsing a string into jQuery.
+          <br><br>
+          <b>Note:</b> Anytime a param value is not found, the default value of that param is used. When a string value is found for an object or array param, SC will try to parse the string
+          as JSON, displaying an error and using the default value when it fails.
+        </span>
+      </span>
+      <span id="aboutSC" class="accord-headeraboutSCAccordion">SC_EMTBase</span>
+      <span id="aboutSCParametersNode">
+        <span>
+          SC_EMTBase appends a header, footer, and main content body SC element. It also adds a few site-wide apps,
+          such as SC_Router, which details parsing the URL for site variables, and SC_Skinner, which handles setting and changing the active skin. SC_Router can get a "page" variable
+          which is used by SC_Cascade to build.
+          <br><br>
+          Once SC_EMTBase has finished appending it's elements, it calls SC_EMTBase.onStrap() the finishStrapping method is called, and SC searches using EMTBase as a root, scraping the next layer of SC apps even if nested within plain elements.
+          <br><br>
+          As Servercide straps your apps, it builds an immutable state tree into the "ADOM" or application document object model. This serves as the single source of truth for
+          the web application, and any component app can be rebuilt using only the state.
+        </span>
+      </span>
+    </span>
+  </span>
+</span>

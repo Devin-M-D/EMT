@@ -1,0 +1,48 @@
+//EMTBase//////
+///////////////
+loadCSS("Assets/JS/Servercide/EMT/EMT_Base/EMT_Base.css");
+loadCSS("Assets/CSS/main.css");
+
+var EMT_Base = function(element) {
+  var defaultParams = {
+    "baseApps": [
+      '<span id="spnRouter" SC_appObj="true" SC_appType="SC_Router" class="SC_floater"></span>',
+      '<span id="spnSkinner" SC_appObj="true" SC_appType="EMT_Skinner" class="SC_floater"></span>',
+      '<span id="spnLeftMenu" SC_appObj="true" SC_appType="SC_DrawerPane" SC_edge="left"></span>',
+      // '<span id="spnContextMenu" class="SC_floater" SC_appObj="true" SC_appType="SC_ContextMenu" ></span>',
+      `<span id="spnRoot" SC_appObj="true" SC_appType="SC_UICascade" style="overflow-x:auto;padding:5px;" debug="7">
+        <sc_uicascade_src>
+          <item>Assets/JS/Servercide/SC/SC_Demo/SC_Demo_Content.json</item>
+          <item>Assets/JS/Servercide/SC/SC_Demo/SC_Demo_Skin-Classic.json</item>
+        </sc_uicascade_src>
+      </span>`
+    ]
+  };
+  var app = this;
+  var promise = ServercideApp.call(this, app, element, "EMT_Base", defaultParams).then(function(){ app.postStrap(app); });
+  return promise;
+}
+EMT_Base.prototype = Object.create(ServercideApp.prototype);
+
+EMT_Base.prototype.onStrap = function(app){
+  return new Promise(function(fulfill, reject){
+    app.getParam("baseApps").forEach(function(baseApp) {
+      app.element.append($(baseApp));
+    });
+    fulfill();
+  });
+}
+
+EMT_Base.prototype.postStrap = function(app){
+  return new Promise(function(fulfill, reject){
+    fulfill();
+  });
+}
+
+EMT_Base.prototype.discoveryComplete = function(app){
+  return new Promise(function(fulfill, reject){
+    fulfill();
+  });
+}
+
+///////////////

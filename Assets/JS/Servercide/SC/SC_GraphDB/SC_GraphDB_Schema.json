@@ -1,0 +1,90 @@
+//Data Types - string, object, or collection
+//Classes - defined by schema
+{
+  "schema": {
+    "val": {
+      "gdb_id": "HASH OF THE VALUE",
+      "value": {
+        "restrictType": "string"
+      }
+    },
+    "obj": {
+      "gdb_id": "0:0",
+      "gdb_inherits": [{
+        "restrictClass": "0:3"
+        }],
+      "gdb_title": "",
+      "gdb_description": ""
+    },
+    "vtx": {
+      "gdb_id": "0:1",
+      "gdb_inherits": [{
+          "restrictClass": "0:3",
+          "mustContain": ["0:0"],
+        }],
+      "gdb_changelog": [{
+          "restrictClass": "0:4",
+          "default": "0:0"
+        }],
+    },
+    "edg": {
+      "gdb_id": "0:2",
+      "gdb_inherits": ["0", "1"],
+      "outName": "",
+      "inName": "",
+      "outID": "",
+      "inID": ""
+    },
+    "inh": {
+      "gdb_id": "0:3",
+      "gdb_inherits": ["2"],
+      "outName": "Inherited Parent",
+      "inName": "Inheriting Child",
+    },
+    "changelog": {
+      "gdb_id": "0:4",
+      "gdb_inherits": ["2"],
+      "outName": "Altered Object",
+      "inName": "Editing User",
+      "date": "",
+      "changesMade": []
+    },
+    "uar": {
+      "gdb_id": "0:5",
+      "gdb_inherits": ["1"],
+      "gdb_roleName": "",
+      "gdb_permissions": []
+    },
+    "usr": {
+      "gdb_id": "0:6",
+      "gdb_inherits": ["1"],
+      "gdb_name": "testuser",
+      "gdb_password": "testuser",
+      "gdb_roles": "SELECT FROM uar",
+      "gdb_activityLog": ["5_out"]
+    },
+    "def": {
+      "gdb_id": "",
+      "restrictType": [""],
+      "restrictClass": [""],
+      "mustContain": [""],
+      "nullable": "",
+      "default": ""
+    }
+  },
+  "data": [
+    {
+
+    },
+    {
+      "gdb_id": "",
+      "value": "0:3"
+    },
+    {
+      "gdb_id": "0",
+      "gdb_inherits": ["0:2"],
+      "Inherited Parent": ["0:0"],
+      "Inheriting Child": ["0:1"]
+    }
+  ]
+}

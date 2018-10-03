@@ -1,0 +1,544 @@
+{
+  "cascadeData": [
+    {
+      "class": "Block",
+      "gdb_id": "10:0",
+      "title": "spnRoot",
+      "type": "container",
+      "styles": {
+        "display": "flex",
+        "justify-content": "center",
+        "align-content": "center"
+      }
+    },
+    {
+      "class": "Block",
+      "gdb_id": "10:1",
+      "title": "content_body",
+      "type": "container",
+      "attrs": {
+        "debug": "true"
+      },
+      "styles": {
+        "width": "90%",
+        "max-width": "2000px",
+        "margin": "5% 5%"
+      }
+    },
+    {
+      "class": "Block",
+      "gdb_id": "10:2",
+      "title": "home_page",
+      "type": "html",
+      "content": "Home Page Loaded",
+      "styles": {
+        "z-index": "1"
+      },
+      "attrs": {
+        "sc_appobj": "true",
+        "sc_apptype": "DF_RewardBoard",
+        "df_RewardBoard_boardSize": "20",
+        "df_RewardBoard_progress": "4"
+      }
+    },
+    {
+      "class": "Block",
+      "gdb_id": "10:3",
+      "title": "reward_board_test",
+      "type": "container",
+      "styles": {
+        "width": "90%",
+        "max-width": "2000px",
+        "margin": "5% 5%"
+      }
+    },
+    {
+      "class": "Block",
+      "gdb_id": "10:4",
+      "title": "aboutPage",
+      "type": "container",
+      "content": "About Loaded",
+      "attrs": {
+        "sc_appobj": "true",
+        "sc_apptype": "SC_Include",
+        "sc_include_src": "Pages/Home/About.html"
+      }
+    },
+    {
+      "class": "Block",
+      "gdb_id": "10:5",
+      "title": "roadmapPage",
+      "type": "container",
+      "content": "Roadmap Loaded",
+      "attrs": {
+        "sc_appobj": "true",
+        "sc_apptype": "SC_Include",
+        "sc_include_src": "Pages/Home/Roadmap.html"
+      }
+    },
+    {
+      "class": "Block",
+      "gdb_id": "10:6",
+      "title": "sc_demos",
+      "type": "container",
+      "content": "",
+      "attrs": {
+        "sc_appobj": "true",
+        "sc_apptype": "SC_Accordion"
+      }
+    },
+    {
+      "class": "Block",
+      "gdb_id": "10:7",
+      "title": "auth_head",
+      "type": "html",
+      "content": "SC_Auth",
+      "classes": [
+        "accord-headersc_demos"
+      ]
+    },
+    {
+      "class": "Block",
+      "gdb_id": "10:8",
+      "title": "auth_node",
+      "type": "container",
+      "content": "",
+      "classes": [
+        "accord-node"
+      ]
+    },
+    {
+      "class": "Block",
+      "gdb_id": "10:9",
+      "title": "auth_demo",
+      "type": "container",
+      "content": "",
+      "attrs": {
+        "sc_appobj": "true",
+        "sc_apptype": "Auth"
+      },
+      "styles": {
+        "height": "150px",
+        "width": "150px",
+        "outline": "solid thin green"
+      }
+    },
+    {
+      "class": "Block",
+      "gdb_id": "10:10",
+      "title": "velcrotooltip_head",
+      "type": "html",
+      "content": "SC_VelcroTooltip",
+      "classes": [
+        "accord-headersc_demos"
+      ]
+    },
+    {
+      "class": "Block",
+      "gdb_id": "10:11",
+      "title": "velcrotooltip_node",
+      "type": "container",
+      "content": "SC_VelcroTooltip",
+      "classes": [
+        "accord-node"
+      ]
+    },
+    {
+      "class": "Block",
+      "gdb_id": "10:12",
+      "title": "velcrotooltip_demo",
+      "type": "container",
+      "content": "VelcroTooltip test, click to launch a tooltip",
+      "attrs": {
+        "sc_appobj": "true",
+        "sc_apptype": "SC_VelcroTooltip",
+        "sc_velcrotooltip_content": "This is a tooltip! :) Please click to close."
+      },
+      "styles": {
+        "height": "150px",
+        "width": "150px",
+        "outline": "solid thin green"
+      }
+    },
+    {
+      "class": "Block",
+      "gdb_id": "10:13",
+      "title": "modal_head",
+      "type": "html",
+      "content": "SC_Modal",
+      "classes": [
+        "accord-headersc_demos"
+      ]
+    },
+    {
+      "class": "Block",
+      "gdb_id": "10:14",
+      "title": "modal_node",
+      "type": "container",
+      "content": "SC_Modal",
+      "classes": [
+        "accord-node"
+      ]
+    },
+    {
+      "class": "Block",
+      "gdb_id": "10:15",
+      "title": "modal_demo",
+      "type": "container",
+      "content": "Modal test, click to add overlay and place modal",
+      "attrs": {
+        "sc_appobj": "true",
+        "sc_apptype": "SC_Modal",
+        "sc_modal_node": "foo bar baz - modal node content can be text, a jquery selector, or on-the-fly jquery elements"
+      },
+      "styles": {
+        "height": "150px",
+        "width": "150px",
+        "outline": "solid thin green"
+      }
+    },
+    {
+      "class": "Block",
+      "gdb_id": "10:16",
+      "title": "ratio_head",
+      "type": "html",
+      "content": "SC_PreserveRatio",
+      "classes": [
+        "accord-headersc_demos"
+      ]
+    },
+    {
+      "class": "Block",
+      "gdb_id": "10:17",
+      "title": "ratio_node",
+      "type": "container",
+      "content": "SC_PreserveRatio",
+      "classes": [
+        "accord-node"
+      ]
+    },
+    {
+      "class": "Block",
+      "gdb_id": "10:18",
+      "title": "ratio_demo",
+      "type": "container",
+      "content": "This will stay in proportion as screen size shrinks, even if relatively sized",
+      "attrs": {
+        "sc_appobj": "true",
+        "sc_apptype": "SC_PreserveRatio",
+        "sc_PreserveRatio_axis": "h",
+        "sc_PreserveRatio_ratio": "1.5"
+      },
+      "styles": {
+        "height": "150px",
+        "width": "25%",
+        "outline": "solid thin green"
+      }
+    },
+    {
+      "class": "Block",
+      "gdb_id": "10:19",
+      "title": "flexGrid_head",
+      "type": "html",
+      "content": "SC_FlexGrid",
+      "classes": [
+        "accord-headersc_demos"
+      ]
+    },
+    {
+      "class": "Block",
+      "gdb_id": "10:20",
+      "title": "flexGrid_node",
+      "type": "container",
+      "content": "SC_FlexGrid",
+      "classes": [
+        "absCenter",
+        "accord-node"
+      ]
+    },
+    {
+      "class": "Block",
+      "gdb_id": "10:21",
+      "title": "flexDemo",
+      "type": "container",
+      "content": "",
+      "attrs": {
+        "sc_appobj": "true",
+        "sc_apptype": "SC_Include",
+        "sc_include_src": "Pages/Home/UXDemos/FlexTest.html"
+      }
+    },
+    {
+      "class": "Block",
+      "gdb_id": "10:22",
+      "title": "carousel_head",
+      "type": "html",
+      "content": "SC_Carousel",
+      "classes": [
+        "accord-headersc_demos"
+      ]
+    },
+    {
+      "class": "Block",
+      "gdb_id": "10:23",
+      "title": "carousel_node",
+      "type": "container",
+      "content": "SC_Carousel",
+      "classes": [
+        "accord-node"
+      ]
+    },
+    {
+      "class": "Block",
+      "gdb_id": "10:24",
+      "title": "carousel_demo",
+      "type": "container",
+      "content": "",
+      "attrs": {
+        "sc_appobj": "true",
+        "sc_apptype": "SC_Carousel"
+      }
+    },
+    {
+      "class": "Block",
+      "gdb_id": "10:25",
+      "title": "CMSTest",
+      "type": "container",
+      "content": "CMS loaded",
+      "styles": {
+        "z-index": "1"
+      }
+    },
+    {
+      "class": "Block",
+      "gdb_id": "10:26",
+      "title": "CMS_Test_1",
+      "type": "container",
+      "content": "CMS container 1",
+      "styles": {
+        "position": "absolute",
+        "display": "block",
+        "top": "50px",
+        "left": "100px",
+        "height": "150px",
+        "width": "150px",
+        "outline": "solid thin orange"
+      }
+    },
+    {
+      "class": "Block",
+      "gdb_id": "10:27",
+      "title": "CMS_Test_2",
+      "type": "container",
+      "content": "CMS container 2",
+      "styles": {
+        "position": "absolute",
+        "display": "block",
+        "top": "200px",
+        "left": "300px",
+        "height": "150px",
+        "width": "150px",
+        "outline": "solid thin green"
+      }
+    },
+    {
+      "class": "Block",
+      "gdb_id": "10:28",
+      "title": "CMS_Test_3",
+      "type": "container",
+      "content": "CMS html box",
+      "styles": {
+        "position": "absolute",
+        "display": "block",
+        "top": "300px",
+        "left": "100px",
+        "height": "150px",
+        "width": "150px",
+        "outline": "solid thin lightblue"
+      }
+    },
+    {
+      "class": "Block",
+      "gdb_id": "10:51",
+      "title": "Reward_Board_Page",
+      "type": "container",
+      "content": "Reward Board Page Loaded",
+      "styles": {
+        "z-index": "1"
+      },
+      "attrs": {
+        "sc_appobj": "true",
+        "sc_apptype": "DF_RewardBoard",
+        "df_RewardBoard_boardSize": "20",
+        "df_RewardBoard_progress": "4"
+      }
+    },
+    {
+      "class": "Block",
+      "gdb_id": "10:53",
+      "title": "Simple_Dungeon",
+      "type": "container",
+      "content": "",
+      "styles": {
+        "z-index": "1"
+      },
+      "attrs": {
+        "sc_appobj": "true",
+        "sc_apptype": "DF_SimpleDungeon"
+      }
+    },
+    {
+      "class": "Edge",
+      "gdb_id": "10:29",
+      "inID": "10:0",
+      "outID": "10:1"
+    },
+    {
+      "class": "Edge",
+      "gdb_id": "10:30",
+      "inID": "10:1",
+      "outID": "10:2",
+      "page": "Home"
+    },
+    {
+      "class": "Edge",
+      "gdb_id": "10:31",
+      "inID": "10:1",
+      "outID": "10:4",
+      "page": "Home/About"
+    },
+    {
+      "class": "Edge",
+      "gdb_id": "10:32",
+      "inID": "10:1",
+      "outID": "10:5",
+      "page": "Home/Roadmap"
+    },
+    {
+      "class": "Edge",
+      "gdb_id": "10:33",
+      "inID": "10:1",
+      "outID": "10:6",
+      "page": "Home/UXDemos"
+    },
+    {
+      "class": "Edge",
+      "gdb_id": "10:34",
+      "inID": "10:6",
+      "outID": "10:10",
+      "page": "Home/UXDemos"
+    },
+    {
+      "class": "Edge",
+      "gdb_id": "10:35",
+      "inID": "10:6",
+      "outID": "10:11",
+      "page": "Home/UXDemos"
+    },
+    {
+      "class": "Edge",
+      "gdb_id": "10:36",
+      "inID": "10:11",
+      "outID": "10:12",
+      "page": "Home/UXDemos"
+    },
+    {
+      "class": "Edge",
+      "gdb_id": "10:37",
+      "inID": "10:6",
+      "outID": "10:13",
+      "page": "Home/UXDemos"
+    },
+    {
+      "class": "Edge",
+      "gdb_id": "10:38",
+      "inID": "10:6",
+      "outID": "10:14",
+      "page": "Home/UXDemos"
+    },
+    {
+      "class": "Edge",
+      "gdb_id": "10:39",
+      "inID": "10:14",
+      "outID": "10:15",
+      "page": "Home/UXDemos"
+    },
+    {
+      "class": "Edge",
+      "gdb_id": "10:40",
+      "inID": "10:6",
+      "outID": "10:16",
+      "page": "Home/UXDemos"
+    },
+    {
+      "class": "Edge",
+      "gdb_id": "10:41",
+      "inID": "10:6",
+      "outID": "10:17",
+      "page": "Home/UXDemos"
+    },
+    {
+      "class": "Edge",
+      "gdb_id": "10:42",
+      "inID": "10:17",
+      "outID": "10:18",
+      "page": "Home/UXDemos"
+    },
+    {
+      "class": "Edge",
+      "gdb_id": "10:43",
+      "inID": "10:6",
+      "outID": "10:19",
+      "page": "Home/UXDemos"
+    },
+    {
+      "class": "Edge",
+      "gdb_id": "10:44",
+      "inID": "10:6",
+      "outID": "10:20",
+      "page": "Home/UXDemos"
+    },
+    {
+      "class": "Edge",
+      "gdb_id": "10:45",
+      "inID": "10:20",
+      "outID": "10:21",
+      "page": "Home/UXDemos"
+    },
+    {
+      "class": "Edge",
+      "gdb_id": "10:46",
+      "inID": "10:6",
+      "outID": "10:22",
+      "page": "Home/UXDemos"
+    },
+    {
+      "class": "Edge",
+      "gdb_id": "10:47",
+      "inID": "10:6",
+      "outID": "10:23",
+      "page": "Home/UXDemos"
+    },
+    {
+      "class": "Edge",
+      "gdb_id": "10:48",
+      "inID": "10:23",
+      "outID": "10:24",
+      "page": "Home/UXDemos"
+    },
+    {
+      "class": "Edge",
+      "gdb_id": "10:52",
+      "inID": "10:1",
+      "outID": "10:51",
+      "page": "Dogfood/Productivity/RewardBoard"
+    },
+    {
+      "class": "Edge",
+      "gdb_id": "10:54",
+      "inID": "10:1",
+      "outID": "10:53",
+      "page": "Dogfood/Games/SimpleDungeon"
+    }
+  ]
+}

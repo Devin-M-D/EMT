@@ -1,0 +1,9 @@
+﻿#bdyMain { background-color:white; }
+#brand_logo {
+  background-color:#ddefcf;
+  background-position:30px;
+  font-weight: bold;
+}
+.navroot li:hover { background-color: #76ade4 !important; }
+.activeMenuItem { box-shadow: inset 0 0 10px orchid; }
+.ctrlPanelItem { outline: solid thin black; height: 50%; }

@@ -1,0 +1,78 @@
+{
+  "todo": [
+    "Graph Data CMS",
+    "Object Editor",
+    "VCS",
+    "Paypal widget",
+    "Blockchain Consensus Mechanism",
+    "Distributed Enterprise Reviews",
+    "",
+    "handle ids automagically?",
+    "fix flex demo second update issue",
+    "move all classes into app definitions?",
+    "add the ability to have multiple instances of a single app type",
+    "add the ability to have subtypes? may be good enough just to use a single namespace regardless of _ segments"
+  ],
+  "apps": [
+    {
+      "name": "EMT_Base",
+      "status": "complete"
+    },
+    {
+      "name": "SC_Router",
+      "status": "complete"
+    },
+    {
+      "name": "EMT_Skinner",
+      "status": "convert to menu cascade"
+    },
+    {
+      "name": "SC_DrawerPane",
+      "status": "convert to just drawer functionality and convert content to block cascades"
+    },
+    {
+      "name": "SC_UICascade",
+      "status": "complete"
+    },
+    {
+      "name": "SC_StickyHead",
+      "status": "redo UI effect (trololo easiest part.... Bev?)"
+    },
+    {
+      "name": "SC_StickyFoot",
+      "status": "back burner"
+    },
+    {
+      "name": "SC_Include",
+      "status": "complete"
+    },
+    {
+      "name": "SC_MenuCascade",
+      "status": "complete"
+    },
+    {
+      "name": "SC_Accordion",
+      "status": "complete"
+    },
+    {
+      "name": "SC_VelcroTooltip",
+      "status": "change css values for placement in params rather than hardcode"
+    },
+    {
+      "name": "SC_Modal",
+      "status": "complete"
+    },
+    {
+      "name": "SC_PreserveRatio",
+      "status": "complete"
+    },
+    {
+      "name": "SC_Flexgrid",
+      "status": "polish css setup? (input from eric)"
+    },
+    {
+      "name": "SC_FlexDash",
+      "status": "resolve 100% width/height issue"
+    }
+  ]
+}

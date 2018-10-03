@@ -1,0 +1,41 @@
+.RewardBoard .StickerSpot { height:50px;width:50px; }
+
+.RewardBoard .sticker {
+  z-index: 1;
+   margin: 12.5px 0;
+   position: absolute;display: block;
+   color: gold;
+   width: 0px;
+   height: 0px;
+   top: 0px;left: 22%;
+   border-right:  25px solid transparent;
+   border-bottom: 17.5px  solid gold;
+   border-left:   25px solid transparent;
+   -moz-transform:    rotate(35deg);-webkit-transform: rotate(35deg);-ms-transform:     rotate(35deg);-o-transform:      rotate(35deg);
+}
+.RewardBoard .sticker:before {
+   position: absolute;display: block;
+   border-bottom: 20px solid gold;
+   border-left: 7.5px solid transparent;
+   border-right: 7.5px solid transparent;
+   height: 0;
+   width: 0;
+   top: -11.25px;
+   left: -16.25px;
+   content: '';
+   -webkit-transform: rotate(-35deg);-moz-transform:    rotate(-35deg);-ms-transform:     rotate(-35deg);-o-transform:      rotate(-35deg);
+
+}
+.RewardBoard .sticker:after {
+   position: absolute;display: block;
+   color: gold;
+   top: 0.75px;
+   left: -26.25px;
+   width: 0px;
+   height: 0px;
+   border-right: 25px solid transparent;
+   border-bottom: 17.5px solid gold;
+   border-left: 25px solid transparent;
+   -webkit-transform: rotate(-70deg);-moz-transform:    rotate(-70deg);-ms-transform:     rotate(-70deg);-o-transform:      rotate(-70deg);
+   content: '';
+}

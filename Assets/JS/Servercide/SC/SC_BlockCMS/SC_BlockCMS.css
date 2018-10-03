@@ -1,0 +1,40 @@
+﻿.SC_editBtn { height:50px;width:50px;background-color:lightblue;z-index:3;display:flex;justify-content: center;flex-flow:column;text-align:center; }
+
+#SC_CMSToolbelt {
+  position: absolute;display: flex;flex-flow: row wrap;
+  justify-content: space-around;align-content: center;align-items: center;
+  border-radius: 8px;background-color: #DED3D0;text-align: center;
+  left: 0%;height: 50px;width:400px;min-width: 300px;max-width: 600px;z-index: 3;
+}
+
+.beltloop{
+  position:relative;display:flex;padding:0px 8px;
+  flex-flow: column nowrap;justify-content: center;
+  width:unset;height:80%;
+  border:solid thin #C2AD9B;cursor: pointer;
+}
+
+/*Pointer Carets*/
+/*//////////////*/
+#SC_CMSToolbelt.above:after, #SC_CMSToolbelt.below:before {
+  content:'';
+  position: absolute;
+  width: 0;
+  height: 0;
+  left:8px;
+  border-style:solid;
+  border-width:10px;
+  border-left-color:transparent;
+  border-right-color:transparent;
+}
+#SC_CMSToolbelt.above:after{
+  border-top-color:#DED3D0;
+  bottom:-19px;
+  border-bottom-color:transparent;
+}
+#SC_CMSToolbelt.below:before{
+  border-bottom-color:#DED3D0;
+  top:-19px;
+  border-top-color:transparent;
+}
+/*//////////////*/

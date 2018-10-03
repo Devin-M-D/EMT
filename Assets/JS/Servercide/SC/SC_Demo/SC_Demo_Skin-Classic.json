@@ -1,0 +1,62 @@
+{
+  "cascadeData": [
+    {
+      "class": "Block",
+      "gdb_id": "10:49",
+      "title": "header",
+      "type": "container",
+      "attrs": {
+        "sc_appobj": "true",
+        "sc_apptype": "SC_Include SC_StickyHead",
+        "sc_include_src": "PageObjects/Frame/Header.html",
+        "sc_stickyframe_scrollroot": "#spnRoot"
+      },
+      "classes": [
+        "rowGrid"
+      ],
+      "styles": {
+        "height": "250px",
+        "background-color": "white",
+        "border-bottom": "solid thin black"
+      }
+    },
+    {
+      "class": "Block",
+      "gdb_id": "10:50",
+      "title": "footer",
+      "type": "html",
+      "content": "",
+      "attrs": {
+        "sc_appobj": "false",
+        "sc_apptype": "SC_StickyFoot"
+      },
+      "styles": {
+        "position": "fixed",
+        "display": "flex",
+        "flex-flow": "column nowrap",
+        "justify-content": "center",
+        "height": "0px",
+        "max-height": "15%",
+        "min-height": "20px",
+        "width": "100%",
+        "bottom": "0px",
+        "z-index": "1",
+        "text-align": "center",
+        "background-color": "thistle",
+        "border-top": "solid thin black"
+      }
+    },
+    {
+      "class": "Edge",
+      "gdb_id": "10:52",
+      "inID": "10:0",
+      "outID": "10:49"
+    },
+    {
+      "class": "Edge",
+      "gdb_id": "10:53",
+      "inID": "10:0",
+      "outID": "10:50"
+    }
+  ]
+}

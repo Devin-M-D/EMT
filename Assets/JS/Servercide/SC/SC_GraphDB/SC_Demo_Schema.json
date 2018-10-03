@@ -1,0 +1,138 @@
+{
+  "schema": {
+    "Session": {
+      "gdb_id": "7",
+      "gdb_inherits": [
+        "4"
+      ]
+    },
+    "SessionItem": {
+      "gdb_id": "8",
+      "gdb_inherits": [
+        "4"
+      ]
+    },
+    "SessionItems": {
+      "gdb_id": "9",
+      "gdb_inherits": [
+        "5"
+      ]
+    },
+    "Block": {
+      "gdb_id": "10",
+      "gdb_inherits": [
+        "4"
+      ],
+      "type": ""
+    },
+    "BlockCascade": {
+      "gdb_id": "11",
+      "gdb_inherits": [
+        "5"
+      ],
+      "inName": "Parent Block",
+      "outName": "Child Block",
+      "skin": ""
+    }
+  },
+  "data": [
+    {
+      "gdb_id": "0",
+      "gdb_inherits": [
+        "4"
+      ],
+      "gdb_schema": "vtx",
+      "gdb_title": "Flag_Definitions",
+      "gdb_description": "developer reference for all data flags",
+      "obj_status": {
+        "Active": "Normal active record",
+        "Suspended": "Currently inactive record",
+        "Deleted": "Discontinued record maintained for archiving"
+      },
+      "Block_type": {
+        "Prop": "Holds text from a data object property",
+        "HTML": "Holds basic HTML for content",
+        "Container": "Holds other blocks"
+      }
+    },
+    {
+      "gdb_id": "1",
+      "gdb_inherits": [
+        "4"
+      ],
+      "gdb_schema": "uar",
+      "gdb_title": "Admin",
+      "gdb_description": "permission to do anything"
+    },
+    {
+      "gdb_schema": "usr"
+    },
+    {
+      "gdb_schema": "usr",
+      "gdb_name": "testdev",
+      "gdb_password": "testdev"
+    },
+    {
+      "gdb_schema": "Block",
+      "gdb_title": "spnRoot",
+      "type": "Container",
+      "styles": {
+        "display": "flex",
+        "justify-content": "center",
+        "align-content": "center"
+      }
+    },
+    {
+      "gdb_schema": "Block",
+      "gdb_title": "content_body",
+      "type": "Container",
+      "styles": {
+        "width": "90%",
+        "max-width": "2000px",
+        "margin": "5% 5%"
+      }
+    },
+    {
+      "gdb_schema": "Block",
+      "gdb_title": "home_page",
+      "type": "HTML",
+      "content": "Home Page Loaded",
+      "styles": {
+        "z-index": "1"
+      }
+    },
+    {
+      "gdb_schema": "Block",
+      "gdb_title": "reward_board_test",
+      "type": "Container",
+      "attrs": {
+        "sc_appobj": "true",
+        "sc_apptype": "RewardBoard",
+        "df_RewardBoard_boardSize": "20",
+        "df_RewardBoard_progress": "4"
+      }
+    },
+    {
+      "gdb_schema": "Block",
+      "gdb_title": "aboutPage",
+      "type": "Container",
+      "content": "About Loaded",
+      "attrs": {
+        "sc_appobj": "true",
+        "sc_apptype": "Include",
+        "sc_include_src": "Pages/Home/About.html"
+      }
+    },
+    {
+      "gdb_schema": "Block",
+      "gdb_title": "roadmapPage",
+      "type": "Container",
+      "content": "Roadmap Loaded",
+      "attrs": {
+        "sc_appobj": "true",
+        "sc_apptype": "Include",
+        "sc_include_src": "Pages/Home/Roadmap.html"
+      }
+    }
+  ]
+}
