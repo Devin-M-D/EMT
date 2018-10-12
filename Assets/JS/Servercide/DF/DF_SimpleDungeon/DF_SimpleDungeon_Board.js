@@ -2,6 +2,7 @@
 ////////////////////////////
 var DF_SimpleDungeon_Board = function(element) {
   var defaultParams = {
+    "inputTimer": 0,
     "keysDown": []
   };
   var app = this;
@@ -11,7 +12,7 @@ var DF_SimpleDungeon_Board = function(element) {
 DF_SimpleDungeon_Board.prototype = Object.create(ServercideApp.prototype);
 
 DF_SimpleDungeon_Board.prototype.onStrap = function(app){
-  app.debugMsg(app.element.attr("id") + " app " + app.getMetaParam("type") + " is strapping, running onStrap before recursion.", [2, 3, 6, 7]);
+  app.debugMsg(app.element.attr("id") + " app " + app.getMetaParam("type") + " is strapping, running onStrap before recursion.", 2);
   return new Promise(function(fulfill, reject){
     var initBoard = '' +
       '<span id="df_sd_unit1" sc_appobj="true" sc_apptype="DF_SimpleDungeon_Unit"></span>' +
@@ -69,14 +70,14 @@ DF_SimpleDungeon_Board.prototype.onStrap = function(app){
 }
 
 DF_SimpleDungeon_Board.prototype.postStrap = function(app){
-  app.debugMsg(app.element.attr("id") + " app " + app.getMetaParam("type") + " is strapping, running onStrap before recursion.", [2, 3, 6, 7]);
+  app.debugMsg(app.element.attr("id") + " app " + app.getMetaParam("type") + " is strapping, running onStrap before recursion.", 2);
   return new Promise(function(fulfill, reject){
     fulfill();
   });
 }
 
 DF_SimpleDungeon_Board.prototype.discoveryComplete = function(app){
-  app.debugMsg("Recursive Servercide discovery complete, running discoveryComplete function of " + app.element.attr("id") + " app " + app.getMetaParam("type") + ".", [2, 3, 6, 7]);
+  app.debugMsg("Recursive Servercide discovery complete, running discoveryComplete function of " + app.element.attr("id") + " app " + app.getMetaParam("type") + ".", 2);
   return new Promise(function(fulfill, reject){
     $(document).keydown(function (e) {
       var key = e.which;
@@ -101,6 +102,10 @@ DF_SimpleDungeon_Board.prototype.discoveryComplete = function(app){
   });
 }
 
+DF_SimpleDungeon_Board.prototype.addInput = function(app, key){
+
+}
+
 DF_SimpleDungeon_Board.prototype.determineInput = function(key){
   if(key == 119 || key ==  87) { return "w";   }
   else if(key == 97 || key ==  65) { return "a"; }
@@ -110,15 +115,21 @@ DF_SimpleDungeon_Board.prototype.determineInput = function(key){
 }
 
 DF_SimpleDungeon_Board.prototype.giveControl = function(app){
-  var player = app.getChild("DF_SimpleDungeon_Player");
-  var unit = player.getParent("DF_SimpleDungeon_Unit");
+  var playerUnit = app.getChild("DF_SimpleDungeon_Player").getParent("DF_SimpleDungeon_Unit");
   var keys = app.getParam("keysDown");
-  $(document).one("keypress", function (e) {
-    unit.tryMove(unit, 30, keys);
-  });
+  console.log(keys)
+  if (keys.length > 0){
+    playerUnit.tryMove(playerUnit, 30, keys);
+  }
+  else {
+    $(document).one("keypress", function (e) {
+      playerUnit.tryMove(playerUnit, 30, keys);
+    });
+  }
 }
 
 DF_SimpleDungeon_Board.prototype.testSight = function(app, enemy){
+
   // var player = app.getChild("DF_SimpleDungeon_Unit");
   // var pposY = df_sd_alphabet[Math.floor(player.getParam("posY") / 25)];
   // var pposX = Math.floor(player.getParam("posX") / 25);

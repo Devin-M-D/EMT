@@ -28,10 +28,10 @@ $(function() {
 //
 // SC debug attr:
 //  0 - no debug
-//  1 - print mapping attempts to parse app param vals from html
+//  1 - print attempts to parse app param vals from html + handlebar mappings
 //  2 - print "app strapped" and the final initialized state, as well as onStrap(), postStrap(), and discoveryComplete() alerts
 //  3 - print 1 + 2
-//  4 - run user-defined debug logging and functions and
+//  4 - run user-defined debug logging and functions
 //  5 - print 1 & run 4
 //  6 - print 2 & run 4
 //  7 - print 1 + 2 & run 4
@@ -244,15 +244,9 @@ var ServercideApp = function(appObj, element, appType, defaultParams = {}) {
     var parentState = SC_state.getIn(parentPath).toJS();
     return $("#" + parentState.elem);
   }
-  SC_.getParents = function(appType) {
-    var parentPath = SC_.statePath.slice(0,-5);
-    var parentState = SC_state.getIn(parentPath).toJS();
-    return $("#" + parentState.elem).data(appType);
-  }
   SC_.getChild = function(appType, index = 0) { return SC_.element.find("[sc_apptype='" + appType + "']").data(appType)[index]; }
-  SC_.getChildElement = function(appType, index = 0) { return SC_.element.find("[sc_apptype='" + appType + "']"); }
+  SC_.getChildElement = function(appType, index = 0) { return SC_.element.find("[sc_apptype='" + appType + "']")[index]; }
   SC_.getChildren = function(appType) { return SC_.element.find("[sc_apptype='" + appType + "']").data(appType); }
-  SC_.getSibling = function(appType, index = 0) { return SC_.statePath; }
   SC_.printApps = function() {
     var objPath = SC_.statePath.slice(0,-3);
     var objState = SC_state.getIn(objPath).toJS();
@@ -260,16 +254,33 @@ var ServercideApp = function(appObj, element, appType, defaultParams = {}) {
   }
 
   SC_.setDebugging = function(setting){ SC_.setMetaParam("debug", setting); }
-  SC_.debugMsg = function(message, debugTypes = [0], trace = false){
-    if (debugTypes.indexOf(SC_.getMetaParam("debug")) != -1 || (debugTypes == [0] && SC_.getMetaParam("debug") != 0)){
-        if (trace) console.error('sc_debugger: ' + message);
-        else{ console.log(message); }
+  SC_.debugMsg = function(message, debugType = 4, trace = false){
+    function runMsg() {
+      if (trace) console.error('sc_debugger: ' + message);
+      else { console.log(message); }
     }
+    var debugLvl = SC_.getMetaParam("debug");
+    if (debugLvl >= 4){
+      if (debugType == 4){ runMsg(); }
+      debugLvl -= 4;
+    }
+    if (debugLvl >= 2){
+      if (debugType == 2){ runMsg(); }
+      debugLvl -= 2;
+    }
+    if (debugLvl >= 1 && debugType == 1){ runMsg(); }
   }
-  SC_.debugFunc = function(func, debugTypes = [0]) {
-    if (debugTypes.indexOf(SC_.getMetaParam("debug")) != -1 || (debugTypes == [0] && SC_.getMetaParam("debug") != 0)){
-        func();
+  SC_.debugFunc = function(func, debugType = 4) {
+    var debugLvl = SC_.getMetaParam("debug");
+    if (debugLvl >= 4){
+      if (debugType == 4){ func(); }
+      debugLvl -= 4;
     }
+    if (debugLvl >= 2){
+      if (debugType == 2){ func(); }
+      debugLvl -= 2;
+    }
+    if (debugLvl >= 1 && debugType == 1){ func(); }
   }
   SC_.setInHTML = function() {
     if ($(SC_.element).data(appType) == undefined){ $(SC_.element).data(appType, [SC_.appObj]); }
@@ -283,6 +294,7 @@ var ServercideApp = function(appObj, element, appType, defaultParams = {}) {
       }
     }
   }
+
   SC_.setDebugging(SC_.element.attr("debug"));
   SC_.setMetaParam("strapped", 1);
 
@@ -404,8 +416,8 @@ var ServercideApp = function(appObj, element, appType, defaultParams = {}) {
           }
           catch(e) {
             console.log("Error: Unable to parse JSON input for #" + SC_.element.attr("id") + " parameter " + formalName + ". Using default parameter value.");
-            SC_.debugFunc(function() { console.log("attempted to use: ", paramInput); }, [1, 3, 5, 7]);
-            SC_.debugFunc(function() { console.log("default param value: ", defaultVal); }, 1, 3);
+            SC_.debugFunc(function() { console.log("attempted to use: ", paramInput); }, 1);
+            SC_.debugFunc(function() { console.log("default param value: ", defaultVal); }, 1);
             vanillaParam[paramKey] = defaultVal;
           }
         }
@@ -425,8 +437,8 @@ var ServercideApp = function(appObj, element, appType, defaultParams = {}) {
               }
               else {
                 console.log("Error: Unable to parse JSON input for #" + SC_.element.attr("id") + " parameter " + formalName + ". Using default parameter value.");
-                SC_.debugFunc(function() { console.log("attempted to use: ", paramInput); }, [1, 3, 5, 7]);
-                SC_.debugFunc(function() { console.log("default param value: ", defaultVal); }, [1, 3, 5, 7]);
+                SC_.debugFunc(function() { console.log("attempted to use: ", paramInput); }, 1);
+                SC_.debugFunc(function() { console.log("default param value: ", defaultVal); }, 1);
                 vanillaParam[paramKey] = defaultVal;
               }
             }
@@ -439,8 +451,8 @@ var ServercideApp = function(appObj, element, appType, defaultParams = {}) {
     function processMaps(){
       function unbalancedMapCheck(checkParamPath, type){
         if (SC_.getParam(checkParamPath) == undefined){
-          if (type == "template"){ SC_.debugMsg("Found empty handlebar map template. Skipping this map.", [1, 3, 5, 7]); }
-          if (type == "input"){ SC_.debugMsg("Found empty handlebar map input " + inputParamPath[inputParamPath.length-1] + ". Skipping this input.", [1, 3, 5, 7]); }
+          if (type == "template"){ SC_.debugMsg("Found empty handlebar map template. Skipping this map.", 1); }
+          if (type == "input"){ SC_.debugMsg("Found empty handlebar map input " + inputParamPath[inputParamPath.length-1] + ". Skipping this input.", 1); }
           return true;
         }
       }
@@ -507,7 +519,7 @@ var ServercideApp = function(appObj, element, appType, defaultParams = {}) {
       for (var mapIndex = 0; mapIndex < SC_.maps.templates.length; mapIndex++){
         SC_.debugFunc(function(){
           console.log("mapping index #" + mapIndex + ": ", SC_.maps.inputs[mapIndex], " into ", SC_.maps.templates[mapIndex]);
-        }, [1, 3, 5, 7]);
+        }, 1);
         var mapTemplates = SC_.maps.templates[mapIndex];
         var mapInputs = SC_.maps.inputs[mapIndex];
 
@@ -530,12 +542,12 @@ var ServercideApp = function(appObj, element, appType, defaultParams = {}) {
             SC_.debugFunc(function() {
               console.log("    mapping ", input);
               console.log("    into ", template);
-            }, [1, 3, 5, 7]);
+            }, 1);
             var mergedVal = replaceHandlebars(template, input, 0, inputParamPath);
             SC_.debugFunc(function(){
               console.log("result of mapping index #", mapIndex);
               console.log(mergedVal)
-            }, [1, 3, 5, 7]);
+            }, 1);
             if (dir == ">"){ SC_state = SC_state.setIn(statePath.concat(inputParamPath), mergedVal); }
             else if (dir == "<"){ SC_state = SC_state.setIn(statePath.concat(templatePath), mergedVal); }
             else if (dir == "^"){ SC_state = SC_state.setIn(statePath.concat(templatePath.slice(0, -1)), mergedVal); }
@@ -547,11 +559,13 @@ var ServercideApp = function(appObj, element, appType, defaultParams = {}) {
     var vanillaState = loadParams(defaultParams, SC_.element, []);
     SC_state = SC_state.setIn(statePath, Immutable.fromJS(vanillaState));
     processMaps();
+
     SC_.debugFunc(function(){
       console.log(SC_.element.attr("id") + " app " + appType + " initial params have been set, state is: ");
       logImmutable(SC_.getState());
       console.log("------------------");
-    }, [2, 3, 6, 7]);
+    }, 2);
+
     if (SC_.appObj != false && SC_.appObj != undefined){
       SC_.setInHTML();
       SC_.appObj.onStrap(SC_.appObj).then(function(){

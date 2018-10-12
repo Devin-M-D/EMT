@@ -25,11 +25,11 @@ SC_DrawerPane.prototype = Object.create(ServercideApp.prototype);
 
 SC_DrawerPane.prototype.onStrap = function(app){
   return new Promise(function(fulfill, reject){
-    app.debugMsg(app.element.attr("id") + " app " + app.getMetaParam("type") + " is strapping, running onStrap before recursion.", [2, 3, 6, 7]);
+    app.debugMsg(app.element.attr("id") + " app " + app.getMetaParam("type") + " is strapping, running onStrap before recursion.", 2);
 
     loadInlineAppCSS("SC_DrawerPane", ".SC_DrawerPane", {"color":"#f00", "font-weight":"bold"});
     loadInlineAppCSS("SC_DrawerPane2", ".SC_DrawerPane_left", {
-      "display":"block", "position":"fixed", "width":"250px", "height": "100%", "top": "0px", "left": "-275px",
+      "display":"block", "position":"fixed", "width":"250px", "height": "100%", "top": "0px", "left": "-250px",
       "background-color": "#fff", "border": "solid 2px #ab9481", "padding":"10px", "z-index":"4"
     });
     loadInlineAppCSS("SC_DrawerPane3", ".SC_DrawerPane_left > .drawerMenu_tab", {
@@ -62,7 +62,7 @@ SC_DrawerPane.prototype.onStrap = function(app){
 
 SC_DrawerPane.prototype.postStrap = function(app){
   return new Promise(function(fulfill, reject){
-    app.debugMsg(app.element.attr("id") + " app " + app.getMetaParam("type") + " is strapping, running onStrap before recursion.", [2, 3, 6, 7]);
+    app.debugMsg(app.element.attr("id") + " app " + app.getMetaParam("type") + " is strapping, running onStrap before recursion.", 2);
     fulfill();
   });
 }

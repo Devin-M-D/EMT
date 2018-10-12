@@ -3,85 +3,194 @@
   <br>A self-contained small enterprise fullstack framework for browser-to-browser decentralized networks
 
   <br><br><span class="header1"  style="height:50px;">License:</span>
-  <br>Released under the <a href="www.wtfpl.net">WTFPL License</a> (free and unlimited in every respect)
-  <br><span class="header2">Docs</span>
+  <br>Released under the <a href="http://www.wtfpl.net">WTFPL License</a> (free and unlimited in every respect)
 </span>
+<span id="aboutAcc" sc_appobj="true" sc_apptype="SC_Accordion" debug="7">
+  <span id="about_emt_head" class="accord-header">The EMT Project</span>
+  <span id="about_emt_node" class="accord-node">
+    The goal of the emt project is to bring enterprise software to the masses by making the programming of business logic
+    accesible to anyone. It utilizes javascript under a firm belief in Atwood's Law. Web communications protocols and Browsers
+    are the most platform-agnostic and standardized end-to-end programming tool we have today, and with the advent of webtorrents,
+    blockchains, and decentralized data I am finally able to write my own job out of existence!
+    <br><br>
+    As a career fullstack enterprise dev, emt is a spiritual endeavor. I want to see every product and service turned into a public
+    utility of sheer efficiency and equality, because no one person can ever achieve what we can all achieve together.
+  </span>
+  <span id="about_sc_head" class="accord-header">The Servercide Frontend Library</span>
+  <span id="about_sc_node" class="accord-node" sc_appobj="true" sc_apptype="SC_Accordion">
+    <span id="abt_sc_head_whatis" class="accord-header">What is a Servercide App?</span>
+    <span id="about_sc_node_whatis" class="accord-node">
+      The app object is the result of an app definition being strapped onto an element. The app obj can then be made accessible to the DOM.
+      <br><br>
+      At it's heart, a Servercide app is just a javascript object with properties and functions. It is as generic and abstract as possible
+      to avoid impeding any non-SC activity, and also not to impede any developer strategies. There is a minimum of strict rules,
+      although non-strict conventions of encapsulated and functional codeshould also be followed.
+      <br><br>
+      By convention, each SC app should have a small and specific job and only be aware of it's parent and children. Ideal code is 100% DRY,
+      with single sources of truth.
+      <br><br>
+      All Servercide apps in their hierarchical structure and associated information (such as the element ids) are stored in the SC_state
+      which is an <b>immutable.js</b> object.
+      <br><br>
+      A Servercide app has access to serveral functions besides the ones in the app definition. These are inherited from the Servercide object
+      type itself:
+      <ul>
+        <li>getMetaState(): get meta state ("type", "strapped", and "debug")</li>
+        <li>getMetaParam(): get one of the above values</li>
+        <li>setMetaParam(): set one of the above values</li>
 
-<span id="SClibraryAccordion" SC_appObj="true" SC_appType="Accordion" style="height:unset;">
-  <span id="aboutSC" class="accord-headerSClibraryAccordion">The Servercide Frontend Library</span>
-  <span id="aboutSCNode">
-    <span id="aboutSCAccordion" SC_appObj="true" SC_appType="Accordion" style="height:unset;">
-      <span id="SCOverview" class="accord-headeraboutSCAccordion">Overview</span>
-      <span id="aboutSCOverviewNode">
-        <span>
-          The Servercide library is a componentization library like angular or react, but intended to remove the server from the equation in favor of
-          completely client-side procedural content building. Frontends can then be passed as a self-describing code with a batch of JSON data.
-          <code><br></code>
-          The goal is to serve sites with client-side JS p2p and consensus algorithms, for a strap-once-ever fully-decentralized serverless web app pattern.
-          After connecting to a server-hosting peer once, peer discovery would pass through connected peers, similar to (or using) webtorrent.
-        </span>
-      </span>
-      <span id="SCLifecycle" class="accord-headeraboutSCAccordion">Servercide Lifecycle</span>
-      <span id="aboutSCLifecycleNode">
-        <span>
-          In Servercide the frontend components are referred to as Servercide applications. Servercide begins by searching the &lt;html&gt; element
-          and its children for span elements with attribute SC_appObj=true.
-          <br><br>
-          It will depth-first traverse all the way down the dom tree when scraping, but is looking for the "next layer" of apps and will not search
-          deeper below any Servercide apps it finds (it will continue to process laterally). Servercide then straps the "top layer" apps in
-          discovery order, and recurses as it goes.
-          <br><br>
-          This makes the body tag a convenient entry point, especially for a root/layout Servercide app such as SC_EMTBase.
-        </span>
-      </span>
-      <span id="SCAppDef" class="accord-headeraboutSCAccordion">App Definitions</span>
-      <span id="aboutSCAppDefNode">
-        <span>
-          SC apps are defined by a js file which defines a js object class matching the type name, eg SC_Include. A set of default parameters in
-          the form of a vanilla javascript object is defined, and passed when SC_Include inherits from ServercideApp, the object underlying the
-          common Servercide functionality.
-          <br><br>
-          ServercideApp searches for any overriding parameters set on this particular SC_Include instance (covered in more detail below), then
-          call SC_Include.onStrap(), restart discovery from the SC_Include span, and call SC_EMTBase.postStrap() to run asynchronously.
-          <br><br>
-          A new SC app definition can be easily started by copying the SC_blankTemplate.js file.
-        </span>
-      </span>
+        <li>getState(): get the full app state</li>
+        <li>getParam(): get a specific param from the app state by name or path</li>
+        <li>setParam(): set a specific param from the app state by name or path</li>
 
-      <span id="aboutSC" class="accord-headeraboutSCAccordion">Parameters</span>
-      <span id="aboutSCParametersNode">
-        <span>
-          SC app parameters can be added in several ways. The simplest is to include an html attribute with the long form of the parameter name eg SC_EMTBase_baseApps or
-          SC_FlexGrid_nodes_template. Similarly jQuery data can be used on the added to the app element, but make sure to add this before the element would be strapped.
-          Finally child elements can be used, where the tag matches the long form param name eg &lt;SC_FlexGrid_nodes_template&gt;&lt;/SC_FlexGrid_nodes&gt;.
-          <br><br>
-          Since the nodes param of SC_FlexGrid is an object, it will search child objects for the SC_FlexGrid_nodes_template and SC_FlexGrid_nodes_contentObjects params.
-          <br><br>
-          Since the template param is a string, the nodes element can implement this with an attribute of the long form name or jQuery data. Otherwise a child element with a tag
-          matching the template param long form name can be used, either as a "value" attribute on that tag or as an html string by including the "htmlParam" attribute on the template tag.
-          <br><br>
-          Since the contentObjects param is an array, there is one additional method that works only when a &lt;SC_FlexGrid_nodes_contentObjects&gt; tag is found: a series of
-          &lt;item&gt; tags specifying value or html can be used to fill an array.
-          <br><br>
-          Params can also be jQuery elements, which can be set by including the child as an element, or by parsing a string into jQuery.
-          <br><br>
-          <b>Note:</b> Anytime a param value is not found, the default value of that param is used. When a string value is found for an object or array param, SC will try to parse the string
-          as JSON, displaying an error and using the default value when it fails.
-        </span>
+        <li>getParent(appName): get the parent SC app</li>
+        <li>getParentElement(appName): get the parent SC app's element</li>
+        <li>getChild(appName, index = 0): get the [index]th child SC app at any depth</li>
+        <li>getChildElement(appName, index = 0): get the [index]th child SC app's element at any depth</li>
+        <li>getChildren(): get children SC apps at any depth</li>
+
+        <li>printApps(): print a list of all apps strapped to the current app's element</li>
+        <li>setDebugging(): set the debugging level on the app</li>
+        <li>debugMsg(message, level = 4, trace = false): console.log(msg) if debug level is met, turn on tracing for the calling file</li>
+        <li>debugFunc(func, level = 4): if the debug level is met, run func()</li>
+
+        <li>setInHTML(): updates element.data("appname") with the latest appObj</li>
+      </ul>
+    </span>
+    <span id="abt_sc_head_namespacing" class="accord-header">Namespacing</span>
+    <span id="about_sc_node_namespacing" class="accord-node">
+      Currently sorted into "/assets/js/servercide" are the folders containing servercide app definitions. The app naming convention is X_Y_Z
+      where X is the namespace, Y is the appspace, and Z is the subspace. Z can include underscores but X and Y can't.
+      <br><br>
+      The folder naming (the path SC uses to automatically bring in app definitions only on demand) is "/assets/js/servercide/X/X_Y/X_Y_Z".
+    </span>
+    <span id="abt_sc_head_appdef" class="accord-header">SC App Definitions</span>
+    <span id="about_sc_node_appdef" class="accord-node">
+      An App Definition consists of 5 parts
+      <ul>
+        <li>The constructor function, containing a default set of parameters (a json object) of which any parts or all can be overwritten</li>
+        <li>The onStrap(), which runs synchronously after parameter values have been set</li>
+        <li>The postStrap(), which runs asynchronously after onStrap()</li>
+        <li>The discoveryComplete(), which runs when all constructors and onStrap() functions have completed</li>
+        <li>Any app functions the resulting app object should be able to access</li>
+      </ul>
+    </span>
+    <span id="abt_sc_head_lifecycle" class="accord-header">The Lifecycle</span>
+    <span id="about_sc_node_lifecycle" class="accord-node">
+      Servercide recurses from the &lt;html&gt; tag, finding any html tags with the attribute sc_appobj="true" and strapping it with the apps defined by
+      the attribute sc_apptype.
+      <br><br>
+      Strapping begins with the app occurs in order and asynchronously in 4 phases
+      <ul>
+        <li>The apps attempt to gather any parameter values being passed in</li>
+        <li>The apps run any handlebar mappings</li>
+        <li>The onStrap() function for the app is run (synchronously)</li>
+        <li>The postStrap() function for the app is run (asynchronously)</li>
+      </ul>
+    </span>
+    <span id="about_sc_head_params" class="accord-header">Initializing with Parameter Values</span>
+    <span id="about_sc_node_params" class="accord-node" sc_appobj="true" sc_apptype="SC_Accordion">
+      The basics:
+      <ul>
+        <li>Servercide is aware of 4 data types: strings, arrays, objects, and jquery element objects.</li>
+        <li>The long-form name of any app parameter is X_Y_Z_paramPath. Use underscores rather than dot notation for the paramPath part.</li>
+        <li>passed values can be a string, jquery object, jquery selector, or valid json</li>
+        <li>Once the app is strapped, parameters can only be found in the SC_state.</li>
+      </ul>
+      <span id="about_sc_head_attribs" class="accord-header">Using attributes</span>
+      <span id="about_sc_node_attribs" class="accord-node">
+        The long-form name can be used as a simple html attribute on the tag, with string or json in the value
       </span>
-      <span id="aboutSC" class="accord-headeraboutSCAccordion">SC_EMTBase</span>
-      <span id="aboutSCParametersNode">
-        <span>
-          SC_EMTBase appends a header, footer, and main content body SC element. It also adds a few site-wide apps,
-          such as SC_Router, which details parsing the URL for site variables, and SC_Skinner, which handles setting and changing the active skin. SC_Router can get a "page" variable
-          which is used by SC_Cascade to build.
-          <br><br>
-          Once SC_EMTBase has finished appending it's elements, it calls SC_EMTBase.onStrap() the finishStrapping method is called, and SC searches using EMTBase as a root, scraping the next layer of SC apps even if nested within plain elements.
-          <br><br>
-          As Servercide straps your apps, it builds an immutable state tree into the "ADOM" or application document object model. This serves as the single source of truth for
-          the web application, and any component app can be rebuilt using only the state.
-        </span>
+      <span id="about_sc_head_html" class="accord-header">Using html content</span>
+      <span id="about_sc_node_html" class="accord-node">
+        The long-form name can be used as an html tag, with a "value" attribute set to the value.
+        <br><br>
+        A tag with attribute "htmlParam='true'" can also be used, so the param can exist in the file as plain html content on the element.
+        <br><br>
+        For an array parameter, you can also use "htmlParam" and create html tags for each array item (&lt;item&gt;)
+      </span>
+      <span id="about_sc_head_html" class="accord-header">Using data attributes</span>
+      <span id="about_sc_node_html" class="accord-node">
+        Failing the above methods, servercide will look in element.data(longFormName) for a string or json value
+      </span>
+      <span id="about_sc_head_handlebars" class="accord-header">Handlebar Mapping</span>
+      <span id="about_sc_head_handlebars" class="accord-node">
+        If a parameter property tag is named "0[[mapInput]]" and there is a corresponding "0{{mapTemplate}}" servercide will replace any instances
+        of the string "{{mapInput}}" in the 0{{mapTemplate}} value. By default the result in placed into the input collection.
+        The handlebar notations are then dropped from the parameter names.
+        <br><br>
+        ...An example is far clearer. During the mapping process, this parameter
+        <pre id="hndlDemo1"></pre>
+        becomes
+        <pre id="hndlDemo2"></pre>
+        <br><br>
+
+        This may only seem so useful, but a single input can fill multiple templates, and dimensional arrays will fill intelligently.
+        <pre id="hndlDemo3"></pre>
+        becomes
+        <pre id="hndlDemo4"></pre>
+        <br><br>
+
+        Using a < or ^ caret to prefix the handlebar notation will place the result in the template param or the parent param, respectively
+        (instead of the input collection param)
+        <pre id="hndlDemo5"></pre>
+        becomes
+        <pre id="hndlDemo6"></pre>
+        <br><br>
       </span>
     </span>
   </span>
 </span>
+<script>
+  var obj = {
+    "0{{mapTemplate}}": "Hello {{mapInput}}",
+    "0[[mapInput]]": "World!"
+  };
+  $("#hndlDemo1").html(JSON.stringify(obj, null, ' '));
+  var obj2 = {
+    "mapTemplate": "World!",
+    "mapInput": "Hello World!"
+  };
+  $("#hndlDemo2").html(JSON.stringify(obj2, null, ' '));
+
+  var obj3 = {
+    "0{{mapTemplate}}": [
+      ["Hello {{mapInput}}", "Greetings {{mapInput}}"],
+      ["Hola {{mapInput}}", "Buenos dias {{mapInput}}"]
+    ],
+    "0[[mapInput]]": ["World!", "Mundo!"]
+  };
+  $("#hndlDemo3").html(JSON.stringify(obj3, null, ' '));
+  var obj4 = {
+    "mapTemplate": [
+      ["Hello {{mapInput}}", "Greetings {{mapInput}}"],
+      ["Hola {{mapInput}}", "Buenos dias {{mapInput}}"]
+    ],
+    "mapInput": [
+      ["Hello World!", "Greetings World!"],
+      ["Hola Mundo!", "Buenos dias Mundo!"]
+    ]
+  };
+  $("#hndlDemo4").html(JSON.stringify(obj4, null, ' '));
+
+  var obj5 = {
+    "0{{colors}}": [
+      "light{{baseColors}}",
+      "dark{{baseColors}}"
+    ],
+    "<0{{baseColors}}": [
+      "red", "green", "blue"
+    ]
+  };
+  $("#hndlDemo5").html(JSON.stringify(obj5, null, ' '));
+  var obj6 = {
+    "colors": [
+      ["lightred", "lightgreen", "lightblue"],
+      ["darkred", "darkgreen", "darkblue"]
+    ],
+    "baseColors":[
+      "red", "green", "blue"
+    ]
+  };
+  $("#hndlDemo6").html(JSON.stringify(obj6, null, ' '));
+</script>

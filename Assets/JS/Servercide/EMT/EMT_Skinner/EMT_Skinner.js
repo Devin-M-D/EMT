@@ -17,7 +17,7 @@ EMT_Skinner.prototype = Object.create(ServercideApp.prototype);
 
 EMT_Skinner.prototype.onStrap = function(app){
   return new Promise(function(fulfill, reject){
-    app.debugMsg(app.element.attr("id") + " app " + app.getMetaParam("type") + " is strapping, running onStrap before recursion.", [2, 3, 6, 7]);
+    app.debugMsg(app.element.attr("id") + " app " + app.getMetaParam("type") + " is strapping, running onStrap before recursion.", 2);
 
     app.element.html('<span class="changeSkin" skin="Classic" title="desktop layout with sticky, pinnable header-footer" style="height:unset;">Classic</span>\
                   <span class="changeSkin" skin="ControlPanel" title="mobile thumb-based layout" style="height:unset;">ControlPanel</span>');
@@ -34,7 +34,7 @@ EMT_Skinner.prototype.onStrap = function(app){
 
 EMT_Skinner.prototype.postStrap = function(app){
   return new Promise(function(fulfill, reject){
-    app.debugMsg(app.element.attr("id") + " app " + app.getMetaParam("type") + " is strapping, running onStrap before recursion.", [2, 3, 6, 7]);
+    app.debugMsg(app.element.attr("id") + " app " + app.getMetaParam("type") + " is strapping, running onStrap before recursion.", 2);
     fulfill();
   });
 }

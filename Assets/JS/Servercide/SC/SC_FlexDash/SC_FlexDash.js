@@ -36,7 +36,7 @@ var SC_FlexDash = function(element) {
 SC_FlexDash.prototype = Object.create(ServercideApp.prototype);
 
 SC_FlexDash.prototype.onStrap = function(app){
-  app.debugMsg(app.element.attr("id") + " app " + app.getMetaParam("type") + " is strapping, running onStrap before recursion.", [2, 3, 6, 7]);
+  app.debugMsg(app.element.attr("id") + " app " + app.getMetaParam("type") + " is strapping, running onStrap before recursion.", 2);
   return new Promise(function(fulfill, reject){
     app.element.append($('<span style="text-align:center;">FlexGrid Control Panel</span>'));
     let controlPanel = $('<span id="flexDash" sc_appobj="true" sc_apptype="SC_FlexGrid"></span>').appendTo(app.element);
@@ -52,14 +52,14 @@ SC_FlexDash.prototype.onStrap = function(app){
 }
 
 SC_FlexDash.prototype.postStrap = function(app){
-  app.debugMsg(app.element.attr("id") + " app " + app.getMetaParam("type") + " is strapping, running onStrap before recursion.", [2, 3, 6, 7]);
+  app.debugMsg(app.element.attr("id") + " app " + app.getMetaParam("type") + " is strapping, running onStrap before recursion.", 2);
   return new Promise(function(fulfill, reject){
     fulfill();
   });
 }
 
 SC_FlexDash.prototype.discoveryComplete = function(app){
-  app.debugMsg("Recursive Servercide discovery complete, running discoveryComplete function of " + app.element.attr("id") + " app " + app.getMetaParam("type") + ".", [2, 3, 6, 7]);
+  app.debugMsg("Recursive Servercide discovery complete, running discoveryComplete function of " + app.element.attr("id") + " app " + app.getMetaParam("type") + ".", 2);
   return new Promise(function(fulfill, reject){
     fulfill();
   });
