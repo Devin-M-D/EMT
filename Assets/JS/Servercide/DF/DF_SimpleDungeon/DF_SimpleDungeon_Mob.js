@@ -10,7 +10,7 @@ var DF_SimpleDungeon_Mob = function(element) {
 DF_SimpleDungeon_Mob.prototype = Object.create(ServercideApp.prototype);
 
 DF_SimpleDungeon_Mob.prototype.onStrap = function(app){
-  app.debugMsg(app.element.attr("id") + " app " + app.getMetaParam("type") + " is strapping, running onStrap before recursion.", [2, 3, 6, 7]);
+  app.debugMsg(app.element.attr("id") + " app " + app.getMetaParam("type") + " is strapping, running onStrap before recursion.", 2);
   return new Promise(function(fulfill, reject){
     app.getParentElement().css("background-color", "orange");
     fulfill();
@@ -18,14 +18,14 @@ DF_SimpleDungeon_Mob.prototype.onStrap = function(app){
 }
 
 DF_SimpleDungeon_Mob.prototype.postStrap = function(app){
-  app.debugMsg(app.element.attr("id") + " app " + app.getMetaParam("type") + " is strapping, running onStrap before recursion.", [2, 3, 6, 7]);
+  app.debugMsg(app.element.attr("id") + " app " + app.getMetaParam("type") + " is strapping, running onStrap before recursion.", 2);
   return new Promise(function(fulfill, reject){
     fulfill();
   });
 }
 
 DF_SimpleDungeon_Mob.prototype.discoveryComplete = function(app){
-  app.debugMsg("Recursive Servercide discovery complete, running discoveryComplete function of " + app.element.attr("id") + " app " + app.getMetaParam("type") + ".", [2, 3, 6, 7]);
+  app.debugMsg("Recursive Servercide discovery complete, running discoveryComplete function of " + app.element.attr("id") + " app " + app.getMetaParam("type") + ".", 2);
   return new Promise(function(fulfill, reject){
     app.wander(app);
     fulfill();

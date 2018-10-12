@@ -35,7 +35,7 @@ var SC_FlexGrid = function(element) {
 SC_FlexGrid.prototype = Object.create(ServercideApp.prototype);
 
 SC_FlexGrid.prototype.onStrap = function(app){
-  app.debugMsg(app.element.attr("id") + " app " + app.getMetaParam("type") + " is strapping, running onStrap before recursion.", [2, 3, 6, 7]);
+  app.debugMsg(app.element.attr("id") + " app " + app.getMetaParam("type") + " is strapping, running onStrap before recursion.", 2);
   return new Promise(function(fulfill, reject){
     app.stylize(app);
     app.renderNodes(app);
@@ -47,14 +47,14 @@ SC_FlexGrid.prototype.onStrap = function(app){
 }
 
 SC_FlexGrid.prototype.postStrap = function(app){
-  app.debugMsg(app.element.attr("id") + " app " + app.getMetaParam("type") + " is strapping, running onStrap before recursion.", [2, 3, 6, 7]);
+  app.debugMsg(app.element.attr("id") + " app " + app.getMetaParam("type") + " is strapping, running onStrap before recursion.", 2);
   return new Promise(function(fulfill, reject){
     fulfill();
   });
 }
 
 SC_FlexGrid.prototype.discoveryComplete = function(app){
-  app.debugMsg("Recursive Servercide discovery complete, running discoveryComplete function of " + app.element.attr("id") + " app " + app.getMetaParam("type") + ".", [2, 3, 6, 7]);
+  app.debugMsg("Recursive Servercide discovery complete, running discoveryComplete function of " + app.element.attr("id") + " app " + app.getMetaParam("type") + ".", 2);
   return new Promise(function(fulfill, reject){
     fulfill();
   });

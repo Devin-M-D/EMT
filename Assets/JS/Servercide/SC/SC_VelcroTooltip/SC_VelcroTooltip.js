@@ -11,7 +11,7 @@ var SC_VelcroTooltip = function(element) {
 SC_VelcroTooltip.prototype = Object.create(ServercideApp.prototype);
 
 SC_VelcroTooltip.prototype.onStrap = function(app){
-  app.debugMsg(app.element.attr("id") + " app " + app.getMetaParam("type") + " is strapping, running onStrap before recursion.", [2, 3, 6, 7]);
+  app.debugMsg(app.element.attr("id") + " app " + app.getMetaParam("type") + " is strapping, running onStrap before recursion.", 2);
   return new Promise(function(fulfill, reject){
     if (isValidSelector(app.getParam("content")) != false && $(app.getParam("content")).length > 0) {
       app.tooltip = $('<span class="SC_VelcroTooltip"></span>').append($(app.getParam("content")));
@@ -24,14 +24,14 @@ SC_VelcroTooltip.prototype.onStrap = function(app){
 }
 
 SC_VelcroTooltip.prototype.postStrap = function(app){
-  app.debugMsg(app.element.attr("id") + " app " + app.getMetaParam("type") + " is strapping, running onStrap before recursion.", [2, 3, 6, 7]);
+  app.debugMsg(app.element.attr("id") + " app " + app.getMetaParam("type") + " is strapping, running onStrap before recursion.", 2);
   return new Promise(function(fulfill, reject){
     fulfill();
   });
 }
 
 SC_VelcroTooltip.prototype.discoveryComplete = function(app){
-  app.debugMsg("Recursive Servercide discovery complete, running discoveryComplete function of " + app.element.attr("id") + " app " + app.getMetaParam("type") + ".", [2, 3, 6, 7]);
+  app.debugMsg("Recursive Servercide discovery complete, running discoveryComplete function of " + app.element.attr("id") + " app " + app.getMetaParam("type") + ".", 2);
   return new Promise(function(fulfill, reject){
     fulfill();
   });

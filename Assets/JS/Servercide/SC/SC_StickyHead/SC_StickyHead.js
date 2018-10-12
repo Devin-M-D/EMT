@@ -12,7 +12,7 @@ var SC_StickyHead = function(element) {
 SC_StickyHead.prototype = Object.create(ServercideApp.prototype);
 
 SC_StickyHead.prototype.onStrap = function(app){
-  app.debugMsg(app.element.attr("id") + " app " + app.getMetaParam("type") + " is strapping, running onStrap before recursion.", [2, 3, 6, 7]);
+  app.debugMsg(app.element.attr("id") + " app " + app.getMetaParam("type") + " is strapping, running onStrap before recursion.", 2);
   return new Promise(function(fulfill, reject){
     loadInlineAppCSS("SC_StickyHead", ".SC_StickyHead", {
         "position": "fixed", "top": "0px", "width": "100%", "z-index": "1",
@@ -30,14 +30,14 @@ SC_StickyHead.prototype.onStrap = function(app){
 }
 
 SC_StickyHead.prototype.postStrap = function(app){
-  app.debugMsg(app.element.attr("id") + " app " + app.getMetaParam("type") + " is strapping, running onStrap before recursion.", [2, 3, 6, 7]);
+  app.debugMsg(app.element.attr("id") + " app " + app.getMetaParam("type") + " is strapping, running onStrap before recursion.", 2);
   return new Promise(function(fulfill, reject){
     fulfill();
   });
 }
 
 SC_StickyHead.prototype.discoveryComplete = function(app){
-  app.debugMsg("Recursive Servercide discovery complete, running discoveryComplete function of " + app.element.attr("id") + " app " + app.getMetaParam("type") + ".", [2, 3, 6, 7]);
+  app.debugMsg("Recursive Servercide discovery complete, running discoveryComplete function of " + app.element.attr("id") + " app " + app.getMetaParam("type") + ".", 2);
   return new Promise(function(fulfill, reject){
     fulfill();
   });

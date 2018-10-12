@@ -12,7 +12,7 @@ var SC_PreserveRatio = function(element) {
 SC_PreserveRatio.prototype = Object.create(ServercideApp.prototype);
 
 SC_PreserveRatio.prototype.onStrap = function(app){
-  app.debugMsg(app.element.attr("id") + " app " + app.getMetaParam("type") + " is strapping, running onStrap before recursion.", [2, 3, 6, 7]);
+  app.debugMsg(app.element.attr("id") + " app " + app.getMetaParam("type") + " is strapping, running onStrap before recursion.", 2);
   return new Promise(function(fulfill, reject){
     SC_addResizeFunc(function() { app.sizeProportions(app); });
     fulfill();
@@ -20,14 +20,14 @@ SC_PreserveRatio.prototype.onStrap = function(app){
 }
 
 SC_PreserveRatio.prototype.postStrap = function(app){
-  app.debugMsg(app.element.attr("id") + " app " + app.getMetaParam("type") + " is strapping, running onStrap before recursion.", [2, 3, 6, 7]);
+  app.debugMsg(app.element.attr("id") + " app " + app.getMetaParam("type") + " is strapping, running onStrap before recursion.", 2);
   return new Promise(function(fulfill, reject){
     fulfill();
   });
 }
 
 SC_PreserveRatio.prototype.discoveryComplete = function(app){
-  app.debugMsg("Recursive Servercide discovery complete, running discoveryComplete function of " + app.element.attr("id") + " app " + app.getMetaParam("type") + ".", [2, 3, 6, 7]);
+  app.debugMsg("Recursive Servercide discovery complete, running discoveryComplete function of " + app.element.attr("id") + " app " + app.getMetaParam("type") + ".", 2);
   return new Promise(function(fulfill, reject){
     fulfill();
   });

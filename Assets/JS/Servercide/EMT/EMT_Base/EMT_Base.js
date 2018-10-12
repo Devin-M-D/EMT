@@ -8,9 +8,9 @@ var EMT_Base = function(element) {
     "baseApps": [
       '<span id="spnRouter" SC_appObj="true" SC_appType="SC_Router" class="SC_floater"></span>',
       '<span id="spnSkinner" SC_appObj="true" SC_appType="EMT_Skinner" class="SC_floater"></span>',
-      '<span id="spnLeftMenu" SC_appObj="true" SC_appType="SC_DrawerPane" SC_edge="left"></span>',
+      '<span id="spnLeftMenu" SC_appObj="true" SC_appType="SC_DrawerPane" SC_DrawerPane_edge="left"></span>',
       // '<span id="spnContextMenu" class="SC_floater" SC_appObj="true" SC_appType="SC_ContextMenu" ></span>',
-      `<span id="spnRoot" SC_appObj="true" SC_appType="SC_UICascade" style="overflow-x:auto;padding:5px;" debug="7">
+      `<span id="spnRoot" SC_appObj="true" SC_appType="SC_UICascade" style="overflow-x:auto;padding:5px;">
         <sc_uicascade_src>
           <item>Assets/JS/Servercide/SC/SC_Demo/SC_Demo_Content.json</item>
           <item>Assets/JS/Servercide/SC/SC_Demo/SC_Demo_Skin-Classic.json</item>
