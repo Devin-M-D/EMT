@@ -20,21 +20,6 @@ $(function() {
     });
   });
 });
-// HTML debug attr:
-//  0 - no root level debug
-//  1 - print initiation of each app
-//  2 - print "finished recursing" and log full state
-//  3 - print both 1 & 2
-//
-// SC debug attr:
-//  0 - no debug
-//  1 - print attempts to parse app param vals from html + handlebar mappings
-//  2 - print "app strapped" and the final initialized state, as well as onStrap(), postStrap(), and discoveryComplete() alerts
-//  3 - print 1 + 2
-//  4 - run user-defined debug logging and functions
-//  5 - print 1 & run 4
-//  6 - print 2 & run 4
-//  7 - print 1 + 2 & run 4
 
 //Severcide core functions
 //////////////////////////
@@ -706,33 +691,9 @@ function RemoteCall(remoteURL, postData = {}, enable_logging = false) {
       },
       error: function(msg) {
         if (enable_logging == 1) { console.log("Call to: " + remoteURL + " - Failed: ", msg);  }
-        reject(console.error(msg.d))
+        reject(console.error("Call to: " + remoteURL + " - Failed:", msg))
       },
     })
-  });
-}
-
-function fileUpload() {
-  var formData = new FormData();
-  formData.append('file', $('#fileElem')[0].files[0]);
-  //formData.append('filenmae', 'user-entered_filename_string');
-  $.ajax({
-    type: 'post',
-    url: "/Assets/EventHandlers/Uploader.ashx",
-    data: formData,
-    success: function(status) {
-      alert(status);
-      if (status != 'error') {
-        var my_path = "/Assets/Uploads/" + status;
-        $("#myUploadedImg").attr("src", my_path);
-      }
-    },
-    processData: false,
-    contentType: false,
-    error: function() {
-      alert("Whoops something went wrong!");
-    },
-    complete: function(data) {}
   });
 }
 //////////////

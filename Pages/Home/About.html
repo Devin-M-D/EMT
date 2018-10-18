@@ -5,13 +5,16 @@
   <br><br><span class="header1"  style="height:50px;">License:</span>
   <br>Released under the <a href="http://www.wtfpl.net">WTFPL License</a> (free and unlimited in every respect)
 </span>
-<span id="aboutAcc" sc_appobj="true" sc_apptype="SC_Accordion" debug="7">
+<span id="aboutAcc" sc_appobj="true" sc_apptype="SC_Accordion">
   <span id="about_emt_head" class="accord-header">The EMT Project</span>
   <span id="about_emt_node" class="accord-node">
     The goal of the emt project is to bring enterprise software to the masses by making the programming of business logic
-    accesible to anyone. It utilizes javascript under a firm belief in Atwood's Law. Web communications protocols and Browsers
-    are the most platform-agnostic and standardized end-to-end programming tool we have today, and with the advent of webtorrents,
-    blockchains, and decentralized data I am finally able to write my own job out of existence!
+    accesible to anyone. It utilizes javascript under a firm belief in Atwood's Law.
+    <br><br>
+    Radical decentralization is waiting on one essential element: the turning of every smartphone into a host node for a global
+    network. Web communications protocols and Browsers are the most platform-agnostic and standardized end-to-end programming tool
+    we have today, and with the advent of webtorrents, blockchains, and decentralized data I am finally able to write my own job
+    out of existence!
     <br><br>
     As a career fullstack enterprise dev, emt is a spiritual endeavor. I want to see every product and service turned into a public
     utility of sheer efficiency and equality, because no one person can ever achieve what we can all achieve together.
@@ -35,6 +38,8 @@
       A Servercide app has access to serveral functions besides the ones in the app definition. These are inherited from the Servercide object
       type itself:
       <ul>
+        <li>app.element: not a function, references the jquery element of the app in use</li>
+
         <li>getMetaState(): get meta state ("type", "strapped", and "debug")</li>
         <li>getMetaParam(): get one of the above values</li>
         <li>setMetaParam(): set one of the above values</li>
@@ -74,18 +79,22 @@
         <li>The discoveryComplete(), which runs when all constructors and onStrap() functions have completed</li>
         <li>Any app functions the resulting app object should be able to access</li>
       </ul>
+      All default functions on an app accept a first param of "app" which is the Servercide application object. Concentionally user
+      functions added to the app definitions should also be declared and called in that way in order to avoid the use of the "this"
+      keyword.
     </span>
     <span id="abt_sc_head_lifecycle" class="accord-header">The Lifecycle</span>
     <span id="about_sc_node_lifecycle" class="accord-node">
-      Servercide recurses from the &lt;html&gt; tag, finding any html tags with the attribute sc_appobj="true" and strapping it with the apps defined by
-      the attribute sc_apptype.
+      Servercide recurses the SC_discover() function from the &lt;html&gt; tag, finding any html tags with the attribute
+      sc_appobj="true" and strapping it with the apps defined by the attribute sc_apptype.
       <br><br>
-      Strapping begins with the app occurs in order and asynchronously in 4 phases
+      Strapping occurs in 5 phases
       <ul>
-        <li>The apps attempt to gather any parameter values being passed in</li>
-        <li>The apps run any handlebar mappings</li>
+        <li>The app attempts to gather any parameter values being passed in</li>
+        <li>The app runs any handlebar mappings</li>
         <li>The onStrap() function for the app is run (synchronously)</li>
         <li>The postStrap() function for the app is run (asynchronously)</li>
+        <li>The app discovers apps which are one SC app deeper into the DOM</li>
       </ul>
     </span>
     <span id="about_sc_head_params" class="accord-header">Initializing with Parameter Values</span>
@@ -97,11 +106,11 @@
         <li>passed values can be a string, jquery object, jquery selector, or valid json</li>
         <li>Once the app is strapped, parameters can only be found in the SC_state.</li>
       </ul>
-      <span id="about_sc_head_attribs" class="accord-header">Using attributes</span>
+      <span id="about_sc_head_attribs" class="accord-header">Using Attributes</span>
       <span id="about_sc_node_attribs" class="accord-node">
         The long-form name can be used as a simple html attribute on the tag, with string or json in the value
       </span>
-      <span id="about_sc_head_html" class="accord-header">Using html content</span>
+      <span id="about_sc_head_html" class="accord-header">Using HTML Content</span>
       <span id="about_sc_node_html" class="accord-node">
         The long-form name can be used as an html tag, with a "value" attribute set to the value.
         <br><br>
@@ -109,9 +118,14 @@
         <br><br>
         For an array parameter, you can also use "htmlParam" and create html tags for each array item (&lt;item&gt;)
       </span>
-      <span id="about_sc_head_html" class="accord-header">Using data attributes</span>
-      <span id="about_sc_node_html" class="accord-node">
+      <span id="about_sc_head_data" class="accord-header">Using Data Attributes</span>
+      <span id="about_sc_node_data" class="accord-node">
         Failing the above methods, servercide will look in element.data(longFormName) for a string or json value
+      </span>
+      <span id="about_sc_head_globals" class="accord-header">Global Parameters</span>
+      <span id="about_sc_node_globals" class="accord-node">
+        A param prefixed with "g:" will be set as a global param at the root of the servercide state. A global param is currently
+        only able to use a default value from the app definition, and cannot also be part of a handlebar map.
       </span>
       <span id="about_sc_head_handlebars" class="accord-header">Handlebar Mapping</span>
       <span id="about_sc_head_handlebars" class="accord-node">
@@ -139,7 +153,83 @@
         <br><br>
       </span>
     </span>
+    <span id="about_sc_head_debugging" class="accord-header">Debugging</span>
+    <span id="about_sc_node_debugging" class="accord-node" sc_appobj="true" sc_apptype="SC_Accordion">
+      There are 2 types of debugging in Servercide, that which is set on the html tag and logs discovery and strapping information,
+      and that which is set on the app tag and runs debug logs or functions for that app only.
+      <br><br>
+      The debug value is stored in the app state as a meta param, so that it can be updated during a debug operation to alter the
+      subsequent debug operations!
+      <br><br>
+      The debugging-related functions made available on the servercide object are:
+      <ul>
+        <li>setDebugging(setting) - sets the passed value as the debug setting for the calling app</li>
+        <li>debugMsg(msg, debugType, trace) - console logs msg if debug setting is high enough at the time (trace="true" for stack trace in the event of an error)</li>
+        <li>debugFunc(func, debugType) - run func if debug setting is high enough at the time</li>
+      </ul>
+      <span id="about_sc_head_debugroot" class="accord-header">Debugging the Servercide Root</span>
+      <span id="about_sc_node_debugroot" class="accord-node">
+        By adding a debug attribute in the &lt;html debug="X"&gt; tag like so. Use a number from the below values.
+        <ul>
+          <li>0 - no root level debug</li>
+          <li>1 - print initiation of each app</li>
+          <li>2 - print "finished recursing" and log full state</li>
+          <li>3 - print both 1 & 2</li>
+        </ul>
+        All root-level debugging takes the form of console logs. It is separate from the servercide apps and development on them should
+        not affect it. It is very useful when the recursion fails partway and you have no idea which app is causing it, as the last line
+        in the console will be "discovering <element id of element with failing app>".
+      </span>
+      <span id="about_sc_head_debugapps" class="accord-header">Debugging a Single SC App</span>
+      <span id="about_sc_node_debugapps" class="accord-node">
+        This is the debugging being used most of the time, it works the same as at the root except the debug attribute it set on the
+        app element tag. This way, you can place debug logs and functions in the app definition without rerunning those commands for each
+        existing app of that type on the page.
+        <ul>
+          <li>0 - no debug</li>
+          <li>1 - print attempts to parse app param vals from html + handlebar mappings</li>
+          <li>2 - print "app strapped" and the final initialized state, as well as onStrap(), postStrap(), and discoveryComplete() alerts</li>
+          <li>3 - print both 1 & 2</li>
+          <li>4 - run user-defined debug logging and functions</li>
+          <li>5 - print 1 & run 4</li>
+          <li>6 - print 2 & run 4</li>
+          <li>7 - print 1 + 2 & run 4</li>
+        </ul>
+      </span>
+    </span>
   </span>
+  <span id="about_helpers_head" class="accord-header">Servercide Helper Functions</span>
+  <span id="about_helpers_node" class="accord-node">
+    Servercide includes some utility functions that occupy the root object
+    <ul>
+      <li>deepCopyArray(arr)</li>
+      <li>logImmutable()</li>
+      <li>loadInlineAppCSS()</li>
+      <li>loadCSS()</li>
+      <li>loadScript()</li>
+      <li>isValidSelector()</li>
+      <li>runInSequence()</li>
+      <li>SC_isArray()</li>
+      <li>SC_isObject()</li>
+      <li>SC_isJQElement()</li>
+      <li>SC_typeOf()</li>
+      <li>SC_addResizeFunc()</li>
+      <li>SC_triggerResize()</li>
+      <li>RemoteCall()</li>
+    </ul>
+  </span>
+  <span id="about_applist_head" class="accord-header">The App List</span>
+  <span id="about_applist_node" class="accord-node">
+    <span id="about_applist_head_scroot" class="accord-header">Servercide</span>
+    <span id="about_applist_node_scroot" class="accord-node">
+
+    </span>
+    <span id="about_applist_head_emtbase" class="accord-header">EMT Base</span>
+    <span id="about_applist_node_emtbase" class="accord-node">
+
+    </span>
+  </span>
+
 </span>
 <script>
   var obj = {

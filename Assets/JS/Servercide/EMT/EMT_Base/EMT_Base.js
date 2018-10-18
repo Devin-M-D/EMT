@@ -10,7 +10,7 @@ var EMT_Base = function(element) {
       '<span id="spnSkinner" SC_appObj="true" SC_appType="EMT_Skinner" class="SC_floater"></span>',
       '<span id="spnLeftMenu" SC_appObj="true" SC_appType="SC_DrawerPane" SC_DrawerPane_edge="left"></span>',
       // '<span id="spnContextMenu" class="SC_floater" SC_appObj="true" SC_appType="SC_ContextMenu" ></span>',
-      `<span id="spnRoot" SC_appObj="true" SC_appType="SC_UICascade" style="overflow-x:auto;padding:5px;">
+      `<span id="spnRoot" SC_appObj="true" SC_appType="SC_UICascade" style="overflow-x:auto;padding:5px;" debug="7">
         <sc_uicascade_src>
           <item>Assets/JS/Servercide/SC/SC_Demo/SC_Demo_Content.json</item>
           <item>Assets/JS/Servercide/SC/SC_Demo/SC_Demo_Skin-Classic.json</item>
@@ -25,6 +25,7 @@ var EMT_Base = function(element) {
 EMT_Base.prototype = Object.create(ServercideApp.prototype);
 
 EMT_Base.prototype.onStrap = function(app){
+  app.debugMsg(app.element.attr("id") + " app " + app.getMetaParam("type") + " is strapping, running onStrap before recursion.", 2);
   return new Promise(function(fulfill, reject){
     app.getParam("baseApps").forEach(function(baseApp) {
       app.element.append($(baseApp));
@@ -34,15 +35,16 @@ EMT_Base.prototype.onStrap = function(app){
 }
 
 EMT_Base.prototype.postStrap = function(app){
+  app.debugMsg(app.element.attr("id") + " app " + app.getMetaParam("type") + " is strapping, running onStrap before recursion.", 2);
   return new Promise(function(fulfill, reject){
     fulfill();
   });
 }
 
 EMT_Base.prototype.discoveryComplete = function(app){
+  app.debugMsg("Recursive Servercide discovery complete, running discoveryComplete function of " + app.element.attr("id") + " app " + app.getMetaParam("type") + ".", 2);
   return new Promise(function(fulfill, reject){
     fulfill();
   });
 }
-
 ///////////////

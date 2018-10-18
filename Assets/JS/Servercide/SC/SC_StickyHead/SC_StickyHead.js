@@ -14,17 +14,28 @@ SC_StickyHead.prototype = Object.create(ServercideApp.prototype);
 SC_StickyHead.prototype.onStrap = function(app){
   app.debugMsg(app.element.attr("id") + " app " + app.getMetaParam("type") + " is strapping, running onStrap before recursion.", 2);
   return new Promise(function(fulfill, reject){
-    loadInlineAppCSS("SC_StickyHead", ".SC_StickyHead", {
-        "position": "fixed", "top": "0px", "width": "100%", "z-index": "1",
-        "display": "flex", "justify-content": "space-around", "flex-flow": "row wrap",
-        "height": app.getParam("height"), "max-height": app.getParam("height"), "min-height": app.getParam("height")
+    // loadInlineAppCSS("SC_StickyHead", ".SC_StickyHead", {
+    //     "position": "fixed", "top": "0px", "width": "100%", "z-index": "1",
+    //     "display": "flex", "justify-content": "space-around", "flex-flow": "row wrap",
+    //     "height": app.getParam("height"), "max-height": app.getParam("height"), "min-height": app.getParam("height")
+    // });
+    // app.element.addClass("SC_StickyHead");
+    // $(app.getParam("scrollRoot")).on("scroll", function() {
+    //   app.positionFrame();
+    // });
+    //
+    // app.positionFrame(app);
+    console.log(app.getParam("scrollRoot"));
+    $(app.getParam("scrollRoot")).scroll(function() {
+      console.log($(app.getParam("scrollRoot")).scrollTop())
+      console.log(app.element.css("height"));
+      if ($(app.getParam("scrollRoot")).scrollTop() > (app.element.css("height").replace("px", "") * 1.0)){
+        console.log("exceeded")
+      }
+      else{
+        console.log("under")
+      }
     });
-    app.element.addClass("SC_StickyHead");
-    $(app.getParam("scrollRoot")).on("scroll", function() {
-      app.positionFrame();
-    });
-
-    app.positionFrame(app);
     fulfill();
   });
 }

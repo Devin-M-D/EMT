@@ -9,7 +9,7 @@
         "sc_appobj": "true",
         "sc_apptype": "SC_Include SC_StickyHead",
         "sc_include_src": "PageObjects/Frame/Header.html",
-        "sc_stickyframe_scrollroot": "#spnRoot"
+        "sc_stickyhead_scrollroot": "#spnRoot"
       },
       "classes": [
         "rowGrid"
