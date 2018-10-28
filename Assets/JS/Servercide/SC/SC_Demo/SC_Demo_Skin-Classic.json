@@ -7,9 +7,10 @@
       "type": "container",
       "attrs": {
         "sc_appobj": "true",
-        "sc_apptype": "SC_Include SC_StickyHead",
+        "sc_apptype": "SC_Include SC_StickyFrame",
         "sc_include_src": "PageObjects/Frame/Header.html",
-        "sc_stickyhead_scrollroot": "#spnRoot"
+        "sc_stickyframe_frametype": "header",
+        "sc_stickyframe_scrollroot": "#spnRoot"
       },
       "classes": [
         "rowGrid"
@@ -17,7 +18,8 @@
       "styles": {
         "height": "250px",
         "background-color": "white",
-        "border-bottom": "solid thin black"
+        "border-bottom": "solid thin black",
+        "padding-bottom": "20px"
       }
     },
     {
@@ -27,8 +29,10 @@
       "type": "html",
       "content": "",
       "attrs": {
-        "sc_appobj": "false",
-        "sc_apptype": "SC_StickyFoot"
+        "sc_appobj": "true",
+        "sc_apptype": "SC_StickyFrame",
+        "sc_stickyframe_frametype": "footer",
+        "sc_stickyframe_scrollroot": "#spnRoot"
       },
       "styles": {
         "position": "fixed",

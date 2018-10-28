@@ -41,12 +41,8 @@
       "status": "complete"
     },
     {
-      "name": "SC_StickyHead",
-      "status": "redo UI effect (trololo easiest part.... Bev?)"
-    },
-    {
-      "name": "SC_StickyFoot",
-      "status": "back burner"
+      "name": "SC_StickyFrame",
+      "status": "complete"
     },
     {
       "name": "SC_Include",

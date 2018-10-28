@@ -4,12 +4,7 @@
       "class": "Block",
       "gdb_id": "10:0",
       "title": "spnRoot",
-      "type": "container",
-      "styles": {
-        "display": "flex",
-        "justify-content": "center",
-        "align-content": "center"
-      }
+      "type": "container"
     },
     {
       "class": "Block",
@@ -19,11 +14,14 @@
       "attrs": {
         "debug": "true"
       },
+      "classes": [
+        "absCenter"
+      ],
       "styles": {
-        "width": "90%",
-        "max-width": "2000px",
-        "min-height": "5000px",
-        "margin": "5% 5%"
+        "height": "unset",
+        "padding": "5% 5% 10% 5%",
+        "box-sizing": "border-box",
+        "overflow": "auto"
       }
     },
     {
@@ -95,7 +93,7 @@
       "type": "html",
       "content": "SC_Auth",
       "classes": [
-        "accord-headersc_demos"
+        "accord-header sc_demos"
       ]
     },
     {
@@ -168,7 +166,7 @@
       "type": "html",
       "content": "SC_Modal",
       "classes": [
-        "accord-headersc_demos"
+        "accord-header sc_demos"
       ]
     },
     {
@@ -205,7 +203,7 @@
       "type": "html",
       "content": "SC_PreserveRatio",
       "classes": [
-        "accord-headersc_demos"
+        "accord-header sc_demos"
       ]
     },
     {
@@ -243,7 +241,7 @@
       "type": "html",
       "content": "SC_FlexGrid",
       "classes": [
-        "accord-headersc_demos"
+        "accord-header sc_demos"
       ]
     },
     {
@@ -276,7 +274,7 @@
       "type": "html",
       "content": "SC_Carousel",
       "classes": [
-        "accord-headersc_demos"
+        "accord-header sc_demos"
       ]
     },
     {

@@ -30,6 +30,13 @@ SC_Accordion.prototype.postStrap = function(app){
 SC_Accordion.prototype.discoveryComplete = function(app){
   app.debugMsg("Recursive Servercide discovery complete, running discoveryComplete function of " + app.element.attr("id") + " app " + app.getMetaParam("type") + ".", 2);
   return new Promise(function(fulfill, reject){
+    // app.element.find('span.accord-header').click(function() {
+    //     $(this).next().toggle('slow');
+    //     return false;
+    // }).next().hide();
+    app.element.css("height", "unset");
+    app.element.find("span.accord-header").css("height", "40px");
+    app.element.find("span.accord-node").css("height", "unset");
     app.element.accordion({
       collapsible: true,
       active: false,
@@ -37,8 +44,6 @@ SC_Accordion.prototype.discoveryComplete = function(app){
       header: "> span.accord-header",
       heightStyle: "content"
     });
-    app.element.find("span.accord-header").css("height", "unset");
-    app.element.find("span.accord-node").css("height", "unset");
 
     fulfill();
   });

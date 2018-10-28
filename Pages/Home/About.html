@@ -1,23 +1,39 @@
-<span class="bodyCopy1" style="text-align:center;display:block;height:250px;">
-  <span class="header1" style="height:50px;">EMT</span>
-  <br>A self-contained small enterprise fullstack framework for browser-to-browser decentralized networks
+<span class="bodyCopy1" class="absCenter" style="text-align:center;display:inline-block;height:unset">
+  <span class="header1" style="height:30px;">EMT: Enterprise Management Tool</span>
+  A self-contained small enterprise fullstack framework and browser-to-browser decentralized network
 
-  <br><br><span class="header1"  style="height:50px;">License:</span>
-  <br>Released under the <a href="http://www.wtfpl.net">WTFPL License</a> (free and unlimited in every respect)
+  <br><br><span class="header1"  style="height:30px;">License:</span>
+  Released under the <a href="http://www.wtfpl.net">WTFPL License</a> (free and unlimited in every respect)
+
+  <br><br><span class="header1"  style="height:30px;">Overview:</span>
+  The goal of the emt project is to bring enterprise software to the masses by making the programming of business logic accesible to anyone. It utilizes javascript under a firm belief in Atwood's Law.
+  <br><br>
+  Radical decentralization is waiting on one essential element: the turning of every smartphone into a host node for a global transactional network. Web communications protocols and browsers are the most platform-agnostic and standardized computational/visual programming tool we have today, and with the advent of torrenting, webRTC, and finally blockchains and concensus algorithms I am finally able to write my own job out of existence! This is very exciting in search of the reduction of waste, as a career fullstack enterprise dev emt is a spiritual endeavor.
+  <br><br>
+  My intention is to make it so you only need to hit a single trusted node once, ever (unless all your discovered nodes are offline the next time you hop on). The webtorrent project <a href="https://elendirx.github.io/web2web/">web2web</a> proved that a blockchain can deliver a webpage payload, and so if the web page is it's own host and the genesis/trunk of it's own blockchain which also features a decentralized database, we could deeply decentralize our entire supply chains and decision-making systems.
+  <br><br>
+   I want to see every product and service turned into a public utility of sheer efficiency and equality, because no one person can ever achieve what we can all achieve together.
+   <br><br>
+   <span class="header1"  style="height:30px;">Docs:</span>
 </span>
-<span id="aboutAcc" sc_appobj="true" sc_apptype="SC_Accordion">
-  <span id="about_emt_head" class="accord-header">The EMT Project</span>
-  <span id="about_emt_node" class="accord-node">
-    The goal of the emt project is to bring enterprise software to the masses by making the programming of business logic
-    accesible to anyone. It utilizes javascript under a firm belief in Atwood's Law.
-    <br><br>
-    Radical decentralization is waiting on one essential element: the turning of every smartphone into a host node for a global
-    network. Web communications protocols and Browsers are the most platform-agnostic and standardized end-to-end programming tool
-    we have today, and with the advent of webtorrents, blockchains, and decentralized data I am finally able to write my own job
-    out of existence!
-    <br><br>
-    As a career fullstack enterprise dev, emt is a spiritual endeavor. I want to see every product and service turned into a public
-    utility of sheer efficiency and equality, because no one person can ever achieve what we can all achieve together.
+<br>
+<span id="aboutAcc" sc_appobj="true" sc_apptype="SC_Accordion" style="margin-bottom: 10px">
+  <span id="about_quickstart_head" class="accord-header">Quick Start</span>
+  <span id="about_quickstart_node" class="accord-node">
+    The quickest way to try out emt is to
+    <ul>
+      <li>Clone the project from <a href="https://github.com/Devin-M-D/emt">the github page</a></li>
+      <li>install the npm package http-server globally</li>
+      <li>go to the emt root directory and run "http-server" to open the site at 127.0.0.1:8080</li>
+      <li>create a namespace directory under "emt/assets/JS/Servercide"</li>
+      <li>create an app directory under "yourNamespaceDir/yourNamespace_yourAppName"</li>
+      <li>create a js file with the same file name as the directory in the previous step</li>
+      <li>copy the content from "emt/assets/JS/Servercide/SC_blankTemplate.js" into your file</li>
+      <li>update your function names with your filename, and replace the string in the constructor function's call to the ServercideApp.call() super function</li>
+      <li>change "emt/index.html" so the body tag SC_appType attribute is your new filename</li>
+      <li>add a line under line 14 in your file type "app.element.css('background-color', 'aquamarine');"</li>
+      <li>now go replace that with something useful!</li>
+    </ul>
   </span>
   <span id="about_sc_head" class="accord-header">The Servercide Frontend Library</span>
   <span id="about_sc_node" class="accord-node" sc_appobj="true" sc_apptype="SC_Accordion">

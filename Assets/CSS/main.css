@@ -5,11 +5,14 @@ body { position:relative; display:inline-block; height:100%; width:100%; flex-fl
 *, *:before, *:after { box-sizing: inherit; }
 span { position:relative; display:inline-block; height:100%; width:100%; margin:0px; padding:0px; }
 input[type=text], input[type=password]{ border-style:ridge; }
+
+/*should be moved into SC_FlexBox*/
+.absCenter { display:inline-flex; flex-flow:column nowrap; justify-content:center; align-items:center; }
+
+/*should be moved into a "SC_Scrollable" app*/
 ::-webkit-scrollbar { width: 12px;display:none; }
 ::-webkit-scrollbar-thumb { background: rgba(100,100,127,0.8); border-radius:8px; }
 ::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); border-radius:8px; }
-.absCenter { display:flex; flex-flow:column nowrap; justify-content:center; align-items:center; }
-
 #spnRoot:hover::-webkit-scrollbar { display:block; }
 
 
