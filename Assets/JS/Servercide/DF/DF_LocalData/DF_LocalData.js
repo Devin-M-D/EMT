@@ -1,33 +1,30 @@
-//DF_RewardBoard
+//SC_LocalData app definition template
+//V1.0
 ////////////////////////////
-var DF_RewardBoard = function(element) {
-  var defaultParams = {
-    "boardSize": "100"
-  };
+var SC_LocalData = function(element) {
+  var defaultParams = {};
   var app = this;
-  var promise = ServercideApp.call(this, app, element, "DF_RewardBoard", defaultParams).then(function(){ app.postStrap(app); });
+  var promise = ServercideApp.call(this, app, element, "SC_LocalData", defaultParams).then(function(){ app.postStrap(app); });
   return promise;
 }
-DF_RewardBoard.prototype = Object.create(ServercideApp.prototype);
+SC_LocalData.prototype = Object.create(ServercideApp.prototype);
 
-DF_RewardBoard.prototype.onStrap = function(app){
+SC_LocalData.prototype.onStrap = function(app){
   app.debugMsg(app.element.attr("id") + " app " + app.getMetaParam("type") + " is strapping, running onStrap before recursion.", 2);
   return new Promise(function(fulfill, reject){
-    app.element.append(`\
-      <span id="rwrdbrd_ToDo" SC_appObj="true" SC_appType="DF_ToDo"></span>\
-    `);
+    app.element.append("<input type='file' />")
     fulfill();
   });
 }
 
-DF_RewardBoard.prototype.postStrap = function(app){
+SC_LocalData.prototype.postStrap = function(app){
   app.debugMsg(app.element.attr("id") + " app " + app.getMetaParam("type") + " is strapping, running onStrap before recursion.", 2);
   return new Promise(function(fulfill, reject){
     fulfill();
   });
 }
 
-DF_RewardBoard.prototype.discoveryComplete = function(app){
+SC_LocalData.prototype.discoveryComplete = function(app){
   app.debugMsg("Recursive Servercide discovery complete, running discoveryComplete function of " + app.element.attr("id") + " app " + app.getMetaParam("type") + ".", 2);
   return new Promise(function(fulfill, reject){
     fulfill();

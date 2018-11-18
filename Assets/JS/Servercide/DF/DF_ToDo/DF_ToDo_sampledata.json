@@ -1,0 +1,13 @@
+{
+  "todo": [
+    {
+      "name": "clean the house",
+      "subtasks": [
+        {"name": "tidy up clutter"},
+        {"name": "mop the floor"},
+        {"name": "do the dishes"},
+        {"name": "take out the trash"}
+      ]
+    }
+  ]
+}

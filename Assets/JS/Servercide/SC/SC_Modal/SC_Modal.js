@@ -15,6 +15,13 @@ SC_Modal.prototype = Object.create(ServercideApp.prototype);
 SC_Modal.prototype.onStrap = function(app){
   app.debugMsg(app.element.attr("id") + " app " + app.getMetaParam("type") + " is strapping, running onStrap before recursion.", 2);
   return new Promise(function(fulfill, reject){
+    loadInlineAppCSS("SC_Modal_wrap", "#SC_modalWrap",
+      {"display":"none", "position":"absolute", "background-color":"rgba(100,100,100,0.5)",
+      "top":"0px", "left":"0px", "bottom":"0px", "right":"0px", "width":"100%", "height":"100%", "z-index":"3"}
+    );
+    loadInlineAppCSS("SC_Modal_box", ".SC_modalNode",
+      {"display":"block", "width":"50%", "height":"50%", "position":"relative", "background-color":"white", "z-index":"5"}
+    );
     app.wrap = $(app.getParam("wrap")).prependTo($("html"));
 
     app.element.on("click", function(event) {
@@ -23,10 +30,11 @@ SC_Modal.prototype.onStrap = function(app){
         $(this).remove();
       });
       var content = app.getParam("node");
+      var modalNode;
       if (isValidSelector(content) != false && $(content).length > 0) {
-        var modalNode = $('<span class="SC_modalNode"></span>').append($(content).clone().attr("id", "modal_tempID"));
+        modalNode = $('<span class="SC_modalNode"></span>').append($(content).clone().attr("id", "modal_tempID").css("display", "inline-flex"));
       } else {
-        var modalNode = $('<span id="modal_tempID" class="SC_modalNode">' + content + '</span>');
+        modalNode = $('<span id="modal_tempID" class="SC_modalNode">' + content + '</span>');
       }
 
       app.wrap.append(modalNode);
@@ -48,7 +56,7 @@ SC_Modal.prototype.onStrap = function(app){
           width: $(root).css("width")
         });
       }
-      SC_discover(modalNode);
+      SC_discover("#modal_tempID");
     });
     fulfill();
   });
