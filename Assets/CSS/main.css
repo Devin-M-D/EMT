@@ -18,7 +18,7 @@ input[type=text], input[type=password]{ border-style:ridge; }
 
 /*Content Styles*/
 /*//////////////////////////*/
-.header1 { font-size:22px; text-decoration:underline; }
+.header1 { font-size:22px; text-decoration:underline; height:30px; }
 .header2 { font-size:20px; font-style:italic; }
 .bodyCopy1 { font-size: 18px; }
 .finePrint { font-size:14px; font-style:italic; line-height:1em; }

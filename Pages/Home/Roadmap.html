@@ -1,11 +1,36 @@
 <span class="bodyCopy1" style="text-align:center;">
-  <span class="header1">EMT</span>
-    <br>A self-contained small enterprise fullstack framework using browser-to-browser decentralized networks
+  <span style="border: solid thin black; height:unset">
+    <span class="header1">Servercide</span>
+    These are issues or changes for the root Servercide code
+    <ul style="text-align:left;">
+      <li>when rediscovering an app, the state needs to come back in consistent fashion (<b>flexgrid</b> dash currently updates
+        correctly once then breaks)</li>
+    </ul>
+  </span>
 
-    <br><br><span class="header1">Upcoming Features:</span>
-    *merge with applist.json
+  <span style="border: solid thin black; height:unset">
+    <span class="header1">Decentralization</span>
+    These goals are not clearly defined, and the best short term solution may be to simply leverage existing tools
+    (my favored projects for this path being IPFS and iota). Under this method however emt can never be entirely self-contained.
+    <ul style="text-align:left;">
+      <li>Formalize programmatically turning class defs into json</li>
+      <li>Write a concensus algorithm which
+        <ul>
+          <li>does not require storing the entire history</li>
+          <li>always delivers/makes available the servercide engine, jquery, bluebird IE promises shim</li>
+        </ul>
+      </li>
+      <li>Establish a graph data-based file storage pattern secured by the concensus algorithm, starting with the
+        json class defs of the existing servercide apps and expanding into user storage</li>
+      <li>Use <a href="https://webtorrent.io/">webtorrents</a> for accessing the data lazily</li>
+    </ul>
+  </span>
 
-    <br><br><span class="header1">Reported Issues:</span>
-    *problems, build into bounty hunt board
+  <span style="border: solid thin black; height:unset">
+    <span class="header1">Apps</span>
+    These are usable apps intended to provide functionality available when the decentralization is eventually sorted.
+    <ul style="text-align:left;">
+      <li>To Do list</li>
+    </ul>
   </span>
 </span>

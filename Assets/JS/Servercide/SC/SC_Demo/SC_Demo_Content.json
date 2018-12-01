@@ -69,6 +69,10 @@
       "title": "roadmapPage",
       "type": "container",
       "content": "Roadmap Loaded",
+      "styles": {
+        "width": "80%"
+      },
+      "classes": ["absCenter"],
       "attrs": {
         "sc_appobj": "true",
         "sc_apptype": "SC_Include",
