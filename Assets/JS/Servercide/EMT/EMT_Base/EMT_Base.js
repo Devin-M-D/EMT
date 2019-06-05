@@ -10,7 +10,7 @@ var EMT_Base = function(element) {
       '<span id="spnSkinner" SC_appObj="true" SC_appType="EMT_Skinner" class="SC_floater"></span>',
       '<span id="spnLeftMenu" SC_appObj="true" SC_appType="SC_DrawerPane" SC_DrawerPane_edge="left"></span>',
       // '<span id="spnContextMenu" class="SC_floater" SC_appObj="true" SC_appType="SC_ContextMenu" ></span>',
-      `<span id="spnRoot" SC_appObj="true" SC_appType="SC_UICascade" style="overflow:auto;padding:0px 5px;">
+      `<span id="spnRoot" SC_appObj="true" SC_appType="SC_UICascade" style="overflow:auto;padding:0px 5px;height:100%;width:100%">
         <sc_uicascade_src>
           <item>Assets/JS/Servercide/SC/SC_Demo/SC_Demo_Content.json</item>
           <item>Assets/JS/Servercide/SC/SC_Demo/SC_Demo_Skin-Classic.json</item>

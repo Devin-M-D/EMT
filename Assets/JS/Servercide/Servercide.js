@@ -6,12 +6,12 @@ var SC_state = Immutable.fromJS({
   "ADOM": {}
 });
 
-$(function() {
+$(function () {
   SC_retrieveGlobals();
-  SC_discover($("html")).then(function() {
+  SC_discover($("html")).then(function () {
     SC_triggerResize();
     SC_storeGlobals();
-    runInSequence(onCompleteFuncs).then(function() {
+    runInSequence(onCompleteFuncs).then(function () {
       SC_triggerResize();
       if ($("html").attr("debug") == "2" || $("html").attr("debug") == "3") {
         console.log("Servercide has finished recursing");
@@ -23,15 +23,15 @@ $(function() {
 
 //Severcide core functions
 //////////////////////////
-function SC_retrieveGlobals(){
-  if (localStorage.SC_globals != null && localStorage.SC_globals != undefined){
+function SC_retrieveGlobals() {
+  if (localStorage.SC_globals != null && localStorage.SC_globals != undefined) {
     SC_state.set("globals", Immutable.fromJS(localStorage.SC_globals));
   }
 }
-function SC_storeGlobals(){
+function SC_storeGlobals() {
   localStorage.SC_globals = SC_state.get("globals").toJS();
 }
-function SC_getGlobal(name){
+function SC_getGlobal(name) {
   return SC_state.getIn(["globals", name]);
 }
 
@@ -39,28 +39,28 @@ function SC_discover(searchRoot) {
   if ($("html").attr("debug") == "1" || $("html").attr("debug") == "3") { console.log("Discovering " + ($(searchRoot).is($("html")) ? "<html>" : $(searchRoot).attr("id"))); }
   function scrapeTopSCApps(root) {
     var skimmedApps = [];
-    root.find("> *").filter("[sc_appobj='true']").each(function() {
+    root.find("> *").filter("[sc_appobj='true']").each(function () {
       skimmedApps.push(this);
-    }).end().filter("[sc_appobj!='true']").each(function() {
+    }).end().filter("[sc_appobj!='true']").each(function () {
       skimmedApps = skimmedApps.concat(scrapeTopSCApps($(this)));
     });
     return skimmedApps;
   }
 
-  return new Promise(function(fulfill, reject){
-    new Promise(function(_fulfill, _reject){
+  return new Promise(function (fulfill, reject) {
+    new Promise(function (_fulfill, _reject) {
       if (searchRoot.attr("sc_appobj") == "true") {
-        SC_strap(searchRoot).then(function(){ _fulfill(); });
+        SC_strap(searchRoot).then(function () { _fulfill(); });
       }
-      else{ _fulfill(); }
-    }).then(function() {
-        var nextLayer = scrapeTopSCApps(searchRoot);
-        var nextLayerFuncs = [];
-        nextLayer.forEach(function(obj) {
-          nextLayerFuncs.push(function() { return SC_discover($(obj)); });
-        });
-        runInSequence(nextLayerFuncs).then(function() { fulfill(); });
+      else { _fulfill(); }
+    }).then(function () {
+      var nextLayer = scrapeTopSCApps(searchRoot);
+      var nextLayerFuncs = [];
+      nextLayer.forEach(function (obj) {
+        nextLayerFuncs.push(function () { return SC_discover($(obj)); });
       });
+      runInSequence(nextLayerFuncs).then(function () { fulfill(); });
+    });
   });
 }
 
@@ -104,16 +104,16 @@ function SC_strap(root) {
   }
 
   function upsertElementApps(keypath, appObj) {
-    return new Promise(function(fulfill, reject) {
+    return new Promise(function (fulfill, reject) {
       var appTypes = [];
       if (appObj.attr("sc_apptype") != undefined) {
         appTypes = appObj.attr("sc_apptype").split(' ');
       }
       var sequence = Promise.resolve();
-      appTypes.forEach(function(appType) {
+      appTypes.forEach(function (appType) {
         if (appType.toLowerCase().indexOf("placeholder") == -1) {
-          sequence = sequence.then(function() {
-            return new Promise(function(seqFulfill, reject) {
+          sequence = sequence.then(function () {
+            return new Promise(function (seqFulfill, seqReject) {
               var appIndex = SC_state.getIn(keypath).findIndex(app => app.get("type") === appType);
               if (appIndex == -1) {
                 var appState = Immutable.fromJS({
@@ -132,16 +132,16 @@ function SC_strap(root) {
                   fulfill();
                 }
               }
-              var scriptPromise = new Promise(function(fulfill, reject) {
-                attemptLoadSCApp(appType).then(function() { fulfill(); });
-              }).then(function() {
-                var strapPromise = new Promise(function(appStrapped, reject) {
+              var scriptPromise = new Promise(function (loadDefFulfill, loadDefReject) {
+                attemptLoadSCApp(appType).then(function () { loadDefFulfill(); });
+              }).then(function () {
+                var strapPromise = new Promise(function (appStrapFulfill, appStrapReject) {
                   $(appObj).data("SC_keypath", keypath.slice(0, -1));
                   var promise = eval("new " + appType.replace('"', '').replace(";", "") + "($(appObj));");
-                  promise.then(function() {
-                    appStrapped();
+                  promise.then(function () {
+                    appStrapFulfill();
                   });
-                }).then(function() {
+                }).then(function () {
                   seqFulfill();
                 });
               });
@@ -149,13 +149,13 @@ function SC_strap(root) {
           });
         }
       });
-      sequence.then(function() {
+      sequence.then(function () {
         fulfill();
       });
     });
   }
 
-  return new Promise(function(fulfill, reject) {
+  return new Promise(function (fulfill, reject) {
     var keypath = locateSCElement(["ADOM"], $(root).attr("id"));
     if (keypath == false) {
       keypath = locateSCElement(["ADOM"], $(root).parents("[sc_appobj='true']").attr("id"));
@@ -167,14 +167,14 @@ function SC_strap(root) {
       keypath = upsertElemToState(keypath, $(root));
     }
     else { $(root).empty(); }
-    keypath.push("apps");
-    upsertElementApps(keypath, $(root)).then(function() {
+    if (keypath[-1] != "apps") { keypath.push("apps"); }
+    upsertElementApps(keypath, $(root)).then(function () {
       fulfill();
     });
   });
 }
 
-var ServercideApp = function(appObj, element, appType, defaultParams = {}) {
+var ServercideApp = function (appObj, element, appType, defaultParams = {}) {
   var SC_ = this;
   SC_.appObj = appObj;
   SC_.element = $(element);
@@ -185,7 +185,7 @@ var ServercideApp = function(appObj, element, appType, defaultParams = {}) {
   var appState = Immutable.Map();
   var appPath = $(SC_.element).data("SC_keypath").slice(0)
   appPath = appPath.concat(["apps"]);
-  var appIdx = SC_state.getIn(appPath).findIndex(function(appToFind) { return appToFind.get("meta").get("type") === appType; });
+  var appIdx = SC_state.getIn(appPath).findIndex(function (appToFind) { return appToFind.get("meta").get("type") === appType; });
   SC_.siblingIndex = 0;
   if ($(SC_.element).data(appType) != undefined) { SC_.siblingIndex = $(SC_.element).data(appType).length }
   appPath.push(appIdx);
@@ -200,79 +200,79 @@ var ServercideApp = function(appObj, element, appType, defaultParams = {}) {
   SC_state = SC_state.setIn(statePath, appState);
   SC_.statePath = statePath;
 
-  SC_.getMetaState = function() { return SC_state.getIn(SC_.metaPath); }
-  SC_.getMetaParam = function(param) { return SC_state.getIn(SC_.metaPath.concat([param])); }
-  SC_.setMetaParam = function(param, value) { SC_state = SC_state.setIn(SC_.metaPath.concat([param]), value); SC_.setInHTML(); }
+  SC_.getMetaState = function () { return SC_state.getIn(SC_.metaPath); }
+  SC_.getMetaParam = function (param) { return SC_state.getIn(SC_.metaPath.concat([param])); }
+  SC_.setMetaParam = function (param, value) { SC_state = SC_state.setIn(SC_.metaPath.concat([param]), value); SC_.setInHTML(); }
 
-  SC_.getState = function() { return SC_state.getIn(SC_.statePath); }
-  SC_.getParam = function(paramPath) {
+  SC_.getState = function () { return SC_state.getIn(SC_.statePath); }
+  SC_.getParam = function (paramPath) {
     var stateChunk = SC_state.getIn(statePath);
-    if (!SC_isArray(paramPath)){ stateChunk = stateChunk.get(paramPath); }
+    if (!SC_isArray(paramPath)) { stateChunk = stateChunk.get(paramPath); }
     else {
-      for (var x = 0; x < paramPath.length; x++){
-        if (Immutable.isImmutable(stateChunk)){ stateChunk = stateChunk.get(paramPath[x]); }
+      for (var x = 0; x < paramPath.length; x++) {
+        if (Immutable.isImmutable(stateChunk)) { stateChunk = stateChunk.get(paramPath[x]); }
         else { stateChunk = stateChunk[paramPath[x]]; }
       }
     }
     if (stateChunk != undefined && Immutable.isImmutable(stateChunk)) { return stateChunk.toJS(); }
     else { return stateChunk; }
   }
-  SC_.setParam = function(paramPath, value) { SC_state = SC_state.setIn(statePath.concat(paramPath), value); SC_.setInHTML(); }
+  SC_.setParam = function (paramPath, value) { SC_state = SC_state.setIn(statePath.concat(paramPath), value); SC_.setInHTML(); }
 
-  SC_.getParent = function(appType, index = 0) {
-    var parentPath = SC_.statePath.slice(0,-5);
+  SC_.getParent = function (appType, index = 0) {
+    var parentPath = SC_.statePath.slice(0, -5);
     var parentState = SC_state.getIn(parentPath).toJS();
     return $("#" + parentState.elem).data(appType)[index];
   }
-  SC_.getParentElement = function() {
-    var parentPath = SC_.statePath.slice(0,-5);
+  SC_.getParentElement = function () {
+    var parentPath = SC_.statePath.slice(0, -5);
     var parentState = SC_state.getIn(parentPath).toJS();
     return $("#" + parentState.elem);
   }
-  SC_.getChild = function(appType, index = 0) { return SC_.element.find("[sc_apptype='" + appType + "']").data(appType)[index]; }
-  SC_.getChildElement = function(appType, index = 0) { return SC_.element.find("[sc_apptype='" + appType + "']")[index]; }
-  SC_.getChildren = function(appType) { return SC_.element.find("[sc_apptype='" + appType + "']").data(appType); }
-  SC_.printApps = function() {
-    var objPath = SC_.statePath.slice(0,-3);
+  SC_.getChild = function (appType, index = 0) { return SC_.element.find("[sc_apptype='" + appType + "']").data(appType)[index]; }
+  SC_.getChildElement = function (appType, index = 0) { return SC_.element.find("[sc_apptype='" + appType + "']")[index]; }
+  SC_.getChildren = function (appType) { return SC_.element.find("[sc_apptype='" + appType + "']").data(appType); }
+  SC_.printApps = function () {
+    var objPath = SC_.statePath.slice(0, -3);
     var objState = SC_state.getIn(objPath).toJS();
     return objState;
   }
 
-  SC_.setDebugging = function(setting){ SC_.setMetaParam("debug", setting); }
-  SC_.debugMsg = function(message, debugType = 4, trace = false){
+  SC_.setDebugging = function (setting) { SC_.setMetaParam("debug", setting); }
+  SC_.debugMsg = function (message, debugType = 4, trace = false) {
     function runMsg() {
       if (trace) console.error('sc_debugger: ' + message);
       else { console.log(message); }
     }
     var debugLvl = SC_.getMetaParam("debug");
-    if (debugLvl >= 4){
-      if (debugType == 4){ runMsg(); }
+    if (debugLvl >= 4) {
+      if (debugType == 4) { runMsg(); }
       debugLvl -= 4;
     }
-    if (debugLvl >= 2){
-      if (debugType == 2){ runMsg(); }
+    if (debugLvl >= 2) {
+      if (debugType == 2) { runMsg(); }
       debugLvl -= 2;
     }
-    if (debugLvl >= 1 && debugType == 1){ runMsg(); }
+    if (debugLvl >= 1 && debugType == 1) { runMsg(); }
   }
-  SC_.debugFunc = function(func, debugType = 4) {
+  SC_.debugFunc = function (func, debugType = 4) {
     var debugLvl = SC_.getMetaParam("debug");
-    if (debugLvl >= 4){
-      if (debugType == 4){ func(); }
+    if (debugLvl >= 4) {
+      if (debugType == 4) { func(); }
       debugLvl -= 4;
     }
-    if (debugLvl >= 2){
-      if (debugType == 2){ func(); }
+    if (debugLvl >= 2) {
+      if (debugType == 2) { func(); }
       debugLvl -= 2;
     }
-    if (debugLvl >= 1 && debugType == 1){ func(); }
+    if (debugLvl >= 1 && debugType == 1) { func(); }
   }
-  SC_.setInHTML = function() {
-    if ($(SC_.element).data(appType) == undefined){ $(SC_.element).data(appType, [SC_.appObj]); }
+  SC_.setInHTML = function () {
+    if ($(SC_.element).data(appType) == undefined) { $(SC_.element).data(appType, [SC_.appObj]); }
     else {
       var siblings = $(SC_.element).data(appType);
-      if (siblings.length == SC_.siblingIndex){
-        $(SC_.element).data(appType, siblings.push(SC_.appObj));
+      if (siblings.length == SC_.siblingIndex) {
+        $(SC_.element).data(appType, siblings.concat(SC_.appObj));
       }
       else {
         siblings[SC_.siblingIndex] = SC_.appObj;
@@ -283,17 +283,17 @@ var ServercideApp = function(appObj, element, appType, defaultParams = {}) {
   SC_.setDebugging(SC_.element.attr("debug"));
   SC_.setMetaParam("strapped", 1);
 
-  return new Promise(function(fulfill, reject) {
-    function loadParams(defaultParam, element, tracer, allowDefault = true){
-      function searchParam(formalName, element){
+  return new Promise(function (fulfill, reject) {
+    function loadParams(defaultParam, element, tracer, allowDefault = true) {
+      function searchParam(formalName, element) {
         if (SC_.element.attr(formalName) != undefined) { return SC_.element.attr(formalName); }
         else if (SC_.element.data(formalName) != undefined) { return SC_.element.data(formalName); }
-        else if (SC_.element.find(formalName).length > 0)  { return $($(SC_.element.find(formalName))[0]); }
+        else if (SC_.element.find(formalName).length > 0) { return $($(SC_.element.find(formalName))[0]); }
         else { return null; }
       }
 
-      function globalCheck(paramKey, val){
-        if (paramKey.indexOf("g:") == 0){
+      function globalCheck(paramKey, val) {
+        if (paramKey.indexOf("g:") == 0) {
           paramKey = paramKey.substring(2, paramKey.length);
           SC_state = SC_state.setIn(["globals", paramKey], Immutable.fromJS(val));
           return true;
@@ -301,10 +301,10 @@ var ServercideApp = function(appObj, element, appType, defaultParams = {}) {
         return false;
       }
 
-      function handlebarsCheck(paramKey){
+      function handlebarsCheck(paramKey) {
         if (paramKey.indexOf("{{") != -1 || paramKey.indexOf("[[") != -1) {
           var resultDir = [];
-          if (paramKey[0] == "<" || paramKey[0] == ">" || paramKey[0] == "^"){
+          if (paramKey[0] == "<" || paramKey[0] == ">" || paramKey[0] == "^") {
             resultDir.push(paramKey[0]);
             paramKey = paramKey.substring(1, paramKey.length);
           }
@@ -318,35 +318,35 @@ var ServercideApp = function(appObj, element, appType, defaultParams = {}) {
           var paramPath = resultDir.concat(deepCopyArray(tracer));
           paramPath.push(paramKey);
 
-          if (mapPart == "{"){
-            if (!SC_isArray(SC_.maps.templates[mapIndex])){ SC_.maps.templates[mapIndex] = []; }
+          if (mapPart == "{") {
+            if (!SC_isArray(SC_.maps.templates[mapIndex])) { SC_.maps.templates[mapIndex] = []; }
             SC_.maps.templates[mapIndex].push(paramPath);
           }
-          else if (mapPart == "["){
+          else if (mapPart == "[") {
             if (!SC_isArray(SC_.maps.inputs[mapIndex])) { SC_.maps.inputs[mapIndex] = []; }
             SC_.maps.inputs[mapIndex].push(paramPath);
           }
         }
-          return paramKey;
+        return paramKey;
       }
 
       var vanillaParam = {};
 
-      for (var paramKey in defaultParam){
+      for (var paramKey in defaultParam) {
         var defaultVal = defaultParam[paramKey];
-        if (globalCheck(paramKey, defaultVal)){ continue; }
+        if (globalCheck(paramKey, defaultVal)) { continue; }
 
         var isMap = false;
         var ogParamKey = paramKey
         paramKey = handlebarsCheck(paramKey);
-        if (ogParamKey != paramKey){ isMap = true; }
+        if (ogParamKey != paramKey) { isMap = true; }
         var formalName = (appType + "_" + tracer.join("_") + ((tracer.length > 0) ? "_" : "") + paramKey).toLowerCase();
         var paramInput = searchParam(formalName, SC_.appObj);
 
-        if (paramInput == null){
-          if (!allowDefault) {continue;}
+        if (paramInput == null) {
+          if (!allowDefault) { continue; }
 
-          if (SC_typeOf(defaultVal) == "object"){
+          if (SC_typeOf(defaultVal) == "object") {
             var deeperTracer = deepCopyArray(tracer);
             deeperTracer.push(paramKey);
             paramInput = loadParams(defaultVal, $(SC_.appObj), deeperTracer, allowDefault);
@@ -355,7 +355,7 @@ var ServercideApp = function(appObj, element, appType, defaultParams = {}) {
             paramInput = defaultVal;
           }
         }
-        else if (SC_typeOf(paramInput) == "element"){
+        else if (SC_typeOf(paramInput) == "element") {
           if (paramInput.attr("value") != undefined) { var tmp = paramInput.attr("value"); paramInput.remove(); paramInput = tmp; }
           else if (paramInput.attr("htmlParam") == "true") { var tmp = $.trim(paramInput.html()); paramInput.remove(); paramInput = tmp; }
           else if (SC_isObject(defaultVal)) {
@@ -365,9 +365,9 @@ var ServercideApp = function(appObj, element, appType, defaultParams = {}) {
             paramInput = loadParams(defaultVal, paramInput, deeperTracer, false);
             elem.remove();
           }
-          else if (SC_isArray(defaultVal)){
+          else if (SC_isArray(defaultVal)) {
             var paramItems = [];
-            paramInput.children("item").each(function(idx, item) {
+            paramInput.children("item").each(function (idx, item) {
               var itemVal = "";
               if ($(item).attr("value") != undefined) { itemVal = $(item).attr("value"); }
               else if ($(item).attr("htmlParam") == "true") { itemVal = $(item).html(); }
@@ -382,48 +382,48 @@ var ServercideApp = function(appObj, element, appType, defaultParams = {}) {
         }
 
         // once a paramInput value is settled on, coerce type if necesssary
-        if (SC_typeOf(paramInput) == SC_typeOf(defaultVal)){ vanillaParam[paramKey] = paramInput; }
-        else if (SC_isJQElement(defaultVal)){
+        if (SC_typeOf(paramInput) == SC_typeOf(defaultVal)) { vanillaParam[paramKey] = paramInput; }
+        else if (SC_isJQElement(defaultVal)) {
           if (typeof paramInput == "string") { vanillaParam[paramKey] = $(paramInput) }
           else {
             console.log("Error: Expected an element for #" + SC_.element.attr("id") + " parameter " + formalName + " but did not recieve jquery object or string. Using default parameter value.");
             vanillaParam[paramKey] = defaultVal;
           }
         }
-        else if (SC_isArray(defaultVal)){
+        else if (SC_isArray(defaultVal)) {
           try {
             paramInput = JSON.parse(paramInput);
-            if (SC_isArray(paramInput)){ vanillaParam[paramKey] = paramInput; }
+            if (SC_isArray(paramInput)) { vanillaParam[paramKey] = paramInput; }
             else {
               console.log("Error: Able to parse JSON input for #" + SC_.element.attr("id") + " parameter " + formalName + " but did not produce an array. Using default parameter value.");
               vanillaParam[paramKey] = defaultVal;
             }
           }
-          catch(e) {
+          catch (e) {
             console.log("Error: Unable to parse JSON input for #" + SC_.element.attr("id") + " parameter " + formalName + ". Using default parameter value.");
-            SC_.debugFunc(function() { console.log("attempted to use: ", paramInput); }, 1);
-            SC_.debugFunc(function() { console.log("default param value: ", defaultVal); }, 1);
+            SC_.debugFunc(function () { console.log("attempted to use: ", paramInput); }, 1);
+            SC_.debugFunc(function () { console.log("default param value: ", defaultVal); }, 1);
             vanillaParam[paramKey] = defaultVal;
           }
         }
-        else if (SC_isObject(defaultVal)){
-          if(SC_isArray(paramInput) ){
+        else if (SC_isObject(defaultVal)) {
+          if (SC_isArray(paramInput)) {
             console.log("Error: Expected an object for #" + SC_.element.attr("id") + " param " + formalName + " but found an array! Using default parameter value.");
             vanillaParam[paramKey] = defaultVal;
           }
-          else if (paramInput != null){
+          else if (paramInput != null) {
             try {
               paramInput = JSON.parse(paramInput);
               vanillaParam[paramKey] = paramInput;
             }
-            catch(e) {
-              if (SC_typeOf(paramInput) == "string"){
+            catch (e) {
+              if (SC_typeOf(paramInput) == "string") {
                 vanillaParam[paramKey] = paramInput;
               }
               else {
                 console.log("Error: Unable to parse JSON input for #" + SC_.element.attr("id") + " parameter " + formalName + ". Using default parameter value.");
-                SC_.debugFunc(function() { console.log("attempted to use: ", paramInput); }, 1);
-                SC_.debugFunc(function() { console.log("default param value: ", defaultVal); }, 1);
+                SC_.debugFunc(function () { console.log("attempted to use: ", paramInput); }, 1);
+                SC_.debugFunc(function () { console.log("default param value: ", defaultVal); }, 1);
                 vanillaParam[paramKey] = defaultVal;
               }
             }
@@ -433,40 +433,36 @@ var ServercideApp = function(appObj, element, appType, defaultParams = {}) {
       return vanillaParam;
     }
 
-    function processMaps(){
-      function unbalancedMapCheck(checkParamPath, type){
-        if (SC_.getParam(checkParamPath) == undefined){
-          if (type == "template"){ SC_.debugMsg("Found empty handlebar map template. Skipping this map.", 1); }
-          if (type == "input"){ SC_.debugMsg("Found empty handlebar map input " + inputParamPath[inputParamPath.length-1] + ". Skipping this input.", 1); }
+    function processMaps() {
+      function unbalancedMapCheck(checkParamPath, type) {
+        if (SC_.getParam(checkParamPath) == undefined) {
+          if (type == "template") { SC_.debugMsg("Found empty handlebar map template. Skipping this map.", 1); }
+          if (type == "input") { SC_.debugMsg("Found empty handlebar map input " + inputParamPath[inputParamPath.length - 1] + ". Skipping this input.", 1); }
           return true;
         }
       }
 
-      function replaceHandlebars(template, input, inputIdx, inputParamPath){
+      function replaceHandlebars(template, input, inputIdx, inputParamPath) {
         var result = template;
-        if (SC_typeOf(input) == "array"){
-          if (SC_typeOf(template) == "array"){
+        if (SC_typeOf(input) == "array") {
+          if (SC_typeOf(template) == "array") {
             result = [];
-            if (input.length == template.length){
-              if (SC_typeOf(input[0]) == "array"){
-                for (var x = 0; x < input.length; x++)
-                {
+            if (input.length == template.length) {
+              if (SC_typeOf(input[0]) == "array") {
+                for (var x = 0; x < input.length; x++) {
                   result.push(replaceHandlebars(template[x], input[x].join(""), x, inputParamPath));
                 }
               }
               else {
-                for (var x = 0; x < input.length; x++)
-                {
+                for (var x = 0; x < input.length; x++) {
                   result.push(replaceHandlebars(template[x], input[x], x, inputParamPath));
                 }
               }
             }
             else {
-              for (var x = 0; x < template.length; x++)
-              {
+              for (var x = 0; x < template.length; x++) {
                 var templateItem = template[x];
-                for (var y = 0; y < input.length; y++)
-                {
+                for (var y = 0; y < input.length; y++) {
                   templateItem = (replaceHandlebars(templateItem, input[y], y, inputParamPath));
                 }
                 result.push(templateItem);
@@ -474,68 +470,68 @@ var ServercideApp = function(appObj, element, appType, defaultParams = {}) {
             }
           }
           else {
-            if (template.search(new RegExp("\\{\\{" + inputParamPath[inputParamPath.length-1] + ":\\d+\\}\\}", "gi")) != -1 && SC_typeOf(input[0]) != 'array') {
-              for (var x = 0; x < input.length; x++){
+            if (template.search(new RegExp("\\{\\{" + inputParamPath[inputParamPath.length - 1] + ":\\d+\\}\\}", "gi")) != -1 && SC_typeOf(input[0]) != 'array') {
+              for (var x = 0; x < input.length; x++) {
                 result = replaceHandlebars(result, input[x], x, inputParamPath);
               }
             }
             else {
               result = [];
-              for (var x = 0; x < input.length; x++){
+              for (var x = 0; x < input.length; x++) {
                 result.push(replaceHandlebars(template, input[x], x, inputParamPath));
               }
             }
           }
         }
-        else if (SC_typeOf(input) == "string"){
+        else if (SC_typeOf(input) == "string") {
           if (SC_typeOf(template) == "string") {
-            var mapResult = template.replace(new RegExp("\\{\\{" + inputParamPath[inputParamPath.length-1] + ":" + inputIdx + "\\}\\}", "gi"), input);
-            result = mapResult.replace(new RegExp("\\{\\{" + inputParamPath[inputParamPath.length-1] + "\\}\\}", "gi"), input);
+            var mapResult = template.replace(new RegExp("\\{\\{" + inputParamPath[inputParamPath.length - 1] + ":" + inputIdx + "\\}\\}", "gi"), input);
+            result = mapResult.replace(new RegExp("\\{\\{" + inputParamPath[inputParamPath.length - 1] + "\\}\\}", "gi"), input);
           }
-          else if (SC_typeOf(template) == "array"){
+          else if (SC_typeOf(template) == "array") {
             result = [];
-            for (var y = 0; y < template.length; y++){
+            for (var y = 0; y < template.length; y++) {
               result.push(replaceHandlebars(template[y], input, inputIdx, inputParamPath));
             }
           }
         }
         return result;
       }
-      for (var mapIndex = 0; mapIndex < SC_.maps.templates.length; mapIndex++){
-        SC_.debugFunc(function(){
+      for (var mapIndex = 0; mapIndex < SC_.maps.templates.length; mapIndex++) {
+        SC_.debugFunc(function () {
           console.log("mapping index #" + mapIndex + ": ", SC_.maps.inputs[mapIndex], " into ", SC_.maps.templates[mapIndex]);
         }, 1);
         var mapTemplates = SC_.maps.templates[mapIndex];
         var mapInputs = SC_.maps.inputs[mapIndex];
 
-        for (var templateIndex = 0; templateIndex < mapTemplates.length; templateIndex++){
+        for (var templateIndex = 0; templateIndex < mapTemplates.length; templateIndex++) {
 
           var templatePath = mapTemplates[templateIndex];
           if (unbalancedMapCheck(templatePath, "template")) { continue; }
 
           template = SC_.getParam(mapTemplates[templateIndex]);
-          for (var inputIndex = 0; inputIndex < mapInputs.length; inputIndex++){
+          for (var inputIndex = 0; inputIndex < mapInputs.length; inputIndex++) {
 
             var inputParamPath = deepCopyArray(mapInputs[inputIndex]);
             var dir = ">";
-            if (inputParamPath[0] == "<"){ dir = "<"; }
-            else if (inputParamPath[0] == "^"){ dir = "^"; }
-            if (inputParamPath[0] == "<" || inputParamPath[0] == "^" || inputParamPath[0] == ">"){ inputParamPath.shift(); }
+            if (inputParamPath[0] == "<") { dir = "<"; }
+            else if (inputParamPath[0] == "^") { dir = "^"; }
+            if (inputParamPath[0] == "<" || inputParamPath[0] == "^" || inputParamPath[0] == ">") { inputParamPath.shift(); }
             if (unbalancedMapCheck(inputParamPath, "input")) { continue; }
 
             var input = SC_.getParam(inputParamPath);
-            SC_.debugFunc(function() {
+            SC_.debugFunc(function () {
               console.log("    mapping ", input);
               console.log("    into ", template);
             }, 1);
             var mergedVal = replaceHandlebars(template, input, 0, inputParamPath);
-            SC_.debugFunc(function(){
+            SC_.debugFunc(function () {
               console.log("result of mapping index #", mapIndex);
               console.log(mergedVal)
             }, 1);
-            if (dir == ">"){ SC_state = SC_state.setIn(statePath.concat(inputParamPath), mergedVal); }
-            else if (dir == "<"){ SC_state = SC_state.setIn(statePath.concat(templatePath), mergedVal); }
-            else if (dir == "^"){ SC_state = SC_state.setIn(statePath.concat(templatePath.slice(0, -1)), mergedVal); }
+            if (dir == ">") { SC_state = SC_state.setIn(statePath.concat(inputParamPath), mergedVal); }
+            else if (dir == "<") { SC_state = SC_state.setIn(statePath.concat(templatePath), mergedVal); }
+            else if (dir == "^") { SC_state = SC_state.setIn(statePath.concat(templatePath.slice(0, -1)), mergedVal); }
           }
         }
       }
@@ -545,18 +541,18 @@ var ServercideApp = function(appObj, element, appType, defaultParams = {}) {
     SC_state = SC_state.setIn(statePath, Immutable.fromJS(vanillaState));
     processMaps();
 
-    SC_.debugFunc(function(){
+    SC_.debugFunc(function () {
       console.log(SC_.element.attr("id") + " app " + appType + " initial params have been set, state is: ");
       logImmutable(SC_.getState());
       console.log("------------------");
     }, 2);
 
-    if (SC_.appObj != false && SC_.appObj != undefined){
+    if (SC_.appObj != false && SC_.appObj != undefined) {
       SC_.setInHTML();
-      SC_.appObj.onStrap(SC_.appObj).then(function(){
+      SC_.appObj.onStrap(SC_.appObj).then(function () {
         SC_state = SC_state.setIn(metaPath.concat(["strapped"]), 1);
-        if (SC_.appObj.discoveryComplete != false && SC_.appObj.discoveryComplete != undefined && SC_.appObj.discoveryComplete != null){
-          onCompleteFuncs.push(function() { return SC_.appObj.discoveryComplete(SC_.appObj); });
+        if (SC_.appObj.discoveryComplete != false && SC_.appObj.discoveryComplete != undefined && SC_.appObj.discoveryComplete != null) {
+          onCompleteFuncs.push(function () { return SC_.appObj.discoveryComplete(SC_.appObj); });
         }
         fulfill();
       });
@@ -571,18 +567,18 @@ var ServercideApp = function(appObj, element, appType, defaultParams = {}) {
 
 //Helper Functions
 //////////////////
-function SC_tryParse(JSONstring, srcApp){
-  try{ return jQuery.parseJSON(JSONstring).result; }
+function SC_tryParse(JSONstring, srcApp) {
+  try { return jQuery.parseJSON(JSONstring).result; }
   catch (e) { console.log("Sorry, " + srcApp + " data '" + JSONstring + "' could not be parsed as JSON."); }
 }
 function deepCopyArray(arr) { return JSON.parse(JSON.stringify(arr)); }
 function logImmutable(state) { if (Immutable.isImmutable(state)) { console.dir(JSON.stringify(state.toJS(), null, 2)); } else { console.log("Attempted to log non-immutable: " + state); } }
 
-function loadInlineAppCSS(appClassName, selector, styles){
-  if (!$("style[sc_app='" + appClassName + "']").length){
+function loadInlineAppCSS(appClassName, selector, styles) {
+  if (!$("style[sc_app='" + appClassName + "']").length) {
     var styleTag = "<style type='text/css' SC_App='" + appClassName + "'> " + selector + "{ ";
     for (var style in styles) {
-      if(!styles.hasOwnProperty(style)) continue;
+      if (!styles.hasOwnProperty(style)) continue;
       styleTag += style + ":" + styles[style] + ";";
     }
     styleTag += "}</style>";
@@ -598,22 +594,22 @@ function loadCSS(hrefURL) {
 }
 
 function loadScript(hrefURL) {
-  return promise = new Promise(function(fulfill, reject) {
+  return promise = new Promise(function (fulfill, reject) {
     script = document.createElement("script");
     script.type = "text/javascript";
     script.src = hrefURL;
-    script.addEventListener("error", function(e) { fulfill("failed"); }, true);
-    script.addEventListener("load", function(e) { fulfill("loaded"); }, false);
+    script.addEventListener("error", function (e) { fulfill("failed"); }, true);
+    script.addEventListener("load", function (e) { fulfill("loaded"); }, false);
     document.head.appendChild(script);
   });
 }
 
 function attemptLoadSCApp(appType) {
-  return new Promise(function(fulfill, reject){
+  return new Promise(function (fulfill, reject) {
     if (SC_loadedApps.indexOf(appType) == -1) {
       var typePath = appType.split("_");
-      loadScript("Assets/JS/Servercide/" + typePath[0] + "/" + typePath[0] + "_" + typePath[1] + "/" + appType + ".js").then(function(result) {
-        if (result != "loaded"){ throw "Could not load app definiton for " + appObj.attr("id"); }
+      loadScript("Assets/JS/Servercide/" + typePath[0] + "/" + typePath[0] + "_" + typePath[1] + "/" + appType + ".js").then(function (result) {
+        if (result != "loaded") { throw "Could not load app definiton for " + appObj.attr("id"); }
         else { SC_loadedApps.push(appType); fulfill(); }
       });
     } else {
@@ -623,7 +619,7 @@ function attemptLoadSCApp(appType) {
 }
 
 function isValidSelector(selector) {
-  if (typeof(selector) !== 'string') {
+  if (typeof (selector) !== 'string') {
     return false;
   }
   try {
@@ -644,10 +640,10 @@ function runInSequence(funcs) {
   });
 }
 
-function SC_isArray(toTest){ return toTest instanceof Array; }
-function SC_isObject(toTest){ return (typeof toTest == 'object' && !(toTest instanceof Array || toTest instanceof jQuery || toTest == null)); }
-function SC_isJQElement(toTest){ return toTest instanceof jQuery; }
-function SC_typeOf(toTest){
+function SC_isArray(toTest) { return toTest instanceof Array; }
+function SC_isObject(toTest) { return (typeof toTest == 'object' && !(toTest instanceof Array || toTest instanceof jQuery || toTest == null)); }
+function SC_isJQElement(toTest) { return toTest instanceof jQuery; }
+function SC_typeOf(toTest) {
   if (SC_isJQElement(toTest)) return "element";
   if (SC_isObject(toTest)) return "object";
   if (SC_isArray(toTest)) return "array";
@@ -671,26 +667,26 @@ function SC_triggerPostLoad() { for (var x = 0; x < SC_postLoadFuncs.length; x++
 function RemoteCall(remoteURL, postData = {}, enable_logging = false) {
   postData = JSON.stringify(postData) || {};
   var callType = "POST";
-  if (remoteURL.indexOf(".json") != -1){
+  if (remoteURL.indexOf(".json") != -1) {
     callType = "GET";
   }
 
-  return promise = new Promise(function(fulfill, reject) {
+  return promise = new Promise(function (fulfill, reject) {
     $.ajax({
       type: callType,
       url: remoteURL,
       data: postData,
       contentType: "application/json; charset=utf-8",
       dataType: "json",
-      success: function(msg) {
+      success: function (msg) {
         if (enable_logging == 1) { console.log("Call to:  " + remoteURL + " - Succeeded: "); }
 
         // static files contained in msg, c# method results contained in msg.d
-        if (remoteURL.indexOf("json") != -1){ fulfill(msg); }
+        if (remoteURL.indexOf("json") != -1) { fulfill(msg); }
         else { fulfill(msg.d); }
       },
-      error: function(msg) {
-        if (enable_logging == 1) { console.log("Call to: " + remoteURL + " - Failed: ", msg);  }
+      error: function (msg) {
+        if (enable_logging == 1) { console.log("Call to: " + remoteURL + " - Failed: ", msg); }
         reject(console.error("Call to: " + remoteURL + " - Failed:", msg))
       },
     })

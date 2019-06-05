@@ -18,7 +18,7 @@
         "absCenter"
       ],
       "styles": {
-        "height": "unset",
+        "width": "100%",
         "padding": "5% 5% 10% 5%",
         "box-sizing": "border-box",
         "overflow": "auto"
@@ -391,6 +391,21 @@
       }
     },
     {
+      "class": "Block",
+      "gdb_id": "10:56",
+      "title": "Budget",
+      "type": "container",
+      "content": "",
+      "styles": {
+        "z-index": "1"
+      },
+      "attrs": {
+        "sc_appobj": "true",
+        "sc_apptype": "DF_Budget"
+      }
+    },
+
+    {
       "class": "Edge",
       "gdb_id": "10:29",
       "inID": "10:0",
@@ -542,6 +557,13 @@
       "inID": "10:1",
       "outID": "10:53",
       "page": "Dogfood/Games/SimpleDungeon"
+    },
+    {
+      "class": "Edge",
+      "gdb_id": "10:55",
+      "inID": "10:1",
+      "outID": "10:56",
+      "page": "Dogfood/Productivity/Budget"
     }
   ]
 }
