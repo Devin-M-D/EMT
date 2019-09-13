@@ -1,30 +1,33 @@
 //SC_Carousel
 ////////////////////////////
-var SC_Carousel = function(element) {
+var SC_Carousel = function (element) {
   var defaultParams = {};
   var app = this;
-  var promise = ServercideApp.call(this, app, element, "SC_Carousel", defaultParams).then(function(){ app.postStrap(app); });
+  var promise = ServercideApp.call(this, app, element, "SC_Carousel", defaultParams).then(function () { app.postStrap(app); });
   return promise;
 }
 SC_Carousel.prototype = Object.create(ServercideApp.prototype);
 
-SC_Carousel.prototype.onStrap = function(app){
+SC_Carousel.prototype.onStrap = function (app) {
   app.debugMsg(app.element.attr("id") + " app " + app.getMetaParam("type") + " is strapping, running onStrap before recursion.", 2);
-  return new Promise(function(fulfill, reject){
+  return new Promise(function (fulfill, reject) {
+    app.element.append(`<span id="carousel_demo_temp" SC_AppObj='true' SC_AppType='SC_Include' \
+    SC_Include_src='Assets/JS/Servercide/SC/SC_Carousel/SC_Carousel.html' class='absCenter'></span>`);
     fulfill();
   });
 }
 
-SC_Carousel.prototype.postStrap = function(app){
+SC_Carousel.prototype.postStrap = function (app) {
   app.debugMsg(app.element.attr("id") + " app " + app.getMetaParam("type") + " is strapping, running onStrap before recursion.", 2);
-  return new Promise(function(fulfill, reject){
+  return new Promise(function (fulfill, reject) {
     fulfill();
   });
 }
 
-SC_Carousel.prototype.discoveryComplete = function(app){
+SC_Carousel.prototype.discoveryComplete = function (app) {
   app.debugMsg("Recursive Servercide discovery complete, running discoveryComplete function of " + app.element.attr("id") + " app " + app.getMetaParam("type") + ".", 2);
-  return new Promise(function(fulfill, reject){
+  return new Promise(function (fulfill, reject) {
+    $("#carousel_head").click();
     fulfill();
   });
 }
