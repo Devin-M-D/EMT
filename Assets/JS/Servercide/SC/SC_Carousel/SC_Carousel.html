@@ -5,6 +5,28 @@
         overflow: hidden;
         flex-wrap: nowrap;
         flex-flow: row;
+        display: inline-flex;
+    }
+
+    #carousel_container:before {
+        content: url('Assets/JS/Servercide/SC/SC_Carousel/arrow_left.png');
+        position: absolute;
+        align-self: center;
+    }
+
+    #carousel_container:after {
+        content: url('Assets/JS/Servercide/SC/SC_Carousel/arrow_left.png');
+        -webkit-transform: rotate(180deg);
+        -moz-transform: rotate(180deg);
+        -o-transform: rotate(180deg);
+        -ms-transform: rotate(180deg);
+        transform: rotate(180deg);
+        position: absolute;
+        align-self: center;
+        right: 0px;
+    }
+
+    .item_wheel {
         left: -100%;
     }
 
@@ -16,16 +38,35 @@
         order: 0;
     }
 </style>
-<span id="carousel_container" class="ColsOf1 RowsOf3">
-    <span class="carousel_item"><img src="Assets/JS/Servercide/SC/SC_Carousel/1.jpg" /></span>
-    <span class="carousel_item"><img src="Assets/JS/Servercide/SC/SC_Carousel/2.jpg" /></span>
-    <span class="carousel_item"><img src="Assets/JS/Servercide/SC/SC_Carousel/3.jpg" /></span>
-    <span class="carousel_item"><img src="Assets/JS/Servercide/SC/SC_Carousel/4.jpg" /></span>
-    <span class="carousel_item"><img src="Assets/JS/Servercide/SC/SC_Carousel/5.jpg" /></span>
-    <span class="carousel_item"><img src="Assets/JS/Servercide/SC/SC_Carousel/6.jpg" /></span>
-    <span class="carousel_item"><img src="Assets/JS/Servercide/SC/SC_Carousel/7.jpg" /></span>
-    <span class="carousel_item"><img src="Assets/JS/Servercide/SC/SC_Carousel/8.jpg" /></span>
-    <span class="carousel_item"><img src="Assets/JS/Servercide/SC/SC_Carousel/9.jpg" /></span>
-    <span class="carousel_item"><img src="Assets/JS/Servercide/SC/SC_Carousel/10.jpg" /></span>
-    <span class="carousel_item last_item"><img src="Assets/JS/Servercide/SC/SC_Carousel/11.jpg" /></span>
+<span id="carousel_container">
+    <span id="item_wheel" class="SC_grid ColsOf1 RowsOf3">
+        <span class="carousel_item">
+            <span>1</span>
+            <!-- <img src="Assets/JS/Servercide/SC/SC_Carousel/1.jpg" /> -->
+        </span>
+        <span class="carousel_item">
+            <span>2</span>
+            <!-- <img src="Assets/JS/Servercide/SC/SC_Carousel/3.jpg" /> -->
+        </span>
+        <span class="carousel_item">
+            <span>3</span>
+            <!-- <img src="Assets/JS/Servercide/SC/SC_Carousel/4.jpg" /> -->
+        </span>
+        <span class="carousel_item">
+            <span>4</span>
+            <!-- <img src="Assets/JS/Servercide/SC/SC_Carousel/2.jpg" /> -->
+        </span>
+        <span class="carousel_item">
+            <span>5</span>
+            <!-- <img src="Assets/JS/Servercide/SC/SC_Carousel/5.jpg" /> -->
+        </span>
+        <span class="carousel_item">
+            <span>6</span>
+            <!-- <6mg src="Assets/JS/Servercide/SC/SC_Carousel/6.jpg" /> -->
+        </span>
+        <span class="carousel_item">
+            <span>7</span>
+            <!-- <img src="Assets/JS/Servercide/SC/SC_Carousel/7.jpg" /> -->
+        </span>
+    </span>
 </span>
