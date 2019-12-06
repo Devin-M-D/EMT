@@ -1,6 +1,5 @@
-function ServercideApp(appObj, element, appType, defaultParams = {}) {
+function ServercideApp(element, appType, defaultParams = {}, onStrapF = null, postStrapF = null, discComplete = null) {
     var SC_ = this;
-    SC_.appObj = appObj;
     SC_.element = $(element);
     SC_.maps = {
         "templates": [],
@@ -41,7 +40,7 @@ function ServercideApp(appObj, element, appType, defaultParams = {}) {
         if (stateChunk != undefined && Immutable.isImmutable(stateChunk)) { return stateChunk.toJS(); }
         else { return stateChunk; }
     }
-    SC_.setParam = function (paramPath, value) { SC_state = SC_state.setIn(statePath.concat(paramPath), value); SC_.setInHTML(); }
+    this.setParam = function (paramPath, value) { SC_state = SC_state.setIn(statePath.concat(paramPath), value); SC_.setInHTML(); }
 
     SC_.getParent = function (appType, index = 0) {
         var parentPath = SC_.statePath.slice(0, -5);
@@ -92,42 +91,63 @@ function ServercideApp(appObj, element, appType, defaultParams = {}) {
         if (debugLvl >= 1 && debugType == 1) { func(); }
     }
     SC_.setInHTML = function () {
-        if ($(SC_.element).data(appType) == undefined) { $(SC_.element).data(appType, [SC_.appObj]); }
+        if ($(SC_.element).data(appType) == undefined) { $(SC_.element).data(appType, [this]); }
         else {
             var siblings = $(SC_.element).data(appType);
             if (siblings.length == SC_.siblingIndex) {
-                $(SC_.element).data(appType, siblings.concat(SC_.appObj));
+                $(SC_.element).data(appType, siblings.concat(this));
             }
             else {
-                siblings[SC_.siblingIndex] = SC_.appObj;
+                siblings[SC_.siblingIndex] = this;
             }
         }
     }
     SC_.onStrapMessage = () => {
-        SC_.debugMsg(element.attr("id") + " app " + appType + " is strapping, running onStrap before recursion.", 2);
+        this.debugMsg(element.attr("id") + " app " + appType + " is strapping, running onStrap before recursion.", 2);
     }
     SC_.onStrap = () => {
-        SC_.onStrapMessage();
+        this.onStrapMessage();
         return new Promise(function (fulfill, reject) {
-            fulfill();
+            if (onStrapF != null){
+                onStrapF(SC_).then(function(){
+                    fulfill();
+                });
+            }
+            else {
+                fulfill();
+            }
         });
     }
     SC_.postStrapMessage = () => {
-        SC_.debugMsg(element.attr("id") + " app " + appType + " is strapping, adding to the postStrap queue.", 2);
+        this.debugMsg(element.attr("id") + " app " + appType + " is strapping, adding to the postStrap queue.", 2);
     }
     SC_.postStrap = () => {
-        SC_.postStrapMessage();
+        this.postStrapMessage();
         return new Promise(function (fulfill, reject) {
-            fulfill();
+            if (postStrapF != null){
+                postStrapF(SC_).then(function(){
+                    fulfill();
+                });
+            }
+            else {
+                fulfill();
+            }        
         });
     }
     SC_.discoveryCompleteMessage = () => {
-        SC_.debugMsg("Recursive Servercide discovery complete, running discoveryComplete function of " + element.attr("id") + " app " + appType + ".", 2);
+        this.debugMsg("Recursive Servercide discovery complete, running discoveryComplete function of " + element.attr("id") + " app " + appType + ".", 2);
     }
-    SC_.discoveryComplete = (func) => {
-        SC_.discoveryCompleteMessage();
+    SC_.discoveryComplete = () => {
+        this.discoveryCompleteMessage();
         return new Promise(function (fulfill, reject) {
-            fulfill();
+            if (discComplete != null){
+                discComplete(SC_).then(function(){
+                    fulfill();
+                });
+            }
+            else {
+                fulfill();
+            }
         });
     }
 
@@ -192,7 +212,7 @@ function ServercideApp(appObj, element, appType, defaultParams = {}) {
                 paramKey = handlebarsCheck(paramKey);
                 if (ogParamKey != paramKey) { isMap = true; }
                 var formalName = (appType + "_" + tracer.join("_") + ((tracer.length > 0) ? "_" : "") + paramKey).toLowerCase();
-                var paramInput = searchParam(formalName, SC_.appObj);
+                var paramInput = searchParam(formalName, this);
 
                 if (paramInput == null) {
                     if (!allowDefault) { continue; }
@@ -200,7 +220,7 @@ function ServercideApp(appObj, element, appType, defaultParams = {}) {
                     if (SC_typeOf(defaultVal) == "object") {
                         var deeperTracer = deepCopyArray(tracer);
                         deeperTracer.push(paramKey);
-                        paramInput = loadParams(defaultVal, $(SC_.appObj), deeperTracer, allowDefault);
+                        paramInput = loadParams(defaultVal, $(this), deeperTracer, allowDefault);
                     }
                     else {
                         paramInput = defaultVal;
@@ -398,11 +418,11 @@ function ServercideApp(appObj, element, appType, defaultParams = {}) {
             console.log("------------------");
         }, 2);
 
-        if (SC_.appObj != false && SC_.appObj != undefined) {
+        if (this != false && this != undefined) {
             SC_.setInHTML();
-            appObj.onStrap().then(function () {
+            SC_.onStrap().then(function () {
                 SC_state = SC_state.setIn(metaPath.concat(["strapped"]), 1);
-                appObj.postStrap()
+                SC_.postStrap()
                 if (SC_.discoveryComplete != false && SC_.discoveryComplete != undefined && SC_.discoveryComplete != null) {
                     onCompleteFuncs.push(function () { return SC_.discoveryComplete(); });
                 }

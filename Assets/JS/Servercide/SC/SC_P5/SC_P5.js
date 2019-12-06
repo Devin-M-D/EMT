@@ -2,7 +2,6 @@
 //////////
 var SC_P5 = function (root, name) {
   ServercideApp.call(this, root, name);
-  var app = this;
   var gameport = $(this.root);
   this.game_name = gameport.attr("SC_game");
   alert("foo");

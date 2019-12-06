@@ -17,8 +17,10 @@ var DF_Budget = function (element) {
       }]
     }
   };
-  var app = this;
-  var promise = ServercideApp.call(this, app, element, "DF_Budget", defaultParams).then(function () { app.postStrap(app); });
+  var promise = ServercideApp.call(
+    this, element, "DF_Budget", defaultParams,
+    DF_Budget.prototype.onStrap
+  );
   return promise;
 }
 DF_Budget.prototype = Object.create(ServercideApp.prototype);
@@ -28,20 +30,6 @@ DF_Budget.prototype.onStrap = function (app) {
   return new Promise(function (fulfill, reject) {
     app.element.html('budget');
     app.element.append('<span id="budgetCal" SC_appObj="true" SC_appType="SC_Calendar">');
-    fulfill();
-  });
-}
-
-DF_Budget.prototype.postStrap = function (app) {
-  app.debugMsg(app.element.attr("id") + " app " + app.getMetaParam("type") + " is strapping, running onStrap before recursion.", 2);
-  return new Promise(function (fulfill, reject) {
-    fulfill();
-  });
-}
-
-DF_Budget.prototype.discoveryComplete = function (app) {
-  app.debugMsg("Recursive Servercide discovery complete, running discoveryComplete function of " + app.element.attr("id") + " app " + app.getMetaParam("type") + ".", 2);
-  return new Promise(function (fulfill, reject) {
     fulfill();
   });
 }

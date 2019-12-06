@@ -15,34 +15,33 @@ var SC_GrowingPanes = function (root, name) {
 SC_GrowingPanes.prototype = Object.create(ServercideApp.prototype);
 
 
-SC_GrowingPanes.prototype.grabHandle = function() {
-/*
-  var app = this;
-  var pane = $(this.root);
-
-    function grabHeader() {
-      return promise = new Promise(function (fulfill, reject) {
+SC_GrowingPanes.prototype.grabHandle = function () {
+  /*
+    var pane = $(this.root);
+  
+      function grabHeader() {
+        return promise = new Promise(function (fulfill, reject) {
+          var resize = setInterval(function () {
+            if (SC_GP_mouseDown == 1) {
+              $("#header").css("height", SC_GP_mousePosY);
+              if ($("#header").css("height").replace("px", "") < 180) { $("#main_nav").fadeOut(); fulfill(); }
+              else { $("#main_nav").fadeIn(); }
+            }
+            else { clearInterval(resize); }
+          }, 50);
+        });
+      }
+  
+      function grabFooter() {
         var resize = setInterval(function () {
           if (SC_GP_mouseDown == 1) {
-            $("#header").css("height", SC_GP_mousePosY);
-            if ($("#header").css("height").replace("px", "") < 180) { $("#main_nav").fadeOut(); fulfill(); }
-            else { $("#main_nav").fadeIn(); }
+            $("#footer").css("height", ($("html").css("height").replace("px", "") - SC_GP_mousePosY) + "px");
+            $("#content_body").css("margin-bottom", $("#footer").css("height"));
           }
           else { clearInterval(resize); }
         }, 50);
-      });
-    }
-
-    function grabFooter() {
-      var resize = setInterval(function () {
-        if (SC_GP_mouseDown == 1) {
-          $("#footer").css("height", ($("html").css("height").replace("px", "") - SC_GP_mousePosY) + "px");
-          $("#content_body").css("margin-bottom", $("#footer").css("height"));
-        }
-        else { clearInterval(resize); }
-      }, 50);
-      $("#footer").data("pinned", true);
-    }
-    /////////////////////////////////
-*/
+        $("#footer").data("pinned", true);
+      }
+      /////////////////////////////////
+  */
 }

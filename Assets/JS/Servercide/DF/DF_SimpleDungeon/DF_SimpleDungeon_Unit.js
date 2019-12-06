@@ -1,27 +1,29 @@
 //DF_SimpleDungeon_Player
 ////////////////////////////
-var DF_SimpleDungeon_Unit = function(element) {
- //unitType: 1 = player, 2 = mob, 3 = boss
+var DF_SimpleDungeon_Unit = function (element) {
+  //unitType: 1 = player, 2 = mob, 3 = boss
   var defaultParams = {
     "unitType": "1",
     "posX": "75px",
     "posY": "150px"
   };
-  var app = this;
-  var promise = ServercideApp.call(this, app, element, "DF_SimpleDungeon_Unit", defaultParams).then(function(){ app.postStrap(app); });
+  var promise = ServercideApp.call(
+    this, element, "DF_SimpleDungeon_Unit", defaultParams,
+    DF_SimpleDungeon_Unit.prototype.onStrap
+  );
   return promise;
 }
 DF_SimpleDungeon_Unit.prototype = Object.create(ServercideApp.prototype);
 
-DF_SimpleDungeon_Unit.prototype.onStrap = function(app){
+DF_SimpleDungeon_Unit.prototype.onStrap = function (app) {
   app.debugMsg(app.element.attr("id") + " app " + app.getMetaParam("type") + " is strapping, running onStrap before recursion.", 2);
-  return new Promise(function(fulfill, reject){
+  return new Promise(function (fulfill, reject) {
     app.element.css("height", "15px");
     app.element.css("width", "15px");
     app.element.css("z-index", "1");
-    if (app.getParam("unitType") == "1"){ app.element.html('<span id="' + app.element.attr("id") + '_player" sc_appobj="true" sc_apptype="DF_SimpleDungeon_Player" debug="7"></span>'); }
-    if (app.getParam("unitType") == "2"){ app.element.html('<span id="' + app.element.attr("id") + '_mob" sc_appobj="true" sc_apptype="DF_SimpleDungeon_Mob"  debug="7"></span>'); }
-    if (app.getParam("unitType") == "3"){ app.element.html('<span id="' + app.element.attr("id") + '_boss" sc_appobj="true" sc_apptype="DF_SimpleDungeon_Boss"  debug="7"></span>'); }
+    if (app.getParam("unitType") == "1") { app.element.html('<span id="' + app.element.attr("id") + '_player" sc_appobj="true" sc_apptype="DF_SimpleDungeon_Player" debug="7"></span>'); }
+    if (app.getParam("unitType") == "2") { app.element.html('<span id="' + app.element.attr("id") + '_mob" sc_appobj="true" sc_apptype="DF_SimpleDungeon_Mob"  debug="7"></span>'); }
+    if (app.getParam("unitType") == "3") { app.element.html('<span id="' + app.element.attr("id") + '_boss" sc_appobj="true" sc_apptype="DF_SimpleDungeon_Boss"  debug="7"></span>'); }
     app.element.css("left", app.getParam("posX"));
     app.element.css("top", app.getParam("posY"));
     app.element.css("position", "absolute");
@@ -29,31 +31,17 @@ DF_SimpleDungeon_Unit.prototype.onStrap = function(app){
   });
 }
 
-DF_SimpleDungeon_Unit.prototype.postStrap = function(app){
-  app.debugMsg(app.element.attr("id") + " app " + app.getMetaParam("type") + " is strapping, running onStrap before recursion.", 2);
-  return new Promise(function(fulfill, reject){
-    fulfill();
-  });
-}
-
-DF_SimpleDungeon_Unit.prototype.discoveryComplete = function(app){
-  app.debugMsg("Recursive Servercide discovery complete, running discoveryComplete function of " + app.element.attr("id") + " app " + app.getMetaParam("type") + ".", 2);
-  return new Promise(function(fulfill, reject){
-    fulfill();
-  });
-}
-
-DF_SimpleDungeon_Unit.prototype.tryMove = function(app, initCost, dir){
+DF_SimpleDungeon_Unit.prototype.tryMove = function (app, initCost, dir) {
   var posY = (app.getParam("posY").replace("px", "") * 1.0);
   var posX = (app.getParam("posX").replace("px", "") * 1.0);
   var isPlayer = (app.getParam("unitType") == "1");
 
-  if (isPlayer){
-    for (var x = dir.length - 1; x >= 0; x--){
-      if (dir[x] == "w"){ posY = posY - 5; }
-      if (dir[x] == "s"){ posY = posY + 5; }
-      if (dir[x] == "a"){ posX = posX - 5; }
-      if (dir[x] == "d"){ posX = posX + 5; }
+  if (isPlayer) {
+    for (var x = dir.length - 1; x >= 0; x--) {
+      if (dir[x] == "w") { posY = posY - 5; }
+      if (dir[x] == "s") { posY = posY + 5; }
+      if (dir[x] == "a") { posX = posX - 5; }
+      if (dir[x] == "d") { posX = posX + 5; }
     }
   } else {
     if (dir == "up") { posY = posY - 5; }
@@ -77,18 +65,18 @@ DF_SimpleDungeon_Unit.prototype.tryMove = function(app, initCost, dir){
   var valid3 = ((["2", "3"].indexOf(c3.attr("df_simpledungeon_tile_tiletype"))) != -1 ? true : false);
   var valid4 = ((["2", "3"].indexOf(c4.attr("df_simpledungeon_tile_tiletype"))) != -1 ? true : false);
 
-  var moveResult = new Promise(function(fulfillMove, rejectMove){
-    if (valid1 && valid2 && valid3 && valid4){
-      var p = new Promise(function(fulfill, reject){
-        app.element.animate({top:posY + "px", left: posX + "px"}, initCost, function() { fulfill(); })
-      }).then(function() {
-        if (isPlayer){
+  var moveResult = new Promise(function (fulfillMove, rejectMove) {
+    if (valid1 && valid2 && valid3 && valid4) {
+      var p = new Promise(function (fulfill, reject) {
+        app.element.animate({ top: posY + "px", left: posX + "px" }, initCost, function () { fulfill(); })
+      }).then(function () {
+        if (isPlayer) {
           app.element.css("background-color", "darkgreen");
           valid1 = c1.attr("sc_apptype") == "3";
           valid2 = c2.attr("sc_apptype") == "3";
           valid3 = c3.attr("sc_apptype") == "3";
           valid4 = c4.attr("sc_apptype") == "3";
-          if (valid1 || valid2 || valid3 || valid4){
+          if (valid1 || valid2 || valid3 || valid4) {
             app.getChild("DF_SimpleDungeon_Player").getCoin(app.getChild("DF_SimpleDungeon_Player"));
           }
         }
@@ -97,15 +85,15 @@ DF_SimpleDungeon_Unit.prototype.tryMove = function(app, initCost, dir){
         fulfillMove();
       });
     } else {
-      if (isPlayer){ app.element.css("background-color", "pink"); }
+      if (isPlayer) { app.element.css("background-color", "pink"); }
       fulfillMove();
     }
-  }).then(function() {
-      if (isPlayer){
-        //app.getParent("DF_SimpleDungeon_Board").recurseControls(app.getParent("DF_SimpleDungeon_Board"));
-         app.getParent("DF_SimpleDungeon_Board").giveControl(app.getParent("DF_SimpleDungeon_Board"));
-        //app.tryMove(app, initCost, app.getParent("DF_SimpleDungeon_Board").getParam("keysDown"));
-      }
+  }).then(function () {
+    if (isPlayer) {
+      //app.getParent("DF_SimpleDungeon_Board").recurseControls(app.getParent("DF_SimpleDungeon_Board"));
+      app.getParent("DF_SimpleDungeon_Board").giveControl(app.getParent("DF_SimpleDungeon_Board"));
+      //app.tryMove(app, initCost, app.getParent("DF_SimpleDungeon_Board").getParam("keysDown"));
+    }
   });
 }
 ////////////////////////////

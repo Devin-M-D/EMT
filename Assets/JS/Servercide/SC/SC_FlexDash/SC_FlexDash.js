@@ -1,7 +1,7 @@
 //SC_FlexDash
 ////////////////////////////
 loadCSS("Assets/JS/Servercide/SC/SC_FlexDash/SC_FlexDash.css");
-var SC_FlexDash = function(element) {
+var SC_FlexDash = function (element) {
   var defaultParams = {
     "dashboard": {
       "4{{panels}}": {
@@ -29,38 +29,26 @@ var SC_FlexDash = function(element) {
       }
     }
   };
-  var app = this;
-  var promise = ServercideApp.call(this, app, element, "SC_FlexDash", defaultParams).then(function(){ app.postStrap(app); });
+  var promise = ServercideApp.call(
+    this, element, "SC_FlexDash", defaultParams,
+    SC_FlexDash.prototype.onStrap
+  );
   return promise;
 }
 SC_FlexDash.prototype = Object.create(ServercideApp.prototype);
 
-SC_FlexDash.prototype.onStrap = function(app){
+SC_FlexDash.prototype.onStrap = function (app) {
   app.debugMsg(app.element.attr("id") + " app " + app.getMetaParam("type") + " is strapping, running onStrap before recursion.", 2);
-  return new Promise(function(fulfill, reject){
+  return new Promise(function (fulfill, reject) {
     app.element.append($('<span style="text-align:center;">FlexGrid Control Panel</span>'));
     let controlPanel = $('<span id="flexDash" sc_appobj="true" sc_apptype="SC_FlexGrid"></span>').appendTo(app.element);
 
     var content = app.getParam("dashboard");
     btnPanel = $('<SC_FlexGrid_nodes htmlParam="true"></SC_FlexGrid_nodes>').appendTo(controlPanel);
-    for (var y = 0; y < content.length; y++){
+    for (var y = 0; y < content.length; y++) {
       btnPanel.append(content[y]);
     }
     app.element.css("margin", "10px")
-    fulfill();
-  });
-}
-
-SC_FlexDash.prototype.postStrap = function(app){
-  app.debugMsg(app.element.attr("id") + " app " + app.getMetaParam("type") + " is strapping, running onStrap before recursion.", 2);
-  return new Promise(function(fulfill, reject){
-    fulfill();
-  });
-}
-
-SC_FlexDash.prototype.discoveryComplete = function(app){
-  app.debugMsg("Recursive Servercide discovery complete, running discoveryComplete function of " + app.element.attr("id") + " app " + app.getMetaParam("type") + ".", 2);
-  return new Promise(function(fulfill, reject){
     fulfill();
   });
 }

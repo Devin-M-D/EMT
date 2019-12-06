@@ -2,34 +2,18 @@
 ////////////////////////////
 loadCSS("Assets/JS/Servercide/SC/SC_Accordion/SC_Accordion.css");
 
-var SC_Accordion = function(element) {
+var SC_Accordion = function (element) {
   var defaultParams = {
     "content": element.html()
   };
-  var app = this;
-  var promise = ServercideApp.call(this, app, element, "SC_Accordion", defaultParams).then(function(){ app.postStrap(app); });
+  var promise = ServercideApp.call(this, element, "SC_Accordion", defaultParams, SC_Accordion.prototype.onStrap, SC_Accordion.prototype.postStrap, SC_Accordion.prototype.discoveryComplete);
   return promise;
 }
 SC_Accordion.prototype = Object.create(ServercideApp.prototype);
 
-SC_Accordion.prototype.onStrap = function(app){
-  app.debugMsg(app.element.attr("id") + " app " + app.getMetaParam("type") + " is strapping, running onStrap before recursion.", 2);
-  return new Promise(function(fulfill, reject){
-    app.element.html(app.getParam("content"));
-    fulfill();
-  });
-}
-
-SC_Accordion.prototype.postStrap = function(app){
-  app.debugMsg(app.element.attr("id") + " app " + app.getMetaParam("type") + " is strapping, running onStrap before recursion.", 2);
-  return new Promise(function(fulfill, reject){
-    fulfill();
-  });
-}
-
-SC_Accordion.prototype.discoveryComplete = function(app){
+SC_Accordion.prototype.discoveryComplete = function (app) {
   app.debugMsg("Recursive Servercide discovery complete, running discoveryComplete function of " + app.element.attr("id") + " app " + app.getMetaParam("type") + ".", 2);
-  return new Promise(function(fulfill, reject){
+  return new Promise(function (fulfill, reject) {
     // app.element.find('span.accord-header').click(function() {
     //     $(this).next().toggle('slow');
     //     return false;
@@ -40,7 +24,7 @@ SC_Accordion.prototype.discoveryComplete = function(app){
     app.element.accordion({
       collapsible: true,
       active: false,
-      activate: function(event, ui) { SC_triggerResize(); },
+      activate: function (event, ui) { SC_triggerResize(); },
       header: "> span.accord-header",
       heightStyle: "content"
     });

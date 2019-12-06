@@ -5,8 +5,10 @@ var DF_ToDo = function (element) {
   var defaultParams = {
     "src": "/Assets/JS/Servercide/DF/DF_ToDo/DF_ToDo_sampledata.json"
   };
-  var app = this;
-  var promise = ServercideApp.call(this, app, element, "DF_ToDo", defaultParams).then(function () { app.postStrap(app); });
+  var promise = ServercideApp.call(
+    this, element, "DF_ToDo", defaultParams,
+    DF_ToDo.prototype.onStrap
+  );
   return promise;
 }
 DF_ToDo.prototype = Object.create(ServercideApp.prototype);
@@ -47,20 +49,6 @@ DF_ToDo.prototype.onStrap = function (app) {
       $("#modal_tempID").find("#todo_addTask").click(function () { app.addTask(app, $("#modal_tempID").find("#todo_NewTask").val()) });
       fulfill();
     });
-  });
-}
-
-DF_ToDo.prototype.postStrap = function (app) {
-  app.debugMsg(app.element.attr("id") + " app " + app.getMetaParam("type") + " is strapping, running onStrap before recursion.", 2);
-  return new Promise(function (fulfill, reject) {
-    fulfill();
-  });
-}
-
-DF_ToDo.prototype.discoveryComplete = function (app) {
-  app.debugMsg("Recursive Servercide discovery complete, running discoveryComplete function of " + app.element.attr("id") + " app " + app.getMetaParam("type") + ".", 2);
-  return new Promise(function (fulfill, reject) {
-    fulfill();
   });
 }
 

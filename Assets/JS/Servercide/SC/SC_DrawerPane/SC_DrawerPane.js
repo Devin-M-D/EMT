@@ -1,6 +1,6 @@
 //SC_DrawerPane
 ////////////////////////////
-var SC_DrawerPane = function(element) {
+var SC_DrawerPane = function (element) {
   var defaultParams = {
     "fromEdge": "left",
     "open": "false",
@@ -17,30 +17,29 @@ var SC_DrawerPane = function(element) {
       }
     ]
   };
-  var app = this;
-  var promise = ServercideApp.call(this, app, element, "SC_DrawerPane", defaultParams).then(function(){ app.postStrap(app); });
+  var promise = ServercideApp.call(this, element, "SC_DrawerPane", defaultParams, SC_DrawerPane.prototype.onStrap);
   return promise;
 }
 SC_DrawerPane.prototype = Object.create(ServercideApp.prototype);
 
-SC_DrawerPane.prototype.onStrap = function(app){
-  return new Promise(function(fulfill, reject){
+SC_DrawerPane.prototype.onStrap = function (app) {
+  return new Promise(function (fulfill, reject) {
     app.debugMsg(app.element.attr("id") + " app " + app.getMetaParam("type") + " is strapping, running onStrap before recursion.", 2);
 
-    loadInlineAppCSS("SC_DrawerPane", ".SC_DrawerPane", {"color":"#f00", "font-weight":"bold"});
+    loadInlineAppCSS("SC_DrawerPane", ".SC_DrawerPane", { "color": "#f00", "font-weight": "bold" });
     loadInlineAppCSS("SC_DrawerPane2", ".SC_DrawerPane_left", {
-      "display":"block", "position":"fixed", "width":"250px", "height": "100%", "top": "0px", "left": "-250px",
-      "background-color": "#fff", "border": "solid 2px #ab9481", "padding":"10px", "z-index":"4"
+      "display": "block", "position": "fixed", "width": "250px", "height": "100%", "top": "0px", "left": "-250px",
+      "background-color": "#fff", "border": "solid 2px #ab9481", "padding": "10px", "z-index": "4"
     });
     loadInlineAppCSS("SC_DrawerPane3", ".SC_DrawerPane_left > .drawerMenu_tab", {
-      "display":"inline-block", "position":"relative", "width":"32%", "height": "30px", "top": "0px", "left": "0px"
+      "display": "inline-block", "position": "relative", "width": "32%", "height": "30px", "top": "0px", "left": "0px"
     });
     loadInlineAppCSS("SC_DrawerPane4", ".SC_DrawerPane_handle_left", {
-      "display":"block", "position":"absolute", "width":"35px", "height": "35px", "top": "0px", "left": "100%",
+      "display": "block", "position": "absolute", "width": "35px", "height": "35px", "top": "0px", "left": "100%",
       "background": "url('/Assets/IMG/menu_icon.png') 5px 5px/25px no-repeat;"
     });
 
-    app.element.addClass("SC_DrawerPane_" + app.getParam("fromEdge")).on("click", function(event) {
+    app.element.addClass("SC_DrawerPane_" + app.getParam("fromEdge")).on("click", function (event) {
       event.stopPropagation();
     });
 
@@ -49,10 +48,10 @@ SC_DrawerPane.prototype.onStrap = function(app){
                   <span class="drawerMenu_tab" tabContent="skins"><span class="absCenter">Skins</span></span>\
                   <span class="drawerMenu_tab" tabContent="VCS"><span class="absCenter">VCS</span></span>\
                   <span id="drawerMenu_content" style="position:absolute;display:block;top:35px;bottom:2%;width:calc(100% - 20px);overflow:auto;outline:solid thin #ab9481;"></span>'
-                );
+    );
     app.enableClick(app);
-    app.element.find(".drawerMenu_tab").each(function() {
-      $(this).on("click", function() {
+    app.element.find(".drawerMenu_tab").each(function () {
+      $(this).on("click", function () {
         app.changeContent(app, $(this).attr("tabContent"));
       })
     });
@@ -60,48 +59,35 @@ SC_DrawerPane.prototype.onStrap = function(app){
   });
 }
 
-SC_DrawerPane.prototype.postStrap = function(app){
-  return new Promise(function(fulfill, reject){
-    app.debugMsg(app.element.attr("id") + " app " + app.getMetaParam("type") + " is strapping, running onStrap before recursion.", 2);
-    fulfill();
+SC_DrawerPane.prototype.enableClick = function (app) {
+  app.element.find(".SC_DrawerPane_handle_" + app.getParam("fromEdge")).on("click", function () {
+    app.toggleDrawer(app);
   });
 }
 
-SC_DrawerPane.prototype.discoveryComplete = function(app){
-  return new Promise(function(fulfill, reject){
-    fulfill();
-  });
-}
-
-SC_DrawerPane.prototype.enableClick = function(app) {
-  app.element.find(".SC_DrawerPane_handle_" + app.getParam("fromEdge")).on("click", function() {
-      app.toggleDrawer(app);
-  });
-}
-
-SC_DrawerPane.prototype.toggleDrawer = function(app) {
+SC_DrawerPane.prototype.toggleDrawer = function (app) {
   app.element.find(".SC_DrawerPane_handle_" + app.getParam("fromEdge")).off("click");
   if (app.getParam("open") == "false") {
-    app.element.animate({ left: "0px" }, 1000, function() {
+    app.element.animate({ left: "0px" }, 1000, function () {
       app.setParam("open", "true");
       app.enableClick(app);
     });
   } else {
-    app.element.animate({ left: "-275px" }, 1000, function() {
+    app.element.animate({ left: "-275px" }, 1000, function () {
       app.setParam("open", "false");
       app.enableClick(app);
     });
   }
 }
 
-SC_DrawerPane.prototype.changeContent = function(app, tabName) {
+SC_DrawerPane.prototype.changeContent = function (app, tabName) {
   if (tabName == "side_nav") {
     $("#drawerMenu_content").html(`<span id="main_nav" SC_appObj="true" SC_appType="SC_MenuCascade" SC_MenuCascade_src="Assets/JS/Servercide/SC/SC_Demo/SC_Demo_Menus.json" SC_MenuCascade_orientation="vertical"></span>`);
     $("#drawerMenu_content").css("overflow", "visible");
     SC_discover($("#drawerMenu_content"));
   } else if (tabName == "skins") {
     $("#drawerMenu_content").html("");
-    $("#spnSkinner").children().each(function() {
+    $("#spnSkinner").children().each(function () {
       $(this).clone(true).appendTo($("#drawerMenu_content"));
     });
   } else if (tabName == "VCS") {

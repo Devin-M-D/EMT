@@ -1,32 +1,36 @@
 //SC_Modal
 ////////////////////////////
-var SC_Modal = function(element) {
+var SC_Modal = function (element) {
   var defaultParams = {
     "wrap": '<span id="SC_modalWrap"></span>',
     "node": "Modal sample text",
     "pos": "center"
   };
-  var app = this;
-  var promise = ServercideApp.call(this, app, element, "SC_Modal", defaultParams).then(function(){ app.postStrap(app); });
+  var promise = ServercideApp.call(
+    this, element, "SC_Modal", defaultParams,
+    SC_Modal.prototype.onStrap
+  );
   return promise;
 }
 SC_Modal.prototype = Object.create(ServercideApp.prototype);
 
-SC_Modal.prototype.onStrap = function(app){
+SC_Modal.prototype.onStrap = function (app) {
   app.debugMsg(app.element.attr("id") + " app " + app.getMetaParam("type") + " is strapping, running onStrap before recursion.", 2);
-  return new Promise(function(fulfill, reject){
+  return new Promise(function (fulfill, reject) {
     loadInlineAppCSS("SC_Modal_wrap", "#SC_modalWrap",
-      {"display":"none", "position":"absolute", "background-color":"rgba(100,100,100,0.5)",
-      "top":"0px", "left":"0px", "bottom":"0px", "right":"0px", "width":"100%", "height":"100%", "z-index":"3"}
+      {
+        "display": "none", "position": "absolute", "background-color": "rgba(100,100,100,0.5)",
+        "top": "0px", "left": "0px", "bottom": "0px", "right": "0px", "width": "100%", "height": "100%", "z-index": "3"
+      }
     );
     loadInlineAppCSS("SC_Modal_box", ".SC_modalNode",
-      {"display":"block", "width":"50%", "height":"50%", "position":"relative", "background-color":"white", "z-index":"5"}
+      { "display": "block", "width": "50%", "height": "50%", "position": "relative", "background-color": "white", "z-index": "5" }
     );
     app.wrap = $(app.getParam("wrap")).prependTo($("html"));
 
-    app.element.on("click", function(event) {
+    app.element.on("click", function (event) {
       event.stopPropagation();
-      app.wrap.css("display", "flex").on("click", function() {
+      app.wrap.css("display", "flex").on("click", function () {
         $(this).remove();
       });
       var content = app.getParam("node");
@@ -41,7 +45,7 @@ SC_Modal.prototype.onStrap = function(app){
       if (modalNode.css("background-color") == "rgba(0, 0, 0, 0)") {
         modalNode.css("background-color", "white");
       }
-      modalNode.on("click", function(event) {
+      modalNode.on("click", function (event) {
         event.stopPropagation();
       });
 
@@ -58,20 +62,6 @@ SC_Modal.prototype.onStrap = function(app){
       }
       SC_discover("#modal_tempID");
     });
-    fulfill();
-  });
-}
-
-SC_Modal.prototype.postStrap = function(app){
-  app.debugMsg(app.element.attr("id") + " app " + app.getMetaParam("type") + " is strapping, running onStrap before recursion.", 2);
-  return new Promise(function(fulfill, reject){
-    fulfill();
-  });
-}
-
-SC_Modal.prototype.discoveryComplete = function(app){
-  app.debugMsg("Recursive Servercide discovery complete, running discoveryComplete function of " + app.element.attr("id") + " app " + app.getMetaParam("type") + ".", 2);
-  return new Promise(function(fulfill, reject){
     fulfill();
   });
 }

@@ -6,8 +6,7 @@ var SC_StickyFrame = function (element) {
     "scrollRoot": "html",
     "height": "10%"
   };
-  var app = this;
-  var promise = ServercideApp.call(this, app, element, "SC_StickyFrame", defaultParams).then(function () { app.postStrap(app); });
+  var promise = ServercideApp.call(this, element, "SC_StickyFrame", defaultParams, SC_StickyFrame.prototype.onStrap);
   return promise;
 }
 SC_StickyFrame.prototype = Object.create(ServercideApp.prototype);
@@ -26,7 +25,6 @@ SC_StickyFrame.prototype.onStrap = function (app) {
     }
 
     if (app.getParam("frameType") == "header") {
-      console.log(app.getParam("scrollRoot"));
       $(app.getParam("scrollRoot")).scroll(function () {
         var scrollRoot = $(app.getParam("scrollRoot"));
         console.log(scrollRoot);
@@ -49,20 +47,6 @@ SC_StickyFrame.prototype.onStrap = function (app) {
       });
     }
 
-    fulfill();
-  });
-}
-
-SC_StickyFrame.prototype.postStrap = function (app) {
-  app.debugMsg(app.element.attr("id") + " app " + app.getMetaParam("type") + " is strapping, running onStrap before recursion.", 2);
-  return new Promise(function (fulfill, reject) {
-    fulfill();
-  });
-}
-
-SC_StickyFrame.prototype.discoveryComplete = function (app) {
-  app.debugMsg("Recursive Servercide discovery complete, running discoveryComplete function of " + app.element.attr("id") + " app " + app.getMetaParam("type") + ".", 2);
-  return new Promise(function (fulfill, reject) {
     fulfill();
   });
 }

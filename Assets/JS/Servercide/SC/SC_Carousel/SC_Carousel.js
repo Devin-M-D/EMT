@@ -2,8 +2,9 @@
 ////////////////////////////
 var SC_Carousel = function (element) {
   var defaultParams = {};
-  var app = this;
-  var promise = ServercideApp.call(this, app, element, "SC_Carousel", defaultParams).then(function () { app.postStrap(app); });
+  var promise = ServercideApp.call(
+    this, element, "SC_Carousel", defaultParams,
+    SC_Carousel.prototype.onStrap, null, SC_Carousel.prototype.discoveryComplete);
   return promise;
 }
 SC_Carousel.prototype = Object.create(ServercideApp.prototype);
@@ -13,13 +14,6 @@ SC_Carousel.prototype.onStrap = function (app) {
   return new Promise(function (fulfill, reject) {
     app.element.append(`<span id="carousel_demo_temp" SC_AppObj='true' SC_AppType='SC_Include' \
     SC_Include_src='Assets/JS/Servercide/SC/SC_Carousel/SC_Carousel.html' class='absCenter'></span>`);
-    fulfill();
-  });
-}
-
-SC_Carousel.prototype.postStrap = function (app) {
-  app.debugMsg(app.element.attr("id") + " app " + app.getMetaParam("type") + " is strapping, running onStrap before recursion.", 2);
-  return new Promise(function (fulfill, reject) {
     fulfill();
   });
 }

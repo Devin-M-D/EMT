@@ -2,19 +2,29 @@
   <span class="header1" style="height:30px;">EMT: Enterprise Management Tool</span>
   A self-contained small enterprise fullstack framework and browser-to-browser decentralized network
 
-  <br><br><span class="header1"  style="height:30px;">License:</span>
+  <br><br><span class="header1" style="height:30px;">License:</span>
   Released under the <a href="http://www.wtfpl.net">WTFPL License</a> (free and unlimited in every respect)
 
-  <br><br><span class="header1"  style="height:30px;">Overview:</span>
-  The goal of the emt project is to bring enterprise software to the masses by making the programming of business logic accesible to anyone. It utilizes javascript under a firm belief in Atwood's Law.
+  <br><br><span class="header1" style="height:30px;">Overview:</span>
+  The goal of the emt project is to bring enterprise software to the masses by making the programming of business logic
+  accesible to anyone. It utilizes javascript under a firm belief in Atwood's Law.
   <br><br>
-  Radical decentralization is waiting on one essential element: the turning of every smartphone into a host node for a global transactional network. Web communications protocols and browsers are the most platform-agnostic and standardized computational/visual programming tool we have today, and with the advent of torrenting, webRTC, and finally blockchains and concensus algorithms I am finally able to write my own job out of existence! This is very exciting in search of the reduction of waste, as a career fullstack enterprise dev emt is a spiritual endeavor.
+  Radical decentralization is waiting on one essential element: the turning of every smartphone into a host node for a
+  global transactional network. Web communications protocols and browsers are the most platform-agnostic and
+  standardized computational/visual programming tool we have today, and with the advent of torrenting, webRTC, and
+  finally blockchains and concensus algorithms I am finally able to write my own job out of existence! This is very
+  exciting in search of the reduction of waste, as a career fullstack enterprise dev emt is a spiritual endeavor.
   <br><br>
-  My intention is to make it so you only need to hit a single trusted node once, ever (unless all your discovered nodes are offline the next time you hop on). The webtorrent project <a href="https://elendirx.github.io/web2web/">web2web</a> proved that a blockchain can deliver a webpage payload, and so if the web page is it's own host and the genesis/trunk of it's own blockchain which also features a decentralized database, we could deeply decentralize our entire supply chains and decision-making systems.
+  My intention is to make it so you only need to hit a single trusted node once, ever (unless all your discovered nodes
+  are offline the next time you hop on). The webtorrent project <a
+    href="https://elendirx.github.io/web2web/">web2web</a> proved that a blockchain can deliver a webpage payload, and
+  so if the web page is it's own host and the genesis/trunk of it's own blockchain which also features a decentralized
+  database, we could deeply decentralize our entire supply chains and decision-making systems.
   <br><br>
-   I want to see every product and service turned into a public utility of sheer efficiency and equality, because no one person can ever achieve what we can all achieve together.
-   <br><br>
-   <span class="header1"  style="height:30px;">Docs:</span>
+  I want to see every product and service turned into a public utility of sheer efficiency and equality, because no one
+  person can ever achieve what we can all achieve together.
+  <br><br>
+  <span class="header1" style="height:30px;">Docs:</span>
 </span>
 <br>
 <span id="aboutAcc" sc_appobj="true" sc_apptype="SC_Accordion" style="margin-bottom: 10px">
@@ -29,7 +39,8 @@
       <li>create an app directory under "yourNamespaceDir/yourNamespace_yourAppName"</li>
       <li>create a js file with the same file name as the directory in the previous step</li>
       <li>copy the content from "emt/assets/JS/Servercide/SC_blankTemplate.js" into your file</li>
-      <li>update your function names with your filename, and replace the string in the constructor function's call to the ServercideApp.call() super function</li>
+      <li>update your function names with your filename, and replace the string in the constructor function's call to
+        the ServercideApp.call() super function</li>
       <li>change "emt/index.html" so the body tag SC_appType attribute is your new filename</li>
       <li>add a line under line 14 in your file type "app.element.css('background-color', 'aquamarine');"</li>
       <li>now go replace that with something useful!</li>
@@ -39,19 +50,25 @@
   <span id="about_sc_node" class="accord-node" sc_appobj="true" sc_apptype="SC_Accordion">
     <span id="abt_sc_head_whatis" class="accord-header">What is a Servercide App?</span>
     <span id="about_sc_node_whatis" class="accord-node">
-      The app object is the result of an app definition being strapped onto an element. The app obj can then be made accessible to the DOM.
+      The app object is the result of an app definition being strapped onto an element. The app obj can then be made
+      accessible to the DOM.
       <br><br>
-      At it's heart, a Servercide app is just a javascript object with properties and functions. It is as generic and abstract as possible
-      to avoid impeding any non-SC activity, and also not to impede any developer strategies. There is a minimum of strict rules,
+      At it's heart, a Servercide app is just a javascript object with properties and functions. It is as generic and
+      abstract as possible
+      to avoid impeding any non-SC activity, and also not to impede any developer strategies. There is a minimum of
+      strict rules,
       although non-strict conventions of encapsulated and functional codeshould also be followed.
       <br><br>
-      By convention, each SC app should have a small and specific job and only be aware of it's parent and children. Ideal code is 100% DRY,
+      By convention, each SC app should have a small and specific job and only be aware of it's parent and children.
+      Ideal code is 100% DRY,
       with single sources of truth.
       <br><br>
-      All Servercide apps in their hierarchical structure and associated information (such as the element ids) are stored in the SC_state
+      All Servercide apps in their hierarchical structure and associated information (such as the element ids) are
+      stored in the SC_state
       which is an <b>immutable.js</b> object.
       <br><br>
-      A Servercide app has access to serveral functions besides the ones in the app definition. These are inherited from the Servercide object
+      A Servercide app has access to serveral functions besides the ones in the app definition. These are inherited from
+      the Servercide object
       type itself:
       <ul>
         <li>app.element: not a function, references the jquery element of the app in use</li>
@@ -72,7 +89,8 @@
 
         <li>printApps(): print a list of all apps strapped to the current app's element</li>
         <li>setDebugging(): set the debugging level on the app</li>
-        <li>debugMsg(message, level = 4, trace = false): console.log(msg) if debug level is met, turn on tracing for the calling file</li>
+        <li>debugMsg(message, level = 4, trace = false): console.log(msg) if debug level is met, turn on tracing for the
+          calling file</li>
         <li>debugFunc(func, level = 4): if the debug level is met, run func()</li>
 
         <li>setInHTML(): updates element.data("appname") with the latest appObj</li>
@@ -80,23 +98,28 @@
     </span>
     <span id="abt_sc_head_namespacing" class="accord-header">Namespacing</span>
     <span id="about_sc_node_namespacing" class="accord-node">
-      Currently sorted into "/assets/js/servercide" are the folders containing servercide app definitions. The app naming convention is X_Y_Z
+      Currently sorted into "/assets/js/servercide" are the folders containing servercide app definitions. The app
+      naming convention is X_Y_Z
       where X is the namespace, Y is the appspace, and Z is the subspace. Z can include underscores but X and Y can't.
       <br><br>
-      The folder naming (the path SC uses to automatically bring in app definitions only on demand) is "/assets/js/servercide/X/X_Y/X_Y_Z".
+      The folder naming (the path SC uses to automatically bring in app definitions only on demand) is
+      "/assets/js/servercide/X/X_Y/X_Y_Z".
     </span>
     <span id="abt_sc_head_appdef" class="accord-header">SC App Definitions</span>
     <span id="about_sc_node_appdef" class="accord-node">
       An App Definition consists of 5 parts
       <ul>
-        <li>The constructor function, containing a default set of parameters (a json object) of which any parts or all can be overwritten</li>
+        <li>The constructor function, containing a default set of parameters (a json object) of which any parts or all
+          can be overwritten</li>
         <li>The onStrap(), which runs synchronously after parameter values have been set</li>
         <li>The postStrap(), which runs asynchronously after onStrap()</li>
         <li>The discoveryComplete(), which runs when all constructors and onStrap() functions have completed</li>
         <li>Any app functions the resulting app object should be able to access</li>
       </ul>
-      All default functions on an app accept a first param of "app" which is the Servercide application object. Concentionally user
-      functions added to the app definitions should also be declared and called in that way in order to avoid the use of the "this"
+      All default functions on an app accept a first param of "app" which is the Servercide application object.
+      Concentionally user
+      functions added to the app definitions should also be declared and called in that way in order to avoid the use of
+      the "this"
       keyword.
     </span>
     <span id="abt_sc_head_lifecycle" class="accord-header">The Lifecycle</span>
@@ -118,7 +141,8 @@
       The basics:
       <ul>
         <li>Servercide is aware of 4 data types: strings, arrays, objects, and jquery element objects.</li>
-        <li>The long-form name of any app parameter is X_Y_Z_paramPath. Use underscores rather than dot notation for the paramPath part.</li>
+        <li>The long-form name of any app parameter is X_Y_Z_paramPath. Use underscores rather than dot notation for the
+          paramPath part.</li>
         <li>passed values can be a string, jquery object, jquery selector, or valid json</li>
         <li>Once the app is strapped, parameters can only be found in the SC_state.</li>
       </ul>
@@ -130,7 +154,8 @@
       <span id="about_sc_node_html" class="accord-node">
         The long-form name can be used as an html tag, with a "value" attribute set to the value.
         <br><br>
-        A tag with attribute "htmlParam='true'" can also be used, so the param can exist in the file as plain html content on the element.
+        A tag with attribute "htmlParam='true'" can also be used, so the param can exist in the file as plain html
+        content on the element.
         <br><br>
         For an array parameter, you can also use "htmlParam" and create html tags for each array item (&lt;item&gt;)
       </span>
@@ -140,13 +165,16 @@
       </span>
       <span id="about_sc_head_globals" class="accord-header">Global Parameters</span>
       <span id="about_sc_node_globals" class="accord-node">
-        A param prefixed with "g:" will be set as a global param at the root of the servercide state. A global param is currently
+        A param prefixed with "g:" will be set as a global param at the root of the servercide state. A global param is
+        currently
         only able to use a default value from the app definition, and cannot also be part of a handlebar map.
       </span>
       <span id="about_sc_head_handlebars" class="accord-header">Handlebar Mapping</span>
       <span id="about_sc_head_handlebars" class="accord-node">
-        If a parameter property tag is named "0[[mapInput]]" and there is a corresponding "0{{mapTemplate}}" servercide will replace any instances
-        of the string "{{mapInput}}" in the 0{{mapTemplate}} value. By default the result in placed into the input collection.
+        If a parameter property tag is named "0[[mapInput]]" and there is a corresponding "0{{mapTemplate}}" servercide
+        will replace any instances
+        of the string "{{mapInput}}" in the 0{{mapTemplate}} value. By default the result in placed into the input
+        collection.
         The handlebar notations are then dropped from the parameter names.
         <br><br>
         ...An example is far clearer. During the mapping process, this parameter
@@ -155,15 +183,16 @@
         <pre id="hndlDemo2"></pre>
         <br><br>
 
-        This may only seem so useful, but a single input can fill multiple templates, and dimensional arrays will fill intelligently.
+        This may only seem so useful, but a single input can fill multiple templates, and dimensional arrays will fill
+        intelligently.
         <pre id="hndlDemo3"></pre>
         becomes
         <pre id="hndlDemo4"></pre>
         <br><br>
 
-        Using a < or ^ caret to prefix the handlebar notation will place the result in the template param or the parent param, respectively
-        (instead of the input collection param)
-        <pre id="hndlDemo5"></pre>
+        Using a < or ^ caret to prefix the handlebar notation will place the result in the template param or the parent
+          param, respectively (instead of the input collection param) <pre id="hndlDemo5">
+        </pre>
         becomes
         <pre id="hndlDemo6"></pre>
         <br><br>
@@ -171,16 +200,19 @@
     </span>
     <span id="about_sc_head_debugging" class="accord-header">Debugging</span>
     <span id="about_sc_node_debugging" class="accord-node" sc_appobj="true" sc_apptype="SC_Accordion">
-      There are 2 types of debugging in Servercide, that which is set on the html tag and logs discovery and strapping information,
+      There are 2 types of debugging in Servercide, that which is set on the html tag and logs discovery and strapping
+      information,
       and that which is set on the app tag and runs debug logs or functions for that app only.
       <br><br>
-      The debug value is stored in the app state as a meta param, so that it can be updated during a debug operation to alter the
+      The debug value is stored in the app state as a meta param, so that it can be updated during a debug operation to
+      alter the
       subsequent debug operations!
       <br><br>
       The debugging-related functions made available on the servercide object are:
       <ul>
         <li>setDebugging(setting) - sets the passed value as the debug setting for the calling app</li>
-        <li>debugMsg(msg, debugType, trace) - console logs msg if debug setting is high enough at the time (trace="true" for stack trace in the event of an error)</li>
+        <li>debugMsg(msg, debugType, trace) - console logs msg if debug setting is high enough at the time (trace="true"
+          for stack trace in the event of an error)</li>
         <li>debugFunc(func, debugType) - run func if debug setting is high enough at the time</li>
       </ul>
       <span id="about_sc_head_debugroot" class="accord-header">Debugging the Servercide Root</span>
@@ -192,19 +224,24 @@
           <li>2 - print "finished recursing" and log full state</li>
           <li>3 - print both 1 & 2</li>
         </ul>
-        All root-level debugging takes the form of console logs. It is separate from the servercide apps and development on them should
-        not affect it. It is very useful when the recursion fails partway and you have no idea which app is causing it, as the last line
+        All root-level debugging takes the form of console logs. It is separate from the servercide apps and development
+        on them should
+        not affect it. It is very useful when the recursion fails partway and you have no idea which app is causing it,
+        as the last line
         in the console will be "discovering <element id of element with failing app>".
       </span>
       <span id="about_sc_head_debugapps" class="accord-header">Debugging a Single SC App</span>
       <span id="about_sc_node_debugapps" class="accord-node">
-        This is the debugging being used most of the time, it works the same as at the root except the debug attribute it set on the
-        app element tag. This way, you can place debug logs and functions in the app definition without rerunning those commands for each
+        This is the debugging being used most of the time, it works the same as at the root except the debug attribute
+        it set on the
+        app element tag. This way, you can place debug logs and functions in the app definition without rerunning those
+        commands for each
         existing app of that type on the page.
         <ul>
           <li>0 - no debug</li>
           <li>1 - print attempts to parse app param vals from html + handlebar mappings</li>
-          <li>2 - print "app strapped" and the final initialized state, as well as onStrap(), postStrap(), and discoveryComplete() alerts</li>
+          <li>2 - print "app strapped" and the final initialized state, as well as onStrap(), postStrap(), and
+            discoveryComplete() alerts</li>
           <li>3 - print both 1 & 2</li>
           <li>4 - run user-defined debug logging and functions</li>
           <li>5 - print 1 & run 4</li>
@@ -294,7 +331,7 @@
       ["lightred", "lightgreen", "lightblue"],
       ["darkred", "darkgreen", "darkblue"]
     ],
-    "baseColors":[
+    "baseColors": [
       "red", "green", "blue"
     ]
   };

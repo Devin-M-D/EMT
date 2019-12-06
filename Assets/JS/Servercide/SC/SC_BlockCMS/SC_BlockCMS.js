@@ -1,33 +1,11 @@
 //SC_BlockCMS
 ////////////////////////////
-var SC_BlockCMS = function(element) {
+var SC_BlockCMS = function (element) {
   var defaultParams = {};
-  var app = this;
-  var promise = ServercideApp.call(this, app, element, "SC_BlockCMS", defaultParams).then(function(){ app.postStrap(app); });
+  var promise = ServercideApp.call(this, element, "SC_BlockCMS", defaultParams);
   return promise;
 }
 SC_BlockCMS.prototype = Object.create(ServercideApp.prototype);
-
-SC_BlockCMS.prototype.onStrap = function(app){
-  app.debugMsg(app.element.attr("id") + " app " + app.getMetaParam("type") + " is strapping, running onStrap before recursion.", 2);
-  return new Promise(function(fulfill, reject){
-    fulfill();
-  });
-}
-
-SC_BlockCMS.prototype.postStrap = function(app){
-  app.debugMsg(app.element.attr("id") + " app " + app.getMetaParam("type") + " is strapping, running onStrap before recursion.", 2);
-  return new Promise(function(fulfill, reject){
-    fulfill();
-  });
-}
-
-SC_BlockCMS.prototype.discoveryComplete = function(app){
-  app.debugMsg("Recursive Servercide discovery complete, running discoveryComplete function of " + app.element.attr("id") + " app " + app.getMetaParam("type") + ".", 2);
-  return new Promise(function(fulfill, reject){
-    fulfill();
-  });
-}
 ////////////////////////////
 
 

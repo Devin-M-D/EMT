@@ -3,30 +3,29 @@
 ////////////////////////////
 var SC_Template = function (element) {
   var defaultParams = {};
-  var app = this;
-  var promise = ServercideApp.call(this, app, element, "SC_Template", defaultParams).then(function () { app.postStrap(app); });
+  var promise = ServercideApp.call(
+    this, element, "SC_Template", defaultParams,
+    //SC_Template.prototype.onStrap, SC_Template.prototype.postStrap, SC_Template.prototype.discoveryComplete
+  );
   return promise;
 }
 SC_Template.prototype = Object.create(ServercideApp.prototype);
 
-SC_Template.prototype.onStrap = function (app) {
-  app.onStrapMessage();
-  return new Promise(function (fulfill, reject) {
-    fulfill();
-  });
-}
+// SC_Template.prototype.onStrap = function (app) {
+//   return new Promise(function (fulfill, reject) {
+//     fulfill();
+//   });
+// }
 
-SC_Template.prototype.postStrap = function (app) {
-  app.debugMsg(app.element.attr("id") + " app " + app.getMetaParam("type") + " is strapping, adding to the postStrap queue.", 2);
-  return new Promise(function (fulfill, reject) {
-    fulfill();
-  });
-}
+// SC_Template.prototype.postStrap = function (app) {
+//   return new Promise(function (fulfill, reject) {
+//     fulfill();
+//   });
+// }
 
-SC_Template.prototype.discoveryComplete = function (app) {
-  app.debugMsg("Recursive Servercide discovery complete, running discoveryComplete function of " + app.element.attr("id") + " app " + app.getMetaParam("type") + ".", 2);
-  return new Promise(function (fulfill, reject) {
-    fulfill();
-  });
-}
+// SC_Template.prototype.discoveryComplete = function (app) {
+//   return new Promise(function (fulfill, reject) {
+//     fulfill();
+//   });
+// }
 ////////////////////////////
