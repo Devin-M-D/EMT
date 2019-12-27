@@ -1,32 +1,60 @@
 //SC_Calendar app definition template
 //V1.0
 ////////////////////////////
-var SC_Calendar = function (element) {
-  var defaultParams = {
-    src: "",
-    data: {
-      accounts: [
-        {
-          name: "Bank1",
-          balance: 100,
-          asOfDate: "2019-12-11"
-        }
-      ],
-      recurringExpenses: [
-        {
-          amount: 10,
-          recurrencePattern: "every 1st of month"
-        }
-      ]
-    }
-  };
-  var promise = ServercideApp.call(
-    this, element, "SC_Calendar", defaultParams,
-    SC_Calendar.prototype.onStrap
-  );
-  return promise;
+class SC_Calendar {
+  constructor(element) {
+    var defaultParams = {
+      src: "",
+      data: {
+        accounts: [
+          {
+            name: "Bank1",
+            balance: 100,
+            asOfDate: "2019-12-11"
+          }
+        ],
+        recurringExpenses: [
+          {
+            amount: 10,
+            recurrencePattern: "every 1st of month"
+          }
+        ]
+      }
+    };
+    var promise = ServercideApp.call(
+      this, element, "SC_Calendar", defaultParams,
+      SC_Calendar.prototype.onStrap
+    );
+    return promise;
+
+  }
 }
-SC_Calendar.prototype = Object.create(ServercideApp.prototype);
+// }= function (element) {
+//   var defaultParams = {
+//     src: "",
+//     data: {
+//       accounts: [
+//         {
+//           name: "Bank1",
+//           balance: 100,
+//           asOfDate: "2019-12-11"
+//         }
+//       ],
+//       recurringExpenses: [
+//         {
+//           amount: 10,
+//           recurrencePattern: "every 1st of month"
+//         }
+//       ]
+//     }
+//   };
+//   var promise = ServercideApp.call(
+//     this, element, "SC_Calendar", defaultParams,
+//     SC_Calendar.prototype.onStrap
+//   );
+//   return promise;
+// }
+// SC_Calendar.prototype = Object.create(ServercideApp.prototype);
 
 SC_Calendar.prototype.onStrap = function (app) {
   app.debugMsg(app.element.attr("id") + " app " + app.getMetaParam("type") + " is strapping, running onStrap before recursion.", 2);

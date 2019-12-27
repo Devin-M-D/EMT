@@ -1,3 +1,5 @@
+
+
 function ServercideApp(element, appType, defaultParams = {}, onStrapF = null, postStrapF = null, discComplete = null) {
     var SC_ = this;
     SC_.element = $(element);
@@ -108,8 +110,8 @@ function ServercideApp(element, appType, defaultParams = {}, onStrapF = null, po
     SC_.onStrap = () => {
         this.onStrapMessage();
         return new Promise(function (fulfill, reject) {
-            if (onStrapF != null){
-                onStrapF(SC_).then(function(){
+            if (onStrapF != null) {
+                onStrapF(SC_).then(function () {
                     fulfill();
                 });
             }
@@ -124,14 +126,14 @@ function ServercideApp(element, appType, defaultParams = {}, onStrapF = null, po
     SC_.postStrap = () => {
         this.postStrapMessage();
         return new Promise(function (fulfill, reject) {
-            if (postStrapF != null){
-                postStrapF(SC_).then(function(){
+            if (postStrapF != null) {
+                postStrapF(SC_).then(function () {
                     fulfill();
                 });
             }
             else {
                 fulfill();
-            }        
+            }
         });
     }
     SC_.discoveryCompleteMessage = () => {
@@ -140,8 +142,8 @@ function ServercideApp(element, appType, defaultParams = {}, onStrapF = null, po
     SC_.discoveryComplete = () => {
         this.discoveryCompleteMessage();
         return new Promise(function (fulfill, reject) {
-            if (discComplete != null){
-                discComplete(SC_).then(function(){
+            if (discComplete != null) {
+                discComplete(SC_).then(function () {
                     fulfill();
                 });
             }
