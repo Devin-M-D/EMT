@@ -7,8 +7,7 @@ var SC_Router = function (element) {
     URLParam = decodeURIComponent(URLParam);
     defaultParams["g:" + URLParam.split(":")[0]] = URLParam.split(":")[1];
   });
-  var promise = ServercideApp.call(this, element, "SC_Router", defaultParams);
+  var promise = new ServercideApp(this, element, "SC_Router", defaultParams);
   return promise;
 }
-SC_Router.prototype = Object.create(ServercideApp.prototype);
 ////////

@@ -1,11 +1,12 @@
 //SC_BlockCMS
 ////////////////////////////
-var SC_BlockCMS = function (element) {
-  var defaultParams = {};
-  var promise = ServercideApp.call(this, element, "SC_BlockCMS", defaultParams);
-  return promise;
+class SC_BlockCMS {
+  constructor(element) {
+    var defaultParams = {};
+    var promise = new ServercideApp(this, element, "SC_BlockCMS", defaultParams);
+    return promise;
+  }
 }
-SC_BlockCMS.prototype = Object.create(ServercideApp.prototype);
 ////////////////////////////
 
 
