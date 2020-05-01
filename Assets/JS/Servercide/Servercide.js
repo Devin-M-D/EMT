@@ -293,8 +293,6 @@ function RemoteCall(remoteURL, postData = {}, enable_logging = false) {
       dataType: "json",
       success: function (msg) {
         if (enable_logging == 1) { console.log("Call to:  " + remoteURL + " - Succeeded: "); }
-
-        // static files contained in msg, c# method results contained in msg.d
         if (remoteURL.indexOf("json") != -1) { fulfill(msg); }
         else { fulfill(msg.d); }
       },
